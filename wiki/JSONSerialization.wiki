@@ -1,4 +1,4 @@
-#labels json,ser,deser
+#labels json,ser,deser,Featured
 ={{{JSON ser/deser}}}=
 
 The generated code uses the json api from jackson-core-asl-1.2.1
