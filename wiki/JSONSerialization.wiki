@@ -31,7 +31,7 @@ public void writeTo(OutputStream out) throws IOException
 The steps involved in generating the json ser/deser code are:
  * compile the .proto into a .java file
  * compile the .java file into a .class file
- * jar the compild classes
+ * jar the compiled classes
  * generate the code via protostuff-codegen-1.0.0-jarjar.jar
 
 =={{{Model.proto}}}==
