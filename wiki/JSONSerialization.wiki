@@ -54,7 +54,7 @@ message Greet {
 }
 }}}
 
-={{{Via Ant}}}=
+={{{Code generation via Ant}}}=
 
 =={{{modules.properties}}}==
 {{{
@@ -106,7 +106,7 @@ Execute:
 $ ant codegen
 }}}
 
-={{{Via Maven}}}=
+={{{Code generation via Maven}}}=
 
 Uses *protostuff-maven-plugin* to generate code
 
