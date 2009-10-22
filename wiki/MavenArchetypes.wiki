@@ -1,0 +1,2 @@
+#labels maven,archetypes,Featured
+={{{Maven Archetypes}}}=
