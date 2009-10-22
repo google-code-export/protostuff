@@ -2,8 +2,8 @@
 ={{{Maven Archetypes}}}=
 
 Currently there are 2 archetypes available:
- * simple-webapp (protobuf+json)
- * simple-gwt-webapp (protobuf+gwt+json)
+ * simple-webapp (protobuf+json+jquery)
+ * simple-gwt-webapp (protobuf+json+gwt)
 
 To try it out, execute:
 {{{
