@@ -52,7 +52,7 @@ message Greet {
 The steps involved in generating the json ser/deser code are:
  * compile the .proto into a .java file
  * compile the .java file into a .class file
- * jar the protobuf generated classes
+ * jar the compild classes
  * generate the code via protostuff-codegen-1.0.0-jarjar.jar
 
 ={{{Via Ant}}}=
