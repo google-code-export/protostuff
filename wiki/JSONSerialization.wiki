@@ -58,13 +58,14 @@ message Greet {
 
 =={{{modules.properties}}}==
 {{{
-modules = json
+modules = foo
 
-json.fullClassname = com.example.foo.model.Model
-json.outputPackage = com.example.foo.json
-json.generator = json
-json.encoding = UTF-8
-json.outputDir = generated
+foo.fullClassname = com.example.foo.model.Model
+foo.outputPackage = com.example.foo.json
+foo.outputDir = generated
+foo.generator = json
+foo.encoding = UTF-8
+
 }}}
 
 =={{{build.xml}}}==
