@@ -1,2 +1,12 @@
 #labels maven,archetypes,Featured
 ={{{Maven Archetypes}}}=
+
+Currently there are 2 archetypes available:
+ * simple-webapp (protobuf+json)
+ * simple-gwt-webapp (protobuf+gwt+json)
+
+To try it out, execute:
+{{{
+$ mvn archetype:generate -DremoteRepositories=http://protostuff.googlecode.com/svn/repos/maven2/
+
+}}}
