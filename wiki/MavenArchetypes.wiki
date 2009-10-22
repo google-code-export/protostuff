@@ -10,3 +10,5 @@ To try it out, execute:
 $ mvn archetype:generate -DremoteRepositories=http://protostuff.googlecode.com/svn/repos/maven2/
 
 }}}
+
+Afterwards, see the README.txt
