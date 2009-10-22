@@ -1,2 +1,80 @@
 #labels json,ser,deser
 ={{{JSON ser/deser}}}=
+
+The generated code uses the json api from jackson-core-asl-1.2.1
+
+At runtime, the following should be on the classpath:
+ * protobuf-java-2.2.0.jar - 313kb
+ * jackson-core-asl-1.2.1.jar - 137kb
+ * protostuff-json-1.0.0.jar - 34kb
+
+
+=={{{Usage}}}==
+
+Consider the following:
+
+{{{Model.proto}}}
+{{{
+package foo;
+
+option optimize_for = LITE_RUNTIME;
+option java_package = "com.example.foo.model";
+option java_outer_classname = "Model";
+
+message Greet {
+  optional int32 id = 1;
+  optional string name = 2;
+  optional string message = 3;
+  enum Status {
+    NEW = 0;
+    ACKNOWLEDGED = 1;
+  }
+  optional Status status = 4;
+}
+}}}
+
+The steps involved in generating the json ser/deser code are:
+ * compile the .proto into a .java file
+ * compile the .java file into a .class file
+ * jar the protobuf generated classes
+ * generate the code via protostuff-codegen-1.0.0-jarjar.jar
+
+=={{{Via Ant}}}==
+
+{{{build.xml}}}
+
+{{{
+<project name="jar" basedir=".">
+
+<target name="protoc">
+  <exec executable="protoc">
+    <arg value="--java_out=src/main/java" />
+    <arg value="src/main/resources/Model.proto" />
+  </exec>
+</target>
+
+<target name="javac" depends="protoc">
+  <javac srcdir="src/main/java" destdir="target/classes" source="1.5" target="1.5" classpath="lib/protobuf-java-2.2.0.jar"/>
+</target>
+
+<target name="jar" depends="javac">
+  <jar destfile="dist/model-1.0.0.jar" basedir="target/classes"/>
+</target>
+
+<target name="codegen" depends="jar">
+  <java classname="com.dyuproject.protostuff.codegen.GeneratorMain">
+    <arg value="src/main/resources/modules.properties"/>
+    <classpath>
+      <pathelement location="dist/model-1.0.0.jar"/>
+      <pathelement location="lib/protostuff-codegen-1.0.0-jarjar.jar"/>
+    </classpath>
+  </java>
+</target>
+
+</project>
+}}}
+
+=={{{Via Maven}}}==
+
+
+
