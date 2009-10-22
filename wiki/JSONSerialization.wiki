@@ -9,11 +9,11 @@ At runtime, the following should be on the classpath:
  * protostuff-json-1.0.0.jar - 34kb
 
 
-=={{{Usage}}}==
+={{{Usage}}}=
 
 Consider the following:
 
-{{{Model.proto}}}
+=={{{Model.proto}}}==
 {{{
 package foo;
 
@@ -39,9 +39,20 @@ The steps involved in generating the json ser/deser code are:
  * jar the protobuf generated classes
  * generate the code via protostuff-codegen-1.0.0-jarjar.jar
 
-=={{{Via Ant}}}==
+={{{Via Ant}}}=
 
-{{{build.xml}}}
+=={{{modules.properties}}}==
+{{{
+modules = json
+
+json.fullClassname = com.example.foo.model.Model
+json.outputPackage = com.example.foo.json
+json.generator = json
+json.encoding = UTF-8
+json.outputDir = generated
+}}}
+
+=={{{build.xml}}}==
 
 {{{
 <project name="jar" basedir=".">
@@ -74,7 +85,130 @@ The steps involved in generating the json ser/deser code are:
 </project>
 }}}
 
-=={{{Via Maven}}}==
+={{{Via Maven}}}=
 
+2 Modules:
 
+ * =={{{model}}}==
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <parent>
+    <artifactId>foo</artifactId>
+    <groupId>com.example.foo</groupId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example.foo</groupId>
+  <artifactId>foo-model</artifactId>
+  <name>foo :: model</name>
+  <packaging>jar</packaging>
+  
+  <build>
+    <defaultGoal>install</defaultGoal>
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-sources</id>
+            <phase>generate-sources</phase>
+            <configuration>
+              <tasks>
+                <exec executable="protoc">
+                  <arg value="--java_out=src/main/java" />
+                  <arg value="src/main/resources/com/example/foo/model/Model.proto" />
+                </exec>
+              </tasks>
+              <sourceRoot>target/generated-sources</sourceRoot>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <dependencies>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+    </dependency>
+  </dependencies>
 
+</project>
+}}}
+
+ * =={{{json}}}==
+
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <parent>
+    <artifactId>foo</artifactId>
+    <groupId>com.example.foo</groupId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example.foo</groupId>
+  <artifactId>foo-json</artifactId>
+  <name>foo :: json</name>
+  <packaging>jar</packaging>
+
+  <build>
+    <defaultGoal>install</defaultGoal>
+    <plugins>
+      <plugin>
+        <groupId>com.dyuproject.protostuff</groupId>
+        <artifactId>protostuff-maven-plugin</artifactId>
+        <version>${protostuff.version}</version>
+        <configuration>
+          <modules>
+            <module>
+              <fullClassname>com.example.foo.model.Model</fullClassname>
+              <outputPackage>com.example.foo.json</outputPackage>
+              <outputDir>src/main/java</outputDir>
+              <generator>json</generator>
+              <encoding>UTF-8</encoding>
+            </module>
+          </modules>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>com.example.foo</groupId>
+            <artifactId>foo-model</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>generate-sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>codegen</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <dependencies>
+    <dependency>
+      <groupId>com.example.foo</groupId>
+      <artifactId>foo-model</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.dyuproject.protostuff</groupId>
+      <artifactId>protostuff-json</artifactId>
+    </dependency>
+  </dependencies>
+
+</project>
+
+}}}
