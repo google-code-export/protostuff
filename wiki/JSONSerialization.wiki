@@ -23,7 +23,7 @@ public void parseFrom(InputStream in) throws IOException
 public void writeTo(OutputStream out) throws IOException
 {
     Greet greet = Greet.newBuilder().setId(1).setName("foo").setMessage("hello").setStatus(Greet.Status.NEW).build();
-    json.generateTo(out, greet);
+    json.writeTo(out, greet);
 }
 
 }}}
