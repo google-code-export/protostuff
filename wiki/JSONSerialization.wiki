@@ -11,7 +11,23 @@ At runtime, the following should be on the classpath:
 
 ={{{Usage}}}=
 
-Consider the following:
+{{{
+
+final ModelJSON json = new ModelJSON ();
+
+public void parseFrom(InputStream in) throws IOException
+{
+    Greet greet = json.parseFrom(in, Greet.class);
+}
+
+public void writeTo(OutputStream out) throws IOException
+{
+    Greet greet = Greet.newBuilder().setId(1).setName("foo").setMessage("hello").setStatus(Greet.Status.NEW).build();
+    json.generateTo(out, greet);
+}
+
+}}}
+
 
 =={{{Model.proto}}}==
 {{{
@@ -55,7 +71,7 @@ json.outputDir = generated
 =={{{build.xml}}}==
 
 {{{
-<project name="jar" basedir=".">
+<project name="foo" basedir=".">
 
 <target name="protoc">
   <exec executable="protoc">
@@ -85,11 +101,18 @@ json.outputDir = generated
 </project>
 }}}
 
+Execute:
+{{{
+$ ant codegen
+}}}
+
 ={{{Via Maven}}}=
+
+Uses *protostuff-maven-plugin* to generate code
 
 2 Modules:
 
- * =={{{model}}}==
+ * =={{{model/pom.xml}}}==
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -142,7 +165,7 @@ json.outputDir = generated
 </project>
 }}}
 
- * =={{{json}}}==
+ * =={{{json/pom.xml}}}==
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
@@ -211,4 +234,9 @@ json.outputDir = generated
 
 </project>
 
+}}}
+
+Eexecute:
+{{{
+$ mvn install
 }}}
