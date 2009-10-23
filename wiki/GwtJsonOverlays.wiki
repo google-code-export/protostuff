@@ -209,7 +209,7 @@ $ ant codegen
 
 ={{{Code generation via Maven}}}=
 
-Uses *protostuff-maven-plugin* to generate code
+Uses *protostuff-maven-plugin* to generate code (Check out the [MavenArchetypes maven archetypes wiki])
 
 2 Modules:
 
