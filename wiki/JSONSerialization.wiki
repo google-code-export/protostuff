@@ -12,8 +12,8 @@ At runtime, the following should be on the classpath:
 To generate the code, see [CodeGeneratorViaAnt] and [CodeGeneratorViaMaven].
 
 There are 2 types:
- * json
- * numeric_json (the generated code ser/deser users the field number instead of the field name)
+ * *json*
+ * *numeric_json* (the generated code ser/deser users the field number instead of the field name)
 
 ={{{Usage}}}=
 
