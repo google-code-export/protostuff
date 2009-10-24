@@ -15,6 +15,26 @@ The steps involved in generating the code are:
  * jar the compiled classes
  * generate the code via [http://protostuff.googlecode.com/files/protostuff-codegen-1.0.0.M0-jarjar.jar protostuff-codegen-1.0.0.M0-jarjar.jar]
 
+=={{{Model.proto}}}==
+{{{
+package foo;
+
+option optimize_for = LITE_RUNTIME;
+option java_package = "com.example.foo.model";
+option java_outer_classname = "Model";
+
+message Greet {
+  optional int32 id = 1;
+  optional string name = 2;
+  optional string message = 3;
+  enum Status {
+    NEW = 0;
+    ACKNOWLEDGED = 1;
+  }
+  optional Status status = 4;
+}
+}}}
+
 =={{{modules.properties}}}==
 {{{
 modules = foo
