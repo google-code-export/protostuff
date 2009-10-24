@@ -3,7 +3,7 @@
 
 ={{{Using the code generator via maven }}}=
 
-Currently, there are 4 variants:
+Currently there are 4 generators:
  * json
  * numeric_json
  * gwt_json
