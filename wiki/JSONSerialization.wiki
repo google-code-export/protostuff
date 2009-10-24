@@ -1,4 +1,4 @@
-#labels json,ser,deser,Featured
+#labels Featured,json,ser,deser
 ={{{JSON ser/deser}}}=
 
 The generated code uses the json api from jackson-core-asl-1.2.1
@@ -6,7 +6,7 @@ The generated code uses the json api from jackson-core-asl-1.2.1
 At runtime, the following should be on the classpath:
  * protobuf-java-2.2.0.jar - 313kb
  * jackson-core-asl-1.2.1.jar - 137kb
- * protostuff-json-1.0.0.jar - 34kb
+ * protostuff-json-1.0.0.M0.jar - 34kb
 
 
 ={{{Usage}}}=
@@ -32,7 +32,7 @@ The steps involved in generating the json ser/deser code are:
  * compile the .proto into a .java file
  * compile the .java file into a .class file
  * jar the compiled classes
- * generate the code via protostuff-codegen-1.0.0-jarjar.jar
+ * generate the code via protostuff-codegen-1.0.0.M0-jarjar.jar
 
 =={{{Model.proto}}}==
 {{{
