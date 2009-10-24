@@ -11,24 +11,9 @@ At runtime, the following should be on the classpath:
 
 To generate the code, see [CodeGeneratorViaAnt] and [CodeGeneratorViaMaven].
 
-={{{Usage}}}=
-
-{{{
-
-final ModelJSON json = new ModelJSON ();
-
-public void parseFrom(InputStream in) throws IOException
-{
-    Greet greet = json.parseFrom(in, Greet.class);
-}
-
-public void writeTo(OutputStream out) throws IOException
-{
-    Greet greet = Greet.newBuilder().setId(1).setName("foo").setMessage("hello").setStatus(Greet.Status.NEW).build();
-    json.writeTo(out, greet);
-}
-
-}}}
+There are 2 variants:
+ * json
+ * numeric_json (the generated code ser/deser users the field number instead of the field name)
 
 =={{{Model.proto}}}==
 {{{
@@ -48,4 +33,23 @@ message Greet {
   }
   optional Status status = 4;
 }
+}}}
+
+={{{Usage}}}=
+
+{{{
+
+final ModelJSON json = new ModelJSON ();
+
+public void parseFrom(InputStream in) throws IOException
+{
+    Greet greet = json.parseFrom(in, Greet.class);
+}
+
+public void writeTo(OutputStream out) throws IOException
+{
+    Greet greet = Greet.newBuilder().setId(1).setName("foo").setMessage("hello").setStatus(Greet.Status.NEW).build();
+    json.writeTo(out, greet);
+}
+
 }}}
