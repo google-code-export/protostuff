@@ -15,6 +15,25 @@ There are 2 types:
  * json
  * numeric_json (the generated code ser/deser users the field number instead of the field name)
 
+={{{Usage}}}=
+
+{{{
+
+final ModelJSON json = new ModelJSON ();
+
+public void parseFrom(InputStream in) throws IOException
+{
+    Greet greet = json.parseFrom(in, Greet.class);
+}
+
+public void writeTo(OutputStream out) throws IOException
+{
+    Greet greet = Greet.newBuilder().setId(1).setName("foo").setMessage("hello").setStatus(Greet.Status.NEW).build();
+    json.writeTo(out, greet);
+}
+
+}}}
+
 =={{{Model.proto}}}==
 {{{
 package foo;
@@ -35,21 +54,14 @@ message Greet {
 }
 }}}
 
-={{{Usage}}}=
-
+If *numeric_json* is used, the data on the wire would look like:
 {{{
-
-final ModelJSON json = new ModelJSON ();
-
-public void parseFrom(InputStream in) throws IOException
 {
-    Greet greet = json.parseFrom(in, Greet.class);
+  "1": 1,
+  "2": "foo",
+  "3": "hello",
+  "4": "NEW"
 }
-
-public void writeTo(OutputStream out) throws IOException
-{
-    Greet greet = Greet.newBuilder().setId(1).setName("foo").setMessage("hello").setStatus(Greet.Status.NEW).build();
-    json.writeTo(out, greet);
-}
-
 }}}
+
+With this optimization, the difference in perf/size would be really huge especially on large messages.
