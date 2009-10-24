@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-catalog>
+  <archetypes>
+    <archetype>
+      <groupId>com.dyuproject.protostuff.archetype</groupId>
+      <artifactId>simple-webapp</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <description>webapp archetype using protobuf, json and jquery</description>
+    </archetype>
+    <archetype>
+      <groupId>com.dyuproject.protostuff.archetype</groupId>
+      <artifactId>simple-gwt-webapp</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <description>webapp archetype using protobuf, json and gwt</description>
+    </archetype>
+  </archetypes>
+</archetype-catalog>
