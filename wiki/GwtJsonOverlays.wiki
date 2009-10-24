@@ -1,11 +1,11 @@
-#labels gwt,json,overlays,Featured
+#labels Featured,gwt,json,overlays
 ={{{GWT JSON Overlays}}}=
 
 The steps involved in generating the GWT json overlay code are:
  * compile the .proto into a .java file
  * compile the .java file into a .class file
  * jar the compiled classes
- * generate the code via protostuff-codegen-1.0.0-jarjar.jar
+ * generate the code via protostuff-codegen-1.0.0.M0-jarjar.jar
 
 =={{{Model.proto}}}==
 {{{
