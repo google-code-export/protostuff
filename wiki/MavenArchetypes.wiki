@@ -1,3 +1,4 @@
+#summary maven archetypes for rapid development
 #labels Featured,maven,archetypes
 ={{{Maven Archetypes}}}=
 
