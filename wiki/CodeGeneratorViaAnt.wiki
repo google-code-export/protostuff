@@ -3,7 +3,7 @@
 
 ={{{Using the code generator via Ant}}}=
 
-Currently, there are 4 variants:
+Currently there are 4 generators:
  * json
  * numeric_json
  * gwt_json
@@ -42,7 +42,7 @@ modules = foo
 foo.fullClassname = com.example.foo.model.Model
 foo.outputPackage = com.example.foo.json
 foo.outputDir = generated
-foo.generator = json
+foo.generator = json // json/numeric_json/gwt_json/gwt_numeric_json
 foo.encoding = UTF-8
 
 }}}
