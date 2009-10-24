@@ -1,4 +1,4 @@
-#labels maven,archetypes,Featured
+#labels Featured,maven,archetypes
 ={{{Maven Archetypes}}}=
 
 Currently there are 2 archetypes available:
@@ -7,7 +7,7 @@ Currently there are 2 archetypes available:
 
 To try it out, execute:
 {{{
-$ mvn archetype:generate -DremoteRepositories=http://protostuff.googlecode.com/svn/repos/maven2/
+$ mvn archetype:generate -DremoteRepositories=http://protostuff.googlecode.com/svn/repos/maven2
 
 }}}
 
