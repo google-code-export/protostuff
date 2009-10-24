@@ -1,0 +1,66 @@
+#summary using the code generator via ant
+#labels Featured,generate,code,ant
+
+={{{Using the code generator via Ant}}}=
+
+Currently, there are 4 variants:
+ * json
+ * numeric_json
+ * gwt_json
+ * gwt_numeric_json
+
+The steps involved in generating the code are:
+ * compile the .proto into a .java file
+ * compile the .java file into a .class file
+ * jar the compiled classes
+ * generate the code via [http://protostuff.googlecode.com/files/protostuff-codegen-1.0.0.M0-jarjar.jar protostuff-codegen-1.0.0.M0-jarjar.jar]
+
+=={{{modules.properties}}}==
+{{{
+modules = foo
+
+foo.fullClassname = com.example.foo.model.Model
+foo.outputPackage = com.example.foo.json
+foo.outputDir = generated
+foo.generator = json
+foo.encoding = UTF-8
+
+}}}
+
+=={{{build.xml}}}==
+
+{{{
+<project name="foo" basedir=".">
+
+<target name="protoc">
+  <exec executable="protoc">
+    <arg value="--java_out=src/main/java" />
+    <arg value="src/main/resources/Model.proto" />
+  </exec>
+</target>
+
+<target name="javac" depends="protoc">
+  <javac srcdir="src/main/java" destdir="target/classes" source="1.5" target="1.5" classpath="lib/protobuf-java-2.2.0.jar"/>
+</target>
+
+<target name="jar" depends="javac">
+  <jar destfile="dist/model-1.0.0.jar" basedir="target/classes"/>
+</target>
+
+<target name="codegen" depends="jar">
+  <java classname="com.dyuproject.protostuff.codegen.GeneratorMain">
+    <arg value="src/main/resources/modules.properties"/>
+    <classpath>
+      <pathelement location="dist/model-1.0.0.jar"/>
+      <pathelement location="lib/protostuff-codegen-1.0.0-jarjar.jar"/>
+    </classpath>
+  </java>
+</target>
+
+</project>
+}}}
+
+Execute:
+{{{
+$ ant codegen
+}}}
