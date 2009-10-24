@@ -1,3 +1,4 @@
+#summary gwt json overlays howto
 #labels Featured,gwt,json,overlays
 ={{{GWT JSON Overlays}}}=
 
