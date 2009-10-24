@@ -6,7 +6,7 @@ To generate the code, see [CodeGeneratorViaAnt] and [CodeGeneratorViaMaven].
 
 There are 2 types:
  * *gwt_json*
- * *gwt_numeric_json* (to be used in conjunction with [JSONSerializer numeric_json] in the server-side to be compatible ... the performance/size of the ser/deser is huge especially on large protobuf messages)
+ * *gwt_numeric_json* (to be used in conjunction with [JSONSerialization numeric_json] in the server-side to be compatible ... the performance/size of the ser/deser is huge especially on large protobuf messages)
 
 
 =={{{Model.proto}}}==
