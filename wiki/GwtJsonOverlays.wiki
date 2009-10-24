@@ -6,7 +6,7 @@ The steps involved in generating the GWT json overlay code are:
  * compile the .proto into a .java file
  * compile the .java file into a .class file
  * jar the compiled classes
- * generate the code via protostuff-codegen-1.0.0.M0-jarjar.jar
+ * generate the code via [http://protostuff.googlecode.com/files/protostuff-codegen-1.0.0.M0-jarjar.jar protostuff-codegen-1.0.0.M0-jarjar.jar]
 
 =={{{Model.proto}}}==
 {{{
@@ -210,7 +210,7 @@ $ ant codegen
 
 ={{{Code generation via Maven}}}=
 
-Uses *protostuff-maven-plugin* to generate code (Check out the [MavenArchetypes maven archetypes wiki])
+Uses *protostuff-maven-plugin* to generate code.  Check out the [MavenArchetypes maven archetypes wiki])
 
 2 Modules:
 
