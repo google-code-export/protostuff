@@ -72,7 +72,7 @@ foo.encoding = UTF-8
     <arg value="src/main/resources/modules.properties"/>
     <classpath>
       <pathelement location="dist/model-1.0.0.jar"/>
-      <pathelement location="lib/protostuff-codegen-1.0.0-jarjar.jar"/>
+      <pathelement location="lib/protostuff-codegen-1.0.0.M0-jarjar.jar"/>
     </classpath>
   </java>
 </target>
