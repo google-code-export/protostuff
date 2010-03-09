@@ -1,5 +1,5 @@
 #summary using the code generator via ant
-#labels Featured,generate,code,ant
+#labels generate,code,ant
 
 ={{{Using the code generator via Ant}}}=
 
