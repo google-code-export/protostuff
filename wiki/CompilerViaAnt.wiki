@@ -15,7 +15,6 @@ package foo;
 
 option optimize_for = LITE_RUNTIME;
 option java_package = "com.example.foo.model";
-option java_outer_classname = "Model";
 
 message Greet {
   optional int32 id = 1;
