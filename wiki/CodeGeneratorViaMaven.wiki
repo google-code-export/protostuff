@@ -1,5 +1,5 @@
 #summary using the code generator via maven
-#labels Featured,code,generator,maven
+#labels code,generator,maven
 
 ={{{Using the code generator via maven }}}=
 
