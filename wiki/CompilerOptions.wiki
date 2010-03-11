@@ -1,0 +1,28 @@
+#summary Compiler Options
+#labels Featured
+
+*generate_field_map* (java_bean)
+ * generates a mapping between the field number and field name.
+ * If on, you can serialize json encoded messages writing its field name or its field number.
+   {{{ 
+      boolean numeric = true;
+      JsonIOUtil.writeTo(out, message, numeric);
+   }}}
+
+*numeric* (gwt_overlay)
+ * the encoded property name of a message is referenced by its field number.
+ * {"firstName":"John","lastName":"Doe"} is json-serialized as {"1":"John","2":"Doe"}
+
+*separate_schema* (java_bean)
+ * lite-runtime, better readability on the source
+ * the schema of the message/pojo is statically declared separately
+
+*generate_helper_methods* (java_bean, gwt_overlay)
+ * additional helper methods for repeated fields
+
+* ${message.name}.implements_declaration = implements com.example.Foo* (java_bean, gwt_overlay)
+ * the matching message will implement the given interface.
+ * Note that gwt overlays can implement interfaces as of gwt-2.0
+
+* ${message.name}.extends_declaration = extends com.example.Bar* (java_bean)
+ * the matching message will extend the given class.
