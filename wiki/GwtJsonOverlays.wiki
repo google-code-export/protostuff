@@ -217,13 +217,13 @@ public final class Greet extends JavaScriptObject {
         
         public static final Status ACKNOWLEDGED = create("ACKNOWLEDGED");
         
-        private static native Status create(String name) /*-{
-            return name;
+        private static native Status create(int number) /*-{
+            return number;
         }-*/;
 
         protected Status() {}
 
-        public native String name() /*-{
+        public native int getNumber() /*-{
             return this;
         }-*/;
     }
