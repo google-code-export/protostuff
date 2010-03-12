@@ -3,7 +3,7 @@
 
 *generate_field_map* (java_bean)
  * generates a mapping between the field number and field name.
- * If on, you can serialize json encoded messages writing either its field name or its field number.
+ * If on, you can serialize json encoded messages writing either its field name or field number.
    {{{ 
       boolean numeric = true;
       JsonIOUtil.writeTo(out, message, numeric);
