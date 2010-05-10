@@ -35,10 +35,10 @@
  * the encoded property name of a message is referenced by its field number.
  * {"firstName":"John","lastName":"Doe"} is json-serialized as {"1":"John","2":"Doe"}
 
-* generate_stringify_method*
- * the stringify/toJSON serialization method will be generated.
+* dev_mode*
+ * additional code for overlays with enums on hosted mode.
  
-* check_global_json*
+* use_global_json*
  * the "parse" and "stringify" method of the gwt overlay would delegate to $wnd.JSON.parse and $wnd.JSON.stringify if available.
 
 *generate_helper_methods*
