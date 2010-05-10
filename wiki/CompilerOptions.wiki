@@ -6,6 +6,10 @@
 * compile_imports*
  * after the target proto is compiled, compile the imported protos as well.
 
+* ${oldPackage} = ${newPackage}*
+ * allows packages to be overridden.
+ * useful to group certain protos together for certain scenarios.
+
 = java_bean =
 
 *generate_field_map* 
