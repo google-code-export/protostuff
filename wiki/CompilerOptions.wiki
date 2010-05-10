@@ -21,7 +21,7 @@
    }}}
 
 *separate_schema*
- * lite-runtime, better readability on the source
+ * statically declared schema (lite at runtime).
  * the schema of the message/pojo is statically declared separately
 
 *generate_helper_methods*
