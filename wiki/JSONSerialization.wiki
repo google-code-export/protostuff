@@ -89,7 +89,7 @@ If *numeric_json* is used, the data on the wire would look like:
   "1": 1,
   "2": "foo",
   "3": "hello",
-  "4": "NEW"
+  "4": 0
 }
 }}}
 
