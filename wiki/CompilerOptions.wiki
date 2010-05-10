@@ -36,7 +36,7 @@
  * {"firstName":"John","lastName":"Doe"} is json-serialized as {"1":"John","2":"Doe"}
 
 * dev_mode*
- * additional code for overlays with enums on hosted mode.
+ * additional code for overlays with enums to work on hosted mode.
  
 * use_global_json*
  * the "parse" and "stringify" method would delegate to $wnd.JSON.parse and $wnd.JSON.stringify respectively.
