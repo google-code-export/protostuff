@@ -16,7 +16,7 @@ option java_package = "com.example.foo.model";
 message Greet {
   optional int32 id = 1;
   optional string name = 2;
-  optional string msg = 3;
+  optional string msg = 3[default="hello"];
   enum Status {
     NEW = 0;
     ACKNOWLEDGED = 1;
@@ -65,6 +65,7 @@ public final class Greet extends JavaScriptObject  {
         public native int getNumber() /*-{
             return this;
         }-*/;
+        
     }
 
     
@@ -115,7 +116,7 @@ public final class Greet extends JavaScriptObject  {
      * @return Greet 
      */
     public static native Greet parse(String json) /*-{
-        return eval("(" + json + ")");
+        return $wnd.JSON.parse(json);
     }-*/;
 
     /**
@@ -125,7 +126,17 @@ public final class Greet extends JavaScriptObject  {
      * @return JsArray<Greet> 
      */
     public static native JsArray<Greet> parseArray(String json) /*-{
-        return eval("(" + json + ")");
+        return $wnd.JSON.parse(json);
+    }-*/;
+    
+    /**
+     * Serializes a json object to a json string.
+     *
+     * @param Greet the object to serialize
+     * @return String the serialized json string
+     */
+    public static native String stringify(Greet obj) /*-{
+        return $wnd.JSON.stringify(obj);
     }-*/;
 
     protected Greet() {}
@@ -135,41 +146,59 @@ public final class Greet extends JavaScriptObject  {
     // id
 
     public native int getId() /*-{
-        return this["id"];
+        return this["id"] || 0;
     }-*/;
 
     public native void setId(int id) /*-{
         this["id"] = id;
     }-*/;
 
+    public native void clearId() /*-{
+        delete this["id"];
+    }-*/;
+
     // name
 
     public native String getName() /*-{
-        return this["name"];
+        return this["name"] || "";
     }-*/;
 
     public native void setName(String name) /*-{
         this["name"] = name;
     }-*/;
 
+    public native void clearName() /*-{
+        delete this["name"];
+    }-*/;
+
     // msg
 
     public native String getMsg() /*-{
-        return this["msg"];
+        var v = this["msg"];
+        return v == null ? "hello" : v;
     }-*/;
 
     public native void setMsg(String msg) /*-{
         this["msg"] = msg;
     }-*/;
 
+    public native void clearMsg() /*-{
+        delete this["msg"];
+    }-*/;
+
     // status
 
     public native Status getStatus() /*-{
-        return this["status"];
+        var v = this["status"];
+        return v == null ? 0 : v;
     }-*/;
 
     public native void setStatus(Status status) /*-{
         this["status"] = status;
+    }-*/;
+
+    public native void clearStatus() /*-{
+        delete this["status"];
     }-*/;
 
 
