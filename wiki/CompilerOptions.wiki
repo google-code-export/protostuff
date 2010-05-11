@@ -1,13 +1,15 @@
 #summary Compiler Options
 #labels Featured
 
+_Note that value (key:value) from some options are optional. The option "compile_imports:false" does not disable the option ... remove the entry instead to disable._
+
 = all =
 
 * compile_imports*
  * after the target proto is compiled, compile the imported protos as well.
 
 * ${oldPackage} = ${newPackage}*
- * allows packages to be overridden.
+ * the matching package will be used for the compiled output.
  * useful to group certain protos together for certain scenarios.
 
 = java_bean =
@@ -37,6 +39,9 @@
 *numeric*
  * the encoded property name of a message is referenced by its field number.
  * {"firstName":"John","lastName":"Doe"} is json-serialized as {"1":"John","2":"Doe"}
+
+*plain_overlay*
+ * By default, the gwt overlays generated will return the default values as configured on the .proto file.  If on, this simply generate plain overlays that basically returns the property without checks.
 
 * dev_mode*
  * additional code for overlays with enums to work on hosted mode.
