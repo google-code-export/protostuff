@@ -1,4 +1,4 @@
-#summary Your existing pojos or ejbs can be protobuf encoded/serialiazed.
+#summary Existing pojos or ejbs can be protobuf encoded/serialized.
 #labels Featured
 
 The *protostuff-runtime* module takes advantage of the speed and efficiency of protobuf serialization, while at the same time allowing your pojos to be written to different formats (json, xml, etc).
