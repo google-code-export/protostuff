@@ -41,7 +41,8 @@ _Note that value (key:value) from some options are optional. The option "compile
  * {"firstName":"John","lastName":"Doe"} is json-serialized as {"1":"John","2":"Doe"}
 
 *plain_overlay*
- * By default, the gwt overlays generated will return the default values as configured on the .proto file.  If on, this simply generate plain overlays that basically returns the property without checks.
+ * simply generate plain overlays that basically returns the property without checks.
+ * By default, the gwt overlays generated will return the field's default values if null, as configured on the .proto file.  
 
 * dev_mode*
  * additional code for overlays with enums to work on hosted mode.
