@@ -1,12 +1,13 @@
 #summary Compiler Options
 #labels Featured
 
-_Note that value (key:value) from some options are optional. The option "compile_imports:false" does not disable the option ... remove the entry instead to disable._
+_Note that value (key:value) from some options are optional. The option "generate_field_map:false" does not disable the option ... remove the entry instead to disable._
 
 = all =
 
-* compile_imports*
+* compile_imports = true | false| recursive*
  * after the target proto is compiled, compile the imported protos as well.
+ * if recursive, the imported protos of it's imported protos will be compiled as well.
 
 * ${oldPackage} = ${newPackage}*
  * the matching package will be used for the compiled output.
