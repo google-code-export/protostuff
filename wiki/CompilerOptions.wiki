@@ -7,7 +7,7 @@ _Note that value (key:value) from some options are optional. The option "generat
 
 * compile_imports = true | false| recursive*
  * after the target proto is compiled, compile the imported protos as well.
- * if recursive, the imported protos of it's imported protos will be compiled as well.
+ * if recursive, the imported protos of it's imported protos will be compiled as well (so on and so forth).
 
 * ${oldPackage} = ${newPackage}*
  * the matching package will be used for the compiled output.
