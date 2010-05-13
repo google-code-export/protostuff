@@ -14,7 +14,7 @@ _Note that value (key:value) from some options are optional. The option "generat
  * useful to group certain protos together for certain scenarios.
 
 * header_source_path *
- * The proto source path (org/example/foo.proto) will be printed (as a comment) in the header.
+ * The source path (org/example/foo.proto) will be printed (as a comment) in the header.
  * By default, it only prints the name (foo.proto)
 
 = java_bean =
