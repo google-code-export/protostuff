@@ -17,6 +17,10 @@ _Note that value (key:value) from some options are optional. The option "generat
  * The source path (org/example/foo.proto) will be printed (as a comment) in the header.
  * By default, it only prints the name (foo.proto)
 
+* underscore_on_vars *
+ * If you have fields named after java keywords ("package", "default", etc), enable this option to avoid the clash. (appends an underscore)
+ * this is not preferred since you might be writing (via reflection) to json output with its field names.
+
 = java_bean =
 
 *generate_field_map* 
