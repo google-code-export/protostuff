@@ -1,4 +1,4 @@
-#summary using the code generator via maven
+#summary using the compiler via maven
 
 ={{{Using the proto compiler via maven }}}=
 
