@@ -1,2 +1,2 @@
-#labels code,generator,options
+#labels Deprecated
 = {{{Code Generator Options}}} =
