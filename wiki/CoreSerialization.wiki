@@ -67,7 +67,7 @@ Reader reader;
 IOUtil.mergeFrom(reader, person);
 }}}
 
-* mergin from a byte array *
+* merging from a byte array *
 {{{
 Person person = new Person();
 byte[] data;
