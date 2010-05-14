@@ -1,5 +1,5 @@
 #summary using the code generator via ant
-#labels generate,code,ant
+#labels Deprecated
 
 ={{{Using the code generator via Ant}}}=
 
