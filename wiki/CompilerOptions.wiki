@@ -69,6 +69,9 @@ _Note that value (key:value) from some options are optional. The option "generat
 = java_v2protoc_schema = 
 
 * generate_field_map *
- * see java_bean
-
-
+ * generates a mapping between the field number and field name.
+ * If on, you can serialize json encoded messages writing either its field name or field number.
+   {{{ 
+      boolean numeric = false;
+      JsonIOUtil.writeTo(out, message, numeric);
+   }}}
