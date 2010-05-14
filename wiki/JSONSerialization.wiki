@@ -2,7 +2,7 @@
 #labels Featured
 ={{{JSON serialization and deserialization}}}=
 
-* Dependencies of [JSONSerialization#java_bean java_bean] and [JSONSerialization#java_v2protoc_schema java_v2protoc_schema]*
+* Dependencies used by [JSONSerialization#java_bean java_bean] and [JSONSerialization#java_v2protoc_schema java_v2protoc_schema]*
  * protostuff-core-1.0-SNAPSHOT.jar - 43kb
  * protostuff-json-1.0-SNAPSHOT.jar - 12kb
  * jackson-core-asl-1.2.1.jar - 137kb
@@ -59,10 +59,12 @@ JsonIOUtil.writeTo(writer, person, Person.getSchema(), numeric);
 
 If the boolean arg "numeric" is true, the output would look like:
 {{{
+    {
     "1":1,
     "2":"John Doe",
     "3":"Speed kills!",
     "4":1
+    }
 }}}
 
 === Deserialization ===
@@ -116,6 +118,7 @@ public final class SchemaFoo
         public static final MessageSchema WRITE = new MessageSchema();
         public static final BuilderSchema MERGE = new BuilderSchema();
         
+        // you can subclass this to further customize
         public static class MessageSchema implements Schema<com.example.foo.Foo.proto.Person>
         {
             // serialization logic
@@ -155,10 +158,12 @@ JsonIOUtil.writeTo(writer, person, SchemaFoo.Person.WRITE, numeric);
 
 If the boolean arg "numeric" is true, the output would look like:
 {{{
+    {
     "1":1,
     "2":"John Doe",
     "3":"Speed kills!",
     "4":1
+    }
 }}}
 
 === Deserialization ===
