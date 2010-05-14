@@ -32,7 +32,7 @@ message Person {
 
 = java_bean =
 
-Generated code via *protostuff-compiler*.  See [CompilerOptions] for more details.
+Generated code via *protostuff-compiler*.  See [CompilerOptions#java_bean compiler options] for more details.
  * simple pojos with a self-contained [Schema schema].
 
 === Serialization ===
@@ -87,7 +87,7 @@ JsonIOUtil.mergeFrom(reader, person, Person.getSchema(), numeric);
 
 = java_v2protoc_schema =
 
-Generated code via *protostuff-compiler*.  See [CompilerOptions] for more details.
+Generated code via *protostuff-compiler*.  See [CompilerOptions#java_v2protoc_schema compiler options] for more details.
  * complements the generated code from the official C++ protoc compiler.
  * allows the existing protoc-generated code to be efficiently serialized to json. (xml/atom too ... soon)
 
