@@ -34,6 +34,9 @@ _Note that value (key:value) from some options are optional. The option "generat
 *separate_schema*
  * statically declared schema (lite at runtime).
 
+*builder_pattern*
+ * the setters will return the instance.
+
 *generate_helper_methods*
  * additional helper methods for repeated fields
 
