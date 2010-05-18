@@ -13,7 +13,8 @@ sample.stg
 
 {{{
 
-// means you extend the base template
+// means you extend the base template (inherit its templates for this group to call)
+// this mechanism enables us to maximize code re-use
 group sample : base;
 
 //#proto begin
@@ -22,30 +23,47 @@ proto_block(proto, module, options) ::= <<
 
 // this is for generating code with OuterClassname style
 
-// call the enum_block template
-<proto.enumGroups:enum_block(eg=it, module=module, options=options)>
+public final class <proto.extraOptions.java_outer_classname> 
+{
 
-// call the message block template
-<proto.messages:message_block(message=it, module=module, options=options)>
+    // call the enum_block template
+    <proto.enumGroups:enum_block(eg=it, module=module, options=options)>
+
+    // call the message block template
+    <proto.messages:message_block(message=it, module=module, options=options)>
+
+}
 
 >>
 
-//#messsage begin
+//#message begin
 
 message_block(message, module, options) ::= <<
 
-public static final <message.name> {
-// message contents
-<message:message_static_method_get_instance(message=it, options=options)>
+public static final class <message.name> 
+{
+    // message contents
+    public static final <message.name> INSTANCE = new <message.name>();
+
+    <message:message_static_method_get_instance(message=it, options=options)>
+    
+    <message:message_constructor(message=it, options=options)>
 
 }
 
 >>
 
 message_static_method_get_instance(message, options) ::= <<
-public static final <message.name> INSTANCE = new <message.name>();
-public static <message.name> getInstance() {
-  return INSTANCE;
+public static <message.name> getInstance() 
+{
+    return INSTANCE;
+}
+>>
+
+message_constructor(message, options) ::= <<
+public <message.name>()
+{
+
 }
 >>
 
@@ -55,6 +73,32 @@ enum_block(eg, module, options) ::= <<
 
 // enum contents
 
+public enum <eg.name> implements com.dyuproject.protostuff.EnumLite\<<eg.name>\> 
+{
+    <eg.values:{v|<v.name>(<v.number>)}; separator=",\n">;
+    
+    public final int number;
+
+    <eg:enum_constructor(eg=it, options=options)>
+
+    <eg:enum_method_get_number(eg=it, options=options)>
+    
+}
+
+>>
+
+enum_constructor(eg, options) ::= <<
+private <eg.name> (int number)
+{
+    this.number = number;
+}
+>>
+
+enum_method_get_number(eg, options) ::= <<
+public int getNumber()
+{
+    return number;
+}
 >>
 
 }}}
