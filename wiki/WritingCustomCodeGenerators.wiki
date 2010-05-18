@@ -5,7 +5,7 @@
 
 Here's a [http://www.antlr.org/wiki/display/ST/StringTemplate+cheat+sheet stringtemplate cheat sheet] for those who are not too familiar with it.
 
-Here's how to structure/organize your stg (StringTemplateGroup)
+Below is a guide/convention to structure/organize your stg ({{{StringTemplateGroup}}})
 
 {{{
 sample.stg
