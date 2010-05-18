@@ -1,0 +1,68 @@
+#summary Writing custom code generators with stringtemplate
+#labels Featured
+
+= Generating code via stringtemplate =
+
+Here's a [http://www.antlr.org/wiki/display/ST/StringTemplate+cheat+sheet stringtemplate cheat sheet] for those who are not too familiar with it.
+
+Here's how to structure/organize your stg (StringTemplateGroup)
+
+{{{
+sample.stg
+}}}
+
+{{{
+
+// means you extend the base template
+group sample : base;
+
+//#proto begin
+
+proto_block(proto, module, options) ::= <<
+
+// this is for generating code with OuterClassname style
+
+// call the enum_block template
+<proto.enumGroups:enum_block(eg=it, module=module, options=options)>
+
+// call the message block template
+<proto.messages:message_block(message=it, module=module, options=options)>
+
+>>
+
+//#messsage begin
+
+message_block(message, module, options) ::= <<
+
+public static final <message.name> {
+// message contents
+<message:message_static_method_get_instance(message=it, options=options)>
+
+}
+
+>>
+
+message_static_method_get_instance(message, options) ::= <<
+public static final <message.name> INSTANCE = new <message.name>();
+public static <message.name> getInstance() {
+  return INSTANCE;
+}
+>>
+
+//#enum begin
+
+enum_block(eg, module, options) ::= <<
+
+// enum contents
+
+>>
+
+}}}
+
+The point is to make it modular (de-centralized) so that your template can easily be extended and maintained.
+
+The "//#message begin" is basically a bookmark so that when the code get's too big, its easy to navigate via your text editor's search for "#message"
+
+
+
+More to be added ...
