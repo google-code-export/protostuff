@@ -3,8 +3,8 @@
 ={{{JSON serialization and deserialization}}}=
 
 * Dependencies used by [JSONSerialization#java_bean java_bean] and [JSONSerialization#java_v2protoc_schema java_v2protoc_schema]*
- * protostuff-core-1.0-SNAPSHOT.jar - 43kb
- * protostuff-json-1.0-SNAPSHOT.jar - 12kb
+ * protostuff-core - 49kb
+ * protostuff-json - 12kb
  * jackson-core-asl-1.2.1.jar - 137kb
 
 This library allows your generated pojos, existing pojos and existing protoc-generated pojos to be serialized and deserialized to json format.
