@@ -137,7 +137,7 @@ It contains the ser/deser logic and also allows the fields to be written using i
 {{{
 Person person = Person.newBuilder()
     .setName("John Doe")
-    .setMotto("Speed kills!");
+    .setMotto("Speed kills!")
     .setGender(Gender.MALE)
     .build();
 }}}
