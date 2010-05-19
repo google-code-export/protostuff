@@ -43,14 +43,14 @@ person.setMotto("Speed kills!");
 person.setGender(Gender.MALE);
 }}}
 
-* serializing to {{{java.io.OutputStream}}} *
+* writing to {{{java.io.OutputStream}}} *
 {{{
 boolean numeric;
 OutputStream out;
 JsonIOUtil.writeTo(out, person, Person.getSchema(), numeric);
 }}}
 
-* serializing to {{{java.io.Writer}}} *
+* writing to {{{java.io.Writer}}} *
 {{{
 boolean numeric;
 Writer writer;
@@ -142,14 +142,14 @@ Person person = Person.newBuilder()
     .build();
 }}}
 
-* serializing to {{{java.io.OutputStream}}} *
+* writing to {{{java.io.OutputStream}}} *
 {{{
 boolean numeric;
 OutputStream out;
 JsonIOUtil.writeTo(out, person, SchemaFoo.Person.WRITE, numeric);
 }}}
 
-* serializing to {{{java.io.Writer}}} *
+* writing to {{{java.io.Writer}}} *
 {{{
 boolean numeric;
 Writer writer;

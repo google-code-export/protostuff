@@ -34,19 +34,19 @@ person.setName("John Doe");
 person.setGender(Gender.MALE);
 }}}
 
-* serializing to {{{java.io.OutputStream}}} *
+* writing to {{{java.io.OutputStream}}} *
 {{{
 OutputStream out;
 IOUtil.writeTo(out, person);
 }}}
 
-* serializing to {{{java.io.Writer}}} *
+* writing to {{{java.io.Writer}}} *
 {{{
 Writer writer;
 IOUtil.writeTo(writer, person);
 }}}
 
-* serializing to a byte array *
+* writing to a byte array *
 {{{
 byte[] data = IOUtil.toByteArray(person);
 }}}
