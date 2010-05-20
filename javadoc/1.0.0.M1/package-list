@@ -1,0 +1,12 @@
+com.dyuproject.protostuff
+com.dyuproject.protostuff.benchmark
+com.dyuproject.protostuff.benchmark.generated
+com.dyuproject.protostuff.benchmark.serializers
+com.dyuproject.protostuff.benchmark.serializers.model
+com.dyuproject.protostuff.codegen
+com.dyuproject.protostuff.compiler
+com.dyuproject.protostuff.json
+com.dyuproject.protostuff.model
+com.dyuproject.protostuff.mojo
+com.dyuproject.protostuff.parser
+com.dyuproject.protostuff.runtime
