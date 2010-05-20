@@ -3,15 +3,15 @@
   <archetypes>
     <archetype>
       <groupId>com.dyuproject.protostuff.archetype</groupId>
-      <artifactId>simple-webapp</artifactId>
-      <version>1.0.0.M0</version>
-      <description>webapp archetype using protobuf, json and jquery</description>
+      <artifactId>basic-webapp</artifactId>
+      <version>1.0.0.M1</version>
+      <description>webapp archetype using protostuff, json and jquery</description>
     </archetype>
     <archetype>
       <groupId>com.dyuproject.protostuff.archetype</groupId>
-      <artifactId>simple-gwt-webapp</artifactId>
-      <version>1.0.0.M0</version>
-      <description>webapp archetype using protobuf, json and gwt</description>
+      <artifactId>basic-gwt-webapp</artifactId>
+      <version>1.0.0.M1</version>
+      <description>webapp archetype using protostuff, json and gwt</description>
     </archetype>
   </archetypes>
 </archetype-catalog>
