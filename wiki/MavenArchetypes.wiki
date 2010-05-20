@@ -1,10 +1,10 @@
 #summary maven archetypes for rapid development
-#labels Deprecated
+#labels Featured
 ={{{Maven Archetypes}}}=
 
 Currently there are 2 archetypes available:
- * simple-webapp (protobuf+json+jquery)
- * simple-gwt-webapp (protobuf+json+gwt)
+ * basic-webapp (protostuff+json+jquery)
+ * basic-gwt-webapp (protostuff+json+gwt)
 
 To try it out, execute:
 {{{
