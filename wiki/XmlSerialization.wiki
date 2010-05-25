@@ -3,7 +3,7 @@
 ={{{XML serialization and deserialization}}}=
 
 * Dependencies used by [XmlSerialization#java_bean java_bean] and [XmlSerialization#java_v2protoc_schema java_v2protoc_schema]*
- * protostuff-core - 49kb
+ * protostuff-core - 50kb
  * protostuff-xml - 14kb
  * any stax impl jar would do ... I'd recommend woodstox-core-asl-4.0.8.jar 473kb from [http://woodstox.codehaus.org/]
 

@@ -2,7 +2,7 @@
 #labels Featured
 
 The single dependency:
- * protostuff-core - 49kb
+ * protostuff-core - 50kb
 
 = java_bean =
 

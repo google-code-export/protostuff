@@ -3,7 +3,7 @@
 ={{{JSON serialization and deserialization}}}=
 
 * Dependencies used by [JSONSerialization#java_bean java_bean] and [JSONSerialization#java_v2protoc_schema java_v2protoc_schema]*
- * protostuff-core - 49kb
+ * protostuff-core - 50kb
  * protostuff-json - 12kb
  * jackson-core-asl-1.2.1.jar - 137kb
 
@@ -90,7 +90,7 @@ JsonIOUtil.mergeFrom(reader, person, Person.getSchema(), numeric);
 
 Generated code via *protostuff-compiler*.  See [CompilerOptions#java_v2protoc_schema compiler options] for more details.
  * complements the generated code from the official C++ protoc compiler.
- * allows the existing protoc-generated code to be efficiently serialized to json. (xml/atom too ... soon)
+ * allows the existing protoc-generated code to be efficiently serialized to json.
 
 The generated code from c++ protoc would look like:
 {{{
