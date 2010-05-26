@@ -33,6 +33,7 @@ _Note that value (key:value) from some options are optional. The option "generat
 
 *separate_schema*
  * statically declared schema (lite at runtime).
+ * especially great for environments like android or j2me 
 
 *builder_pattern*
  * the setters will return the instance.
