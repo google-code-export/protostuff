@@ -1,13 +1,13 @@
-#summary xml serialization and deserialization, howto, usage
+#summary json serialization and deserialization, howto, usage
 #labels Featured
-={{{xml serialization and deserialization}}}=
+={{{json serialization and deserialization}}}=
 
-* Dependencies used by [XmlSerialization#java_bean java_bean] and [XmlSerialization#java_v2protoc_schema java_v2protoc_schema]*
+* Dependencies used by [JSONSerialization#java_bean java_bean] and [JSONSerialization#java_v2protoc_schema java_v2protoc_schema]*
  * protostuff-core - 50kb
- * protostuff-xml - 14kb
- * any stax impl jar would do ... I'd recommend woodstox-core-asl-4.0.8.jar 473kb from [http://woodstox.codehaus.org/]
+ * protostuff-json - 12kb
+ * jackson-core-asl-1.2.1.jar - 137kb
 
-This library allows your generated pojos, existing pojos and existing protoc-generated pojos to be serialized and deserialized to xml format.
+This library allows your generated pojos, existing pojos and existing protoc-generated pojos to be serialized and deserialized to json format.
 
 Take a look at the example:
 
@@ -46,25 +46,26 @@ person.setGender(Gender.MALE);
 
 * writing to {{{java.io.OutputStream}}} *
 {{{
+boolean numeric;
 OutputStream out;
-XmlIOUtil.writeTo(out, person, Person.getSchema());
+JsonIOUtil.writeTo(out, person, Person.getSchema(), numeric);
 }}}
 
 * writing to {{{java.io.Writer}}} *
 {{{
+boolean numeric;
 Writer writer;
-XmlIOUtil.writeTo(writer, person, Person.getSchema());
+JsonIOUtil.writeTo(writer, person, Person.getSchema(), numeric);
 }}}
 
-The output would look like:
+If the boolean arg "numeric" is true, the output would look like:
 {{{
-    <?xml version='1.0' encoding='UTF-8'?>
-    <Person>
-      <id>1</id>
-      <name>John Doe</name>
-      <motto>Speed kills!</motto>
-      <gender>1</gender>
-    </Person>
+    {
+    "1":1,
+    "2":"John Doe",
+    "3":"Speed kills!",
+    "4":1
+    }
 }}}
 
 === Deserialization ===
@@ -72,22 +73,24 @@ The output would look like:
 * merging from {{{java.io.InputStream}}}*
 {{{
 Person person = new Person();
+boolean numeric;
 InputStream in;
-XmlIOUtil.mergeFrom(in, person, Person.getSchema());
+JsonIOUtil.mergeFrom(in, person, Person.getSchema(), numeric);
 }}}
 
 * merging from {{{java.io.Reader}}} *
 {{{
 Person person = new Person();
+boolean numeric;
 Reader reader;
-XmlIOUtil.mergeFrom(reader, person, Person.getSchema());
+JsonIOUtil.mergeFrom(reader, person, Person.getSchema(), numeric);
 }}}
 
 = java_v2protoc_schema =
 
 Generated code via *protostuff-compiler*.  See [CompilerOptions#java_v2protoc_schema compiler options] for more details.
  * complements the generated code from the official C++ protoc compiler.
- * allows the existing protoc-generated code to be efficiently serialized to xml.
+ * allows the existing protoc-generated code to be efficiently serialized to json.
 
 The generated code from c++ protoc would look like:
 {{{
@@ -142,25 +145,26 @@ Person person = Person.newBuilder()
 
 * writing to {{{java.io.OutputStream}}} *
 {{{
+boolean numeric;
 OutputStream out;
-XmlIOUtil.writeTo(out, person, SchemaFoo.Person.WRITE);
+JsonIOUtil.writeTo(out, person, SchemaFoo.Person.WRITE, numeric);
 }}}
 
 * writing to {{{java.io.Writer}}} *
 {{{
+boolean numeric;
 Writer writer;
-XmlIOUtil.writeTo(writer, person, SchemaFoo.Person.WRITE);
+JsonIOUtil.writeTo(writer, person, SchemaFoo.Person.WRITE, numeric);
 }}}
 
-The output would look like:
+If the boolean arg "numeric" is true, the output would look like:
 {{{
-    <?xml version='1.0' encoding='UTF-8'?>
-    <Person>
-      <id>1</id>
-      <name>John Doe</name>
-      <motto>Speed kills!</motto>
-      <gender>1</gender>
-    </Person>
+    {
+    "1":1,
+    "2":"John Doe",
+    "3":"Speed kills!",
+    "4":1
+    }
 }}}
 
 === Deserialization ===
@@ -168,13 +172,15 @@ The output would look like:
 * merging from {{{java.io.InputStream}}}*
 {{{
 Person.Builder person = Person.newBuilder();
+boolean numeric;
 InputStream in;
-XmlIOUtil.mergeFrom(in, person, SchemaFoo.Person.MERGE);
+JsonIOUtil.mergeFrom(in, person, SchemaFoo.Person.MERGE, numeric);
 }}}
 
 * merging from {{{java.io.Reader}}} *
 {{{
 Person.Builder person = Person.newBuilder();
+boolean numeric;
 Reader reader;
-XmlIOUtil.mergeFrom(reader, person, SchemaFoo.Person.MERGE);
+JsonIOUtil.mergeFrom(reader, person, SchemaFoo.Person.MERGE, numeric);
 }}}
