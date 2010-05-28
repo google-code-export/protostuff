@@ -1,6 +1,5 @@
 #summary json serialization and deserialization, howto, usage
 #labels Featured
-={{{json serialization and deserialization}}}=
 
 * Dependencies used by [JSONSerialization#java_bean java_bean] and [JSONSerialization#java_v2protoc_schema java_v2protoc_schema]*
  * protostuff-core - 50kb

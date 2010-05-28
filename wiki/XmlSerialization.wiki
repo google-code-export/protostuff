@@ -1,6 +1,5 @@
 #summary xml serialization and deserialization, howto, usage
 #labels Featured
-={{{xml serialization and deserialization}}}=
 
 * Dependencies used by [XmlSerialization#java_bean java_bean] and [XmlSerialization#java_v2protoc_schema java_v2protoc_schema]*
  * protostuff-core - 50kb

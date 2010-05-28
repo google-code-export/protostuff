@@ -1,6 +1,5 @@
 #summary protobuf serialization and deserialization, howto, usage
 #labels Featured
-={{{protobuf serialization and deserialization}}}=
 
 The single dependency:
  * protostuff-core - 50kb
