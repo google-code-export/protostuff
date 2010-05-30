@@ -5,21 +5,43 @@
 
 Here's a [http://www.antlr.org/wiki/display/ST/StringTemplate+cheat+sheet stringtemplate cheat sheet] for those who are not too familiar with it.
 
+The current feature is currently available on trunk.
+It allows the specified string template group (stg) to inherit from the current generators for extra add-ons/customizations.
+You simply invoke the compiler and supply your .stg resource as the "output".
+* java -jar protostuff-compiler.jar protostuff.properties *
+{{{protostuff.properties}}}
+{{{
+   modules = foo
+   foo.source = path/to/your/foo.proto
+   foo.output = path/to/your/foo.java.stg
+   foo.outputDir = generated
+   foo.options = some_key,key:value,another_key
+}}}
+
+To test it out, try supplying "http://code.google.com/p/protostuff/downloads/detail?name=protodoc.html.stg&can=1&q=" as the output.
+It generates html from your .proto files. (Enable the option "compile_imports" to "recursive").
+You can look at it as a guide for writing your custom generators.
+
 Below is a guide/convention to structure/organize your stg ({{{StringTemplateGroup}}})
 
 The goal is to make it modular (de-centralized) so that your template can easily be extended and maintained.
 
-The "//#message begin" is basically a bookmark so that when the code get's too big, its easy to navigate via your text editor's search for "#message"
+If the rule "proto_block" is defined, the compiler will supply "proto", "module", and "options" as the args.
+If not, the "message_block" is looked up with the args {{{[message,module,options]}}}.
+For enums, the rule would be "enum_block" with the args {{{[eg,module,options]}}} (eg is a shortcut for EnumGroup)
+See the api for more details.
 
-
-{{{
-sample.stg
-}}}
+{{{foo.java.stg}}}
 
 {{{
 
 // means you extend the base template (inherit its templates for this group to call)
 // this mechanism enables us to maximize code re-use
+// extending the template "base" gives you formatting.
+// "CC" - camel-case
+// "PC" - pascal-case
+// "UC" - underscore-case
+// "UUC" - uppercased "UC"
 group sample : base;
 
 //#proto begin
@@ -109,4 +131,4 @@ public int getNumber()
 }}}
 
 
-More to be added ...
+The "//#message begin" is basically a bookmark so that when the code get's too big, its easy to navigate via your text editor's search for "#message"
