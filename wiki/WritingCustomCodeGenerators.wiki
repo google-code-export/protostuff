@@ -130,8 +130,8 @@ If the rule "proto_block" is defined, the compiler will supply {{{[proto,module,
 
 If not, the "message_block" is looked up with the args {{{[message,module,options]}}}.
 
-For enums, the rule would be "enum_block" with the args {{{[eg,module,options]}}} (eg is a shortcut for EnumGroup)
+For enums, the rule would be "enum_block" with the args {{{[eg,module,options]}}} (eg is a shortcut for {{{EnumGroup}}})
 
-See the api for more details.
+See the [http://protostuff.googlecode.com/svn/javadoc/1.0.0.M1/index.html javadoc api] for more details.
 
 The "//#message begin" is basically a bookmark so that when the code get's too big, its easy to navigate via your text editor's search for "#message"
