@@ -8,6 +8,7 @@ Here's a [http://www.antlr.org/wiki/display/ST/StringTemplate+cheat+sheet string
 The current feature is currently available on trunk.
 It allows the specified string template group (stg) to inherit from the current generators for extra add-ons/customizations.
 You simply invoke the compiler and supply your .stg resource as the "output".
+
 * java -jar protostuff-compiler.jar protostuff.properties *
 {{{protostuff.properties}}}
 {{{
