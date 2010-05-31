@@ -10,6 +10,8 @@ It allows the specified string template group (stg) to inherit from the current 
 You simply invoke the compiler and supply your .stg resource as the "output".
 
 * java -jar protostuff-compiler.jar protostuff.properties *
+
+
 {{{protostuff.properties}}}
 {{{
    modules = foo
@@ -39,7 +41,7 @@ The ".java" in "foo.java.stg" indicates the output target of your custom code ge
 // "PC" - pascal-case
 // "UC" - underscore-case
 // "UUC" - uppercased "UC"
-group sample : base;
+group foo : base;
 
 //#proto begin
 
