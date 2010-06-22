@@ -1,9 +1,9 @@
 #summary Existing pojos or ejbs can be protobuf encoded/serialized.
 #labels Featured
 
-The *protostuff-runtime* module takes advantage of the speed and efficiency of protobuf serialization, while at the same time allowing your pojos to be written to different formats (json, xml, etc).
+The *protostuff-runtime* module allows your existing pojos to be written to different formats (protobuf,json, xml, etc) at runtime.
 
-The key factor is that protostuff does not need a message to implement/extend certain classes in order to be serialized.
+The key factor is that protostuff does not need a pojo to implement/extend certain classes in order to be serialized.
 
 What this module does is generate a schema at runtime where you can use it and cache it to write and read protobuf-encoded messages.
 
@@ -12,13 +12,58 @@ _Note that you can also hand-code schemas to avoid reflection._
 {{{
    Foo foo = new Foo("foo", 1, 3.5);
 
+   // this is lazily created and cached by RuntimeSchema
+   // so its safe to call RuntimeSchema.getSchema(Foo.class) over and over
+   // The getSchema method is also thread-safe
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
    
-   //serialize
+   // protobuf serialize
    byte[] data = IOUtil.toByteArray(foo , schema);
 
-   //deserialize
+   // protobuf deserialize
    Foo f = new Foo();
    IOUtil.mergeFrom(data, f, schema);
    
+   // json serialize
+   boolean numeric = true;
+   byte[] data = JsonIOUtil.toByteArray(foo , schema, numeric);
+
+   // json deserialize
+   Foo f = new Foo();
+   JsonIOUtil.mergeFrom(data, f, schema, numeric);
+   
+   // xml serialize
+   byte[] data = XmlIOUtil.toByteArray(foo , schema);
+
+   // xml deserialize
+   Foo f = new Foo();
+   XmlIOUtil.mergeFrom(data, f, schema);
+   
+}}}
+
+===Reading/Writing from/to streams===
+{{{
+   Foo foo = new Foo("foo", 1, 3.5);
+   
+   Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
+
+   // protobuf serialize
+   IOUtil.writeDelimitedTo(outputStream, foo, schema);
+   
+   // protobuf deserialize
+   IOUtil.mergeDelimitedFrom(inputStream, foo, schema);
+   
+   // json serialize
+   boolean numeric = true;
+   JsonIOUtil.writeTo(outputStream, foo, schema, numeric);
+   
+   // json deserialize
+   JsonIOUtil.mergeFrom(inputStream, foo, schema, numeric);
+   
+   // xml serialize
+   XmlIOUtil.writeTo(outputStream, foo, schema);
+   
+   // xml deserialize
+   XmlIOUtil.mergeFrom(inputStream, foo, schema);
+
 }}}
