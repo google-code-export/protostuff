@@ -51,19 +51,22 @@ _Note that you can also hand-code schemas to avoid reflection._
    IOUtil.writeDelimitedTo(outputStream, foo, schema);
    
    // protobuf deserialize
-   IOUtil.mergeDelimitedFrom(inputStream, foo, schema);
+   Foo f = new Foo();
+   IOUtil.mergeDelimitedFrom(inputStream, f, schema);
    
    // json serialize
    boolean numeric = true;
    JsonIOUtil.writeTo(outputStream, foo, schema, numeric);
    
    // json deserialize
-   JsonIOUtil.mergeFrom(inputStream, foo, schema, numeric);
+   Foo f = new Foo();
+   JsonIOUtil.mergeFrom(inputStream, f, schema, numeric);
    
    // xml serialize
    XmlIOUtil.writeTo(outputStream, foo, schema);
    
    // xml deserialize
-   XmlIOUtil.mergeFrom(inputStream, foo, schema);
+   Foo f = new Foo();
+   XmlIOUtil.mergeFrom(inputStream, f, schema);
 
 }}}
