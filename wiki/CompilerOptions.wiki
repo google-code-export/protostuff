@@ -31,6 +31,10 @@ _Note that value (key:value) from some options are optional. The option "generat
       JsonIOUtil.writeTo(out, message, numeric);
    }}}
 
+*alphanumeric*
+ * requires the "generate_field_map" option to be on.
+ * the field names will be its field number prefixed by "f".  (e.g "f1")
+   
 *separate_schema*
  * statically declared schema (lite at runtime).
  * especially great for environments like android or j2me 
@@ -52,6 +56,10 @@ _Note that value (key:value) from some options are optional. The option "generat
 *numeric*
  * the encoded property name of a message is referenced by its field number.
  * {"firstName":"John","lastName":"Doe"} is json-serialized as {"1":"John","2":"Doe"}
+ 
+*alphanumeric*
+ * the encoded property name of a message is referenced by its field number prefixed by "f".
+ * {"firstName":"John","lastName":"Doe"} is json-serialized as {"f1":"John","f2":"Doe"}
 
 *plain_overlay*
  * simply generate plain overlays that basically returns the property without checks.
