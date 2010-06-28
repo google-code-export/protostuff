@@ -5,7 +5,7 @@
  * protostuff-api - 22kb
  * protostuff-yaml - 9kb
 
-This library allows your generated pojos, existing pojos and existing protoc-generated pojos to be serialized and deserialized to yaml format.
+This library allows your generated pojos, existing pojos and existing protoc-generated pojos to be serialized to yaml format.
 
 Take a look at the example:
 
