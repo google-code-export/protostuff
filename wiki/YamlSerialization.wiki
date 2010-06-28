@@ -1,0 +1,128 @@
+#summary yaml serialization howto, usage
+#labels Featured
+
+* Dependencies used by [YamlSerialization#java_bean java_bean] and [YamlSerialization#java_v2protoc_schema java_v2protoc_schema]*
+ * protostuff-api - 22kb
+ * protostuff-yaml - 9kb
+
+This library allows your generated pojos, existing pojos and existing protoc-generated pojos to be serialized and deserialized to yaml format.
+
+Take a look at the example:
+
+{{{foo.proto}}}
+{{{
+package foo;
+
+option optimize_for = LITE_RUNTIME;
+option java_package = "com.example.foo";
+
+message Person {
+  required int32 id = 1;
+  optional string name = 2;
+  optional string motto = 3 [default="When the cat is away, the mouse is alone!"];
+  enum Gender {
+    MALE = 1;
+    FEMALE = 2;
+  }
+  optional Gender gender = 4;
+}
+}}}
+
+= java_bean =
+
+Generate code via [http://protostuff.googlecode.com/files/protostuff-compiler-1.0.0.M2-jarjar.jar protostuff-compiler]. 
+See [CompilerOptions#java_bean compiler options] for more details.
+ * simple pojos with a self-contained [Schema schema].
+
+=== Serialization ===
+{{{
+Person person = new Person(1);
+person.setName("John Doe");
+person.setMotto("Speed kills!");
+person.setGender(Gender.MALE);
+}}}
+
+* writing to {{{java.io.OutputStream}}} *
+{{{
+OutputStream out;
+YamlIOUtil.writeTo(out, person, Person.getSchema());
+}}}
+
+The output would look like:
+{{{
+--- !Person
+name: John Doe
+motto: Speed kills!
+gender: 1
+}}}
+
+= java_v2protoc_schema =
+
+Generated code via *protostuff-compiler*.  See [CompilerOptions#java_v2protoc_schema compiler options] for more details.
+ * complements the generated code from the official C++ protoc compiler.
+ * allows the existing protoc-generated code to be efficiently serialized to yaml.
+
+The generated code from c++ protoc would look like:
+{{{
+public final class Foo 
+{
+    public static final class Person extends com.google.protobuf.GeneratedMessageLite 
+    {
+        // field getters
+        // serialization logic
+        
+        public static final class Builder extends com.google.protobuf.GeneratedMessageLite.Builder<com.example.foo.Foo.Person, Builder> 
+        {
+            // field getters/setters
+            // deserialization logic
+        }
+    }
+}
+}}}
+
+The generated [Schema schema] by protostuff-compiler would look like:
+{{{
+public final class SchemaFoo 
+{
+    public static final class Person 
+    {
+        public static final MessageSchema WRITE = new MessageSchema();
+        public static final BuilderSchema MERGE = new BuilderSchema();
+        
+        // you can subclass this to further customize
+        public static class MessageSchema implements Schema<com.example.foo.Foo.proto.Person>
+        {
+            // serialization logic
+        }
+        public static class BuilderSchema implements Schema<com.example.foo.Foo.proto.Person.Builder>
+        {
+            // deserialization logic
+        }
+    }
+}
+}}}
+
+It contains the ser/deser logic and also allows the fields to be written using its name or number.
+
+=== Serialization ===
+{{{
+Person person = Person.newBuilder()
+    .setName("John Doe")
+    .setMotto("Speed kills!")
+    .setGender(Gender.MALE)
+    .build();
+}}}
+
+* writing to {{{java.io.OutputStream}}} *
+{{{
+OutputStream out;
+YamlIOUtil.writeTo(out, person, SchemaFoo.Person.WRITE);
+}}}
+
+The output would look like:
+{{{
+--- !Person
+name: John Doe
+motto: Speed kills!
+gender: 1
+}}}
