@@ -4,13 +4,13 @@
     <archetype>
       <groupId>com.dyuproject.protostuff.archetype</groupId>
       <artifactId>basic-webapp</artifactId>
-      <version>1.0.0.M2</version>
+      <version>1.0.0.M3</version>
       <description>webapp archetype using protostuff, json and jquery</description>
     </archetype>
     <archetype>
       <groupId>com.dyuproject.protostuff.archetype</groupId>
       <artifactId>basic-gwt-webapp</artifactId>
-      <version>1.0.0.M2</version>
+      <version>1.0.0.M3</version>
       <description>webapp archetype using protostuff, json and gwt</description>
     </archetype>
   </archetypes>
