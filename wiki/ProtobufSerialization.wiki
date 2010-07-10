@@ -2,12 +2,12 @@
 #labels Featured
 
 The single dependency:
- * protostuff-api - 22kb
+ * protostuff-api - 33kb
  * protostuff-core - 33kb
 
 = java_bean =
 
-Generate code via [http://protostuff.googlecode.com/files/protostuff-compiler-1.0.0.M2-jarjar.jar protostuff-compiler].
+Generate code via [http://protostuff.googlecode.com/files/protostuff-compiler-1.0.0.M3-jarjar.jar protostuff-compiler].
 
 {{{foo.proto}}}
 {{{
@@ -35,21 +35,58 @@ person.setName("John Doe");
 person.setGender(Gender.MALE);
 }}}
 
+All write operations require a {{{LinkedBuffer}}} as an arg.
+
+It is better to re-use the buffer (application/threadlocal buffer) to avoid buffer allocation everytime you serialize.
+
+Allocating a new buffer:
+{{{
+LinkedBuffer buffer = LinkedBuffer.allocate(512);
+}}}
+
 * writing to {{{java.io.OutputStream}}} *
 {{{
 OutputStream out;
-IOUtil.writeTo(out, person);
+LinkedBuffer buffer = getApplicationBuffer();
+try
+{
+    int totalBytes = IOUtil.writeTo(out, person, buffer);
+}
+finally
+{
+    buffer.clear();
+}
 }}}
 
-* writing to {{{java.io.Writer}}} *
+* writing to a {{{LinkedBuffer}}} *
 {{{
-Writer writer;
-IOUtil.writeTo(writer, person);
+boolean groupEncoded = false;
+LinkedBuffer buffer = getApplicationBuffer();
+try
+{
+    int totalBytes = IOUtil.writeTo(buffer, person, person.cachedSchema(), groupEncoded);
+    // write the buffer to somewhere else
+    
+}
+finally
+{
+    // after writing, clear the buffer
+    buffer.clear();
+}
 }}}
 
 * writing to a byte array *
 {{{
-byte[] data = IOUtil.toByteArray(person);
+LinkedBuffer buffer = getApplicationBuffer();
+try
+{
+    byte[] data = IOUtil.toByteArray(person);
+    // do something with data
+}
+finally
+{
+    buffer.clear();
+}
 }}}
 
 == Deserialization ==
@@ -59,13 +96,6 @@ byte[] data = IOUtil.toByteArray(person);
 Person person = new Person();
 InputStream in;
 IOUtil.mergeFrom(in, person);
-}}}
-
-* merging from {{{java.io.Reader}}} *
-{{{
-Person person = new Person();
-Reader reader;
-IOUtil.mergeFrom(reader, person);
 }}}
 
 * merging from a byte array *

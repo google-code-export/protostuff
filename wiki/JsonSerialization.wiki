@@ -2,7 +2,7 @@
 #labels Featured
 
 * Dependencies used by [JSONSerialization#java_bean java_bean] and [JSONSerialization#java_v2protoc_schema java_v2protoc_schema]*
- * protostuff-api - 22kb
+ * protostuff-api - 33kb
  * protostuff-json - 12kb
  * jackson-core-asl-1.2.1.jar - 137kb
 
@@ -31,7 +31,7 @@ message Person {
 
 = java_bean =
 
-Generate code via [http://protostuff.googlecode.com/files/protostuff-compiler-1.0.0.M2-jarjar.jar protostuff-compiler]. 
+Generate code via [http://protostuff.googlecode.com/files/protostuff-compiler-1.0.0.M3-jarjar.jar protostuff-compiler]. 
 See [CompilerOptions#java_bean compiler options] for more details.
  * simple pojos with a self-contained [Schema schema].
 

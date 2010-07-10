@@ -31,7 +31,7 @@ message Person {
       <plugin>
         <groupId>com.dyuproject.protostuff</groupId>
         <artifactId>protostuff-maven-plugin</artifactId>
-        <version>1.0.0.M2</version>
+        <version>1.0.0.M3</version>
         <configuration>
           <protoModules>
             <protoModule>
