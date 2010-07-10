@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.dyuproject.protostuff</groupId>
+  <artifactId>protostuff-yaml</artifactId>
+  <version>1.0.0.M3</version>
+  <versioning>
+    <versions>
+      <version>1.0.0.M3</version>
+    </versions>
+    <lastUpdated>20100710055519</lastUpdated>
+  </versioning>
+</metadata>
