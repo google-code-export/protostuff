@@ -1,7 +1,7 @@
 #summary Existing pojos or ejbs can be protobuf encoded/serialized.
 #labels Featured
 
-The *protostuff-runtime* module allows your existing pojos to be written to different formats (protobuf,json, xml, etc) at runtime.
+The *protostuff-runtime* module allows your existing pojos to be written to different formats (protobuf,json, xml, yaml) at runtime.
 
 The key factor is that protostuff does not need a pojo to implement/extend certain classes in order to be serialized.
 
@@ -18,7 +18,7 @@ _Note that you can also hand-code schemas to avoid reflection._
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
    
    // protobuf serialize
-   byte[] data = IOUtil.toByteArray(foo , schema);
+   byte[] data = IOUtil.toByteArray(foo, schema, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
 
    // protobuf deserialize
    Foo f = new Foo();
@@ -39,6 +39,9 @@ _Note that you can also hand-code schemas to avoid reflection._
    Foo f = new Foo();
    XmlIOUtil.mergeFrom(data, f, schema);
    
+   // yaml serialize
+   byte[] data = YamlIOUtil.toByteArray(foo, schema, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+   
 }}}
 
 ===Reading/Writing from/to streams===
@@ -48,7 +51,7 @@ _Note that you can also hand-code schemas to avoid reflection._
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
 
    // protobuf serialize
-   IOUtil.writeDelimitedTo(outputStream, foo, schema);
+   IOUtil.writeDelimitedTo(outputStream, foo, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
    
    // protobuf deserialize
    Foo f = new Foo();
@@ -68,5 +71,8 @@ _Note that you can also hand-code schemas to avoid reflection._
    // xml deserialize
    Foo f = new Foo();
    XmlIOUtil.mergeFrom(inputStream, f, schema);
+   
+   // yaml serialize
+   YamlIOUtil.writeTo(outputStream, foo, schema, buffer); // buffer recommended to be thread-local
 
 }}}
