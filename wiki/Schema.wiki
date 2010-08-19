@@ -122,7 +122,7 @@ public class UserSchema implements Schema<User>
             output.writeString(2, user.getFirstName(), false);
         
         if(user.getLastName() != null)
-            output.writeString(2, user.getLastName(), false);
+            output.writeString(3, user.getLastName(), false);
     }
 
     public User newMessage()
