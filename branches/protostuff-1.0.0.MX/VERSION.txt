@@ -1,0 +1,55 @@
+protostuff-1.0-SNAPSHOT
+
+protostuff-1.0.0.M4 2010-09-14
++ Issue 28: Class member with signature of interface causes NullPointerException
++ Issue 27: ArrayIndexOutOfBoundsException in StringSerializer.writeUTF8 (patch by Tim Underwood)
++ Add support for BigInteger and BigDecimal in protostuff-runtime
++ Issue 26: Bug in the reflection compiler with nested protobuf types (patch by Joseph Gentle)
++ Issue 25: Allow generating code for message extensions (patch by Philippe Laflamme)
++ Issue 5: Ignore "target" working directories in Subversion
+
+protostuff-1.0.0.M3 2010-07-10
++ faster utf8 string serialization
++ write operations on IOUtil now require a buffer as an extra arg.
+  This allows the developer to determine the appropriate buffer size needed for a particular message (to avoid buffer allocation overhead).
+  The LinkedBuffer can be re-used by calling LinkedBuffer.clear() ... w/c is applicable to application/thread-local/network buffers.
++ added protostuf-yaml for yaml serialization (zero-copy capable).
++ Issue 24: JsonInput not able to skip repeated scalar fields that are unknown
++ support serializing Map fields via the MapSchema.
++ make Schema.typeClass() return the super type.
++ Issue 23: Validation missing (for required fields) when nested messages are "group_encoded"
+
+protostuff-1.0.0.M2 2010-06-22
++ more IO optimizations
++ Issue 22: Enable parsing of service/rpc in proto for code generation
++ Issue 21: Support java-style compilation mode where imported messages do not need to be referenced by full name
++ Issue 20: Compiler throws NPE if no package defined in proto file 
++ added protostuff-api (protostuff-core, protostuff-json and protostuff-xml will only contain their respective IO impl).
++ added a runtime option for nested messages to be "group-encoded" for more efficient serialization. (especially for rpc).
++ added an abstract helper class CustomSchema to easily customize how messages can be read/written and for adding filters/hooks as well.
++ added messageName() and messageFullName() methods to the schema to support full xml serialization of existing C++ protoc messages.
+  This also enables aliasing of the message names (especially for xml) by overriding the messageName() method.
++ added protostuff-xml for fast xml ser/deser via stax api.
+
+protostuff-1.0.0.M1 2010-05-20
++ completed Issue 18: Generated GWT Protobuffers - base class, name
++ fixed Issue 17: trying to compile google/protobuf/descriptor.proto from protobuf-2.3.0
++ fixed Issue 15: JsonIOUtil.writeListTo fails when inner messages contain repeated fields
++ completed Issue 14: Allow packages to be overriden via compile time options
++ completed Issue 13: Allow unknown scalar fields to be ignored when parsing json-encoded messages
++ completed Issue 12: Add support for protobuf enums on GWT overlays hosted mode
++ completed Issue 11: Add serialization method (stringify) for GWT overlay types
++ fixed Issue 3: JSON parser converts null values to the string "null"
++ fixed Issue 10: JsonOutput bug when writing a message that contains an inner message with repeated fields
++ completed Issue 8: Use the default values of the optional fields of gwt-overlays
++ completed Issue 9: If enum's default value is not specified, it should be the first value listed in the enum's type definition
++ completed Issue 7: Add optional clear methods on code compiled to gwt_overlay
++ fixed Issue 4: .proto files that use "import" create non-compilable Java files
++ completed Issue 6: Support the header: syntax = "proto2"; (patch by J.D. Zamfirescu)
++ fixed Issue 2: Wrong enum type in generated code of GWT overlays
++ fixed benchmark deser bug on protostuff-json (duplicate parser created)
+
+protostuff-1.0.0.M0 2009-10-24
++ code generator for json, numeric_json, gwt_json, gwt_numeric_json
++ maven archetypes for quick start and rapid development
++ benchmark module to relatively compare with protobuf
