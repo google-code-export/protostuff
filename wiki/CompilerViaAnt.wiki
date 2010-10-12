@@ -2,7 +2,7 @@
 
 ={{{Using the proto compiler via Ant}}}=
 
-First, download the compiler [http://protostuff.googlecode.com/files/protostuff-compiler-1.0.0.M3-jarjar.jar protostuff-compiler-1.0.0.M3-jarjar.jar].
+First, download the compiler [http://protostuff.googlecode.com/files/protostuff-compiler-1.0.0.M5-jarjar.jar protostuff-compiler-1.0.0.M5-jarjar.jar].
 
 Currently there are 3 outputs:
  * java_bean
@@ -49,7 +49,7 @@ foo.options = key:value,generate_field_map,separate_schema
   <java classname="com.dyuproject.protostuff.compiler.CompilerMain" fork="true" dir="src">
     <arg value="protostuff.properties"/>
     <classpath>
-      <pathelement location="protostuff-compiler-1.0.0.M3-jarjar.jar"/>
+      <pathelement location="protostuff-compiler-1.0.0.M5-jarjar.jar"/>
     </classpath>
   </java>
 </target>

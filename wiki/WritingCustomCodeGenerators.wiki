@@ -9,7 +9,7 @@ The current feature is currently available on trunk.
 It allows the specified string template group (stg) to inherit from the current generators for extra add-ons/customizations.
 You simply invoke the compiler and supply your .stg resource as the "output".
 
-* java -jar protostuff-compiler-1.0.0.M3-jarjar.jar protostuff.properties *
+* java -jar protostuff-compiler-1.0.0.M5-jarjar.jar protostuff.properties *
 
 
 {{{protostuff.properties}}}
@@ -135,6 +135,6 @@ If not, the "message_block" is looked up with the args {{{[message,module,option
 
 For enums, the rule would be "enum_block" with the args {{{[eg,module,options]}}} (eg is a shortcut for {{{EnumGroup}}})
 
-See the [http://protostuff.googlecode.com/svn/javadoc/1.0.0.M3/index.html javadoc api] for more details.
+See the [http://protostuff.googlecode.com/svn/javadoc/1.0.0.M5/index.html javadoc api] for more details.
 
 The "//#message begin" is basically a bookmark so that when the code get's too big, its easy to navigate via your text editor's search for "#message"

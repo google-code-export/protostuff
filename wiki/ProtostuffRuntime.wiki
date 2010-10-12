@@ -17,30 +17,37 @@ _Note that you can also hand-code schemas to avoid reflection._
    // The getSchema method is also thread-safe
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
    
+   // protostuff serialize
+   byte[] protostuff = ProtostuffIOUtil.toByteArray(foo, schema, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+
+   // protostuff deserialize
+   Foo f = new Foo();
+   ProtostuffIOUtil.mergeFrom(protostuff, f, schema);
+   
    // protobuf serialize
-   byte[] data = ProtobufIOUtil.toByteArray(foo, schema, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+   byte[] protobuf = ProtobufIOUtil.toByteArray(foo, schema, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
 
    // protobuf deserialize
    Foo f = new Foo();
-   ProtobufIOUtil.mergeFrom(data, f, schema);
+   ProtobufIOUtil.mergeFrom(protobuf, f, schema);
    
    // json serialize
    boolean numeric = true;
-   byte[] data = JsonIOUtil.toByteArray(foo , schema, numeric);
+   byte[] json = JsonIOUtil.toByteArray(foo, schema, numeric);
 
    // json deserialize
    Foo f = new Foo();
-   JsonIOUtil.mergeFrom(data, f, schema, numeric);
+   JsonIOUtil.mergeFrom(json, f, schema, numeric);
    
    // xml serialize
-   byte[] data = XmlIOUtil.toByteArray(foo , schema);
+   byte[] xml = XmlIOUtil.toByteArray(foo, schema);
 
    // xml deserialize
    Foo f = new Foo();
-   XmlIOUtil.mergeFrom(data, f, schema);
+   XmlIOUtil.mergeFrom(xml, f, schema);
    
    // yaml serialize
-   byte[] data = YamlIOUtil.toByteArray(foo, schema, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+   byte[] yaml = YamlIOUtil.toByteArray(foo, schema, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
    
 }}}
 
@@ -50,12 +57,19 @@ _Note that you can also hand-code schemas to avoid reflection._
    
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
 
+   // protostuff serialize
+   ProtostuffIOUtil.writeTo(outputStream, foo, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+   
+   // protostuff deserialize
+   Foo f = new Foo();
+   ProtostuffIOUtil.mergeFrom(inputStream, f, schema);
+   
    // protobuf serialize
-   ProtobufIOUtil.writeDelimitedTo(outputStream, foo, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+   ProtobufIOUtil.writeTo(outputStream, foo, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
    
    // protobuf deserialize
    Foo f = new Foo();
-   ProtobufIOUtil.mergeDelimitedFrom(inputStream, f, schema);
+   ProtobufIOUtil.mergeFrom(inputStream, f, schema);
    
    // json serialize
    boolean numeric = true;
