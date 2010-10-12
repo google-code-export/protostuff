@@ -50,7 +50,7 @@ OutputStream out;
 LinkedBuffer buffer = getApplicationBuffer();
 try
 {
-    int totalBytes = ProtobufIOUtil.writeTo(out, person, person.cachedSchema(), buffer);
+    int totalBytes = ProtobufIOUtil.writeTo(out, person, Person.getSchema(), buffer);
 }
 finally
 {
@@ -63,7 +63,7 @@ finally
 LinkedBuffer buffer = getApplicationBuffer();
 try
 {
-    int totalBytes = ProtobufIOUtil.writeTo(buffer, person, person.cachedSchema());
+    int totalBytes = ProtobufIOUtil.writeTo(buffer, person, Person.getSchema());
     // write the buffer to somewhere else
     
 }
@@ -79,7 +79,7 @@ finally
 LinkedBuffer buffer = getApplicationBuffer();
 try
 {
-    byte[] data = ProtobufIOUtil.toByteArray(person, person.cachedSchema());
+    byte[] data = ProtobufIOUtil.toByteArray(person, Person.getSchema());
     // do something with data
 }
 finally
@@ -94,12 +94,12 @@ finally
 {{{
 Person person = new Person();
 InputStream in;
-ProtobufIOUtil.mergeFrom(in, person, person.cachedSchema());
+ProtobufIOUtil.mergeFrom(in, person, Person.getSchema());
 }}}
 
 * merging from a byte array *
 {{{
 Person person = new Person();
 byte[] data;
-ProtobufIOUtil.mergeFrom(data, person, person.cachedSchema()); 
+ProtobufIOUtil.mergeFrom(data, person, Person.getSchema()); 
 }}}
