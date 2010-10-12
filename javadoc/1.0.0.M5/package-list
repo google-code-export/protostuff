@@ -1,0 +1,5 @@
+com.dyuproject.protostuff
+com.dyuproject.protostuff.compiler
+com.dyuproject.protostuff.model
+com.dyuproject.protostuff.parser
+com.dyuproject.protostuff.runtime
