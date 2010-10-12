@@ -1,0 +1,43 @@
+#summary pipes explained, usage
+#labels Featured
+
+In protostuff, pipes are a way to transfer/transcode data from an input to another output. See [http://en.wikipedia.org/wiki/Transcoding]
+
+Suppose you have an incoming protobuf input stream. 
+Normally, you have to parse the stream and build the message. 
+When you send the data to the client, you serialize the newly built message to json. 
+
+The main point of pipes is to skip the message building ... thus effectively converting one encoding to another.
+
+Here's the normal approach:
+{{{
+InputStream protobufInputStream;
+
+// deserialize
+Foo foo = new Foo();
+ProtobufIOUtil.mergeFrom(protobufInputStream, foo, Foo.getSchema());
+
+// write to json
+JsonIOUtil.writeTo(outputStream, foo, Foo.getSchema(), false);
+}}}
+
+To use pipes, enable the "generate_pipe_schema" option (see [CompilerOptions#java_bean compiler options]). 
+A static method "getPipeSchema" will be generated.
+{{{
+InputStream protobufInputStream;
+
+// transcode the protobuf encoding to json encoding
+Pipe pipe = ProtobufIOUtil.newPipe(protobufInputStream);
+JsonIOUtil.writeTo(outputStream, pipe, Foo.getPipeSchema(), false);
+}}}
+
+
+For runtime objects, pipes are also supported. 
+The schema of a runtime object is an instance of {{{MappedSchema<T>}}}, which has a getPipeSchema() method. 
+{{{
+MappedSchema<Foo> schema = (MappedSchema<Foo>)RuntimeSchema.getSchema(Foo.class);
+
+// transcode the protobuf encoding to json encoding
+Pipe pipe = ProtobufIOUtil.newPipe(protobufInputStream);
+JsonIOUtil.writeTo(outputStream, pipe, schema.getPipeSchema(), false);
+}}}

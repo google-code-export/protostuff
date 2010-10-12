@@ -1,7 +1,7 @@
 #summary json serialization and deserialization, howto, usage
 #labels Featured
 
-* Dependencies used by [JSONSerialization#java_bean java_bean] and [JSONSerialization#java_v2protoc_schema java_v2protoc_schema]*
+* Dependencies used by [JsonSerialization#java_bean java_bean] and [JsonSerialization#java_v2protoc_schema java_v2protoc_schema]*
  * protostuff-api - 50kb
  * protostuff-json - 21kb
  * jackson-core-asl-1.6.1.jar - 197kb
