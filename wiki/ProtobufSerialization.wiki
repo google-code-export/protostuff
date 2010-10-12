@@ -50,7 +50,7 @@ OutputStream out;
 LinkedBuffer buffer = getApplicationBuffer();
 try
 {
-    int totalBytes = IOUtil.writeTo(out, person, buffer);
+    int totalBytes = ProtobufIOUtil.writeTo(out, person, person.cachedSchema(), buffer);
 }
 finally
 {
@@ -60,11 +60,10 @@ finally
 
 * writing to a {{{LinkedBuffer}}} *
 {{{
-boolean groupEncoded = false;
 LinkedBuffer buffer = getApplicationBuffer();
 try
 {
-    int totalBytes = IOUtil.writeTo(buffer, person, person.cachedSchema(), groupEncoded);
+    int totalBytes = ProtobufIOUtil.writeTo(buffer, person, person.cachedSchema());
     // write the buffer to somewhere else
     
 }
@@ -80,7 +79,7 @@ finally
 LinkedBuffer buffer = getApplicationBuffer();
 try
 {
-    byte[] data = IOUtil.toByteArray(person);
+    byte[] data = ProtobufIOUtil.toByteArray(person, person.cachedSchema());
     // do something with data
 }
 finally
@@ -95,12 +94,12 @@ finally
 {{{
 Person person = new Person();
 InputStream in;
-IOUtil.mergeFrom(in, person);
+IOUtil.mergeFrom(in, person, person.cachedSchema());
 }}}
 
 * merging from a byte array *
 {{{
 Person person = new Person();
 byte[] data;
-IOUtil.mergeFrom(data, person); 
+IOUtil.mergeFrom(data, person, person.cachedSchema()); 
 }}}

@@ -18,11 +18,11 @@ _Note that you can also hand-code schemas to avoid reflection._
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
    
    // protobuf serialize
-   byte[] data = IOUtil.toByteArray(foo, schema, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+   byte[] data = ProtobufIOUtil.toByteArray(foo, schema, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
 
    // protobuf deserialize
    Foo f = new Foo();
-   IOUtil.mergeFrom(data, f, schema);
+   ProtobufIOUtil.mergeFrom(data, f, schema);
    
    // json serialize
    boolean numeric = true;
@@ -51,11 +51,11 @@ _Note that you can also hand-code schemas to avoid reflection._
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
 
    // protobuf serialize
-   IOUtil.writeDelimitedTo(outputStream, foo, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+   ProtobufIOUtil.writeDelimitedTo(outputStream, foo, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
    
    // protobuf deserialize
    Foo f = new Foo();
-   IOUtil.mergeDelimitedFrom(inputStream, f, schema);
+   ProtobufIOUtil.mergeDelimitedFrom(inputStream, f, schema);
    
    // json serialize
    boolean numeric = true;

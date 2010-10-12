@@ -31,6 +31,9 @@ _Note that value (key:value) from some options are optional. The option "generat
       JsonIOUtil.writeTo(out, message, numeric);
    }}}
 
+*generate_pipe_schema*
+  * generates a pipe schema for transcoding an input to a different output.
+
 *alphanumeric*
  * requires the "generate_field_map" option to be on.
  * the field names will be its field number prefixed by "f".  (e.g "f1")

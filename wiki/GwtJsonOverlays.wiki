@@ -133,8 +133,7 @@ public final class Person extends JavaScriptObject  {
     }-*/;
     
     public static native boolean isInitialized(Person obj) /*-{
-        return 
-            obj["id"] != null;
+        return obj["id"] != null;
     }-*/;
 
     protected Person() {}
