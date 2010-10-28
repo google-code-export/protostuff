@@ -30,45 +30,15 @@ public class User
     
     public User()
     {
-        
+    
     }
     
     public User(String email)
     {
-        // email is required.
         this.email = email;
     }
-
-    public String getFirstName()
-    {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName)
-    {
-        this.firstName = firstName;
-    }
-
-    public String getLastName()
-    {
-        return lastName;
-    }
-
-    public void setLastName(String lastName)
-    {
-        this.lastName = lastName;
-    }
-
-    public String getEmail()
-    {
-        return email;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
+    
+    // getters and setters
 }
 
 }}}
@@ -122,7 +92,7 @@ public class UserSchema implements Schema<User>
             output.writeString(2, user.getFirstName(), false);
         
         if(user.getLastName() != null)
-            output.writeString(3, user.getLastName(), false);
+            output.writeString(2, user.getLastName(), false);
     }
 
     public User newMessage()

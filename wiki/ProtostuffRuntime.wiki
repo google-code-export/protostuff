@@ -1,11 +1,42 @@
 #summary Existing pojos or ejbs can be protobuf encoded/serialized.
 #labels Featured
 
-The *protostuff-runtime* module allows your existing pojos to be written to different formats (protobuf,json, xml, yaml) at runtime.
+The *protostuff-runtime* module allows your existing pojos to be serialized to different formats.
 
-The key factor is that protostuff does not need a pojo to implement/extend certain classes in order to be serialized.
+For people who prefer not to have their messages code-generated from proto files, this fits your bill.
 
-What this module does is generate a schema at runtime where you can use it and cache it to write and read protobuf-encoded messages.
+The advantages of using proto files is that you have explicit control of fields and their corresponding numbers (which is useful 
+for schema evolution, e.g forward-backward compatibility.
+
+With this module, the field's number is according to the order of their declaration in the pojo (top to bottom).
+
+Forward-backward compatibility is supported via convention (append-only).
+ * To add new fields, append the field in the declaration
+ * To remove existing fields, annotate with @Deprecated
+   
+Here's an example:
+{{{
+    public static class Entity
+    {
+
+        int id;
+        String name;
+        @Deprecated
+        String alias;
+        long timestamp;
+    }
+}}}
+
+Schema evolution scenario:
+ * v1: There were 3 initial fields (id=1, name=2, alias=3)
+ * v2: Added a new field (timestamp=4).
+ * v3: Removed the "alias" field.
+
+With v3, the field mapping would be (id=1, name=2, timestamp=4).  When we encounter the alias field, it is ignored by the deserializer.
+
+The field mapping is still intact despite schema evolution ... w/c makes it backward-forward compatible to old versions.
+
+===Usage===
 
 _Note that you can also hand-code schemas to avoid reflection._
 
@@ -16,16 +47,31 @@ _Note that you can also hand-code schemas to avoid reflection._
    // so its safe to call RuntimeSchema.getSchema(Foo.class) over and over
    // The getSchema method is also thread-safe
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
+   LinkedBuffer buffer = getApplicationBufer();
    
    // protostuff serialize
-   byte[] protostuff = ProtostuffIOUtil.toByteArray(foo, schema, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+   try
+   {
+       byte[] protostuff = ProtostuffIOUtil.toByteArray(foo, schema, buffer);
+   }
+   finally
+   {
+       buffer.clear();
+   }
 
    // protostuff deserialize
    Foo f = new Foo();
    ProtostuffIOUtil.mergeFrom(protostuff, f, schema);
    
    // protobuf serialize
-   byte[] protobuf = ProtobufIOUtil.toByteArray(foo, schema, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+   try
+   {
+       byte[] protostuff = ProtobufIOUtil.toByteArray(foo, schema, buffer);
+   }
+   finally
+   {
+       buffer.clear();
+   }
 
    // protobuf deserialize
    Foo f = new Foo();
@@ -47,7 +93,14 @@ _Note that you can also hand-code schemas to avoid reflection._
    XmlIOUtil.mergeFrom(xml, f, schema);
    
    // yaml serialize
-   byte[] yaml = YamlIOUtil.toByteArray(foo, schema, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+   try
+   {
+       byte[] protostuff = YamlIOUtil.toByteArray(foo, schema, buffer);
+   }
+   finally
+   {
+       buffer.clear();
+   }
    
 }}}
 
@@ -56,16 +109,31 @@ _Note that you can also hand-code schemas to avoid reflection._
    Foo foo = new Foo("foo", 1, 3.5);
    
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
-
+   LinkedBuffer buffer = getApplicationBufer();
+   
    // protostuff serialize
-   ProtostuffIOUtil.writeTo(outputStream, foo, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+   try
+   {
+       ProtostuffIOUtil.writeTo(outputStream, foo, buffer);
+   }
+   finally
+   {
+       buffer.clear();
+   }
    
    // protostuff deserialize
    Foo f = new Foo();
    ProtostuffIOUtil.mergeFrom(inputStream, f, schema);
    
    // protobuf serialize
-   ProtobufIOUtil.writeTo(outputStream, foo, LinkedBuffer.allocate(512)); // buffer recommended to be thread-local
+   try
+   {
+       ProtobufIOUtil.writeTo(outputStream, foo, buffer);
+   }
+   finally
+   {
+       buffer.clear();
+   }
    
    // protobuf deserialize
    Foo f = new Foo();
@@ -87,6 +155,13 @@ _Note that you can also hand-code schemas to avoid reflection._
    XmlIOUtil.mergeFrom(inputStream, f, schema);
    
    // yaml serialize
-   YamlIOUtil.writeTo(outputStream, foo, schema, buffer); // buffer recommended to be thread-local
+   try
+   {
+       YamlIOUtil.writeTo(outputStream, foo, buffer);
+   }
+   finally
+   {
+       buffer.clear();
+   }
 
 }}}
