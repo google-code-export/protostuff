@@ -49,7 +49,7 @@ _Note that you can also hand-code schemas for more customization._
    // so its safe to call RuntimeSchema.getSchema(Foo.class) over and over
    // The getSchema method is also thread-safe
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
-   LinkedBuffer buffer = getApplicationBufer();
+   LinkedBuffer buffer = getApplicationBuffer();
    
    // protostuff serialize
    try
