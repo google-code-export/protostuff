@@ -8,7 +8,7 @@ For people who prefer not to have their messages code-generated from proto files
 The advantages of using proto files is that you have explicit control of fields and their corresponding numbers (which is useful 
 for schema evolution, e.g forward-backward compatibility).
 
-With this module, the field's number is ordered according of their declaration in the pojo (top to bottom).
+With this module, the field's number is ordered according to their declaration in the pojo (top to bottom).
 
 Forward-backward compatibility is supported via "append-only" schema evolution.
  * To add new fields, append the field in the declaration
