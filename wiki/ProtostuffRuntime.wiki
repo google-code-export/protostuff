@@ -28,7 +28,7 @@ Here's an example:
 }}}
 
 Schema evolution scenario:
- * v1: There were 3 initial fields (id=1, name=2, alias=3)
+ * v1: 3 initial fields (id=1, name=2, alias=3)
  * v2: Added a new field (timestamp=4).
  * v3: Removed the "alias" field.
 
