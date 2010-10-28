@@ -16,7 +16,7 @@ Forward-backward compatibility is supported via "append-only" schema evolution.
    
 Here's an example:
 {{{
-    public static class Entity
+    public class Entity
     {
         int id;
         
