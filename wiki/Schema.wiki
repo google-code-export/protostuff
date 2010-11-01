@@ -104,6 +104,16 @@ public class UserSchema implements Schema<User>
     {
         return User.class;
     }
+
+    public String messageName()
+    {
+        return User.class.getSimpleName();
+    }
+    
+    public String messageFullName()
+    {
+        return User.class.getName();
+    }
     
     // the mapping between the field names to the field numbers.
     
