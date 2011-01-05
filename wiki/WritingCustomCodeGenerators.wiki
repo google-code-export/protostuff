@@ -5,8 +5,10 @@
 
 Here's a [http://www.antlr.org/wiki/display/ST/StringTemplate+cheat+sheet stringtemplate cheat sheet] for those who are not too familiar with it.
 
-The current feature is currently available on trunk.
-It allows the specified string template group (stg) to inherit from the current generators for extra add-ons/customizations.
+You will be generating code via templating (yes, like jsps except it generates code than html pages).
+
+The templates can inherit from the built-in templates for addons and code reuse.
+
 You simply invoke the compiler and supply your .stg resource as the "output".
 
 * java -jar protostuff-compiler-1.0.0.M6-jarjar.jar protostuff.properties *
@@ -22,6 +24,7 @@ You simply invoke the compiler and supply your .stg resource as the "output".
 }}}
 
 To test it out, try supplying [http://protostuff.googlecode.com/files/protodoc.html.stg] as the output.
+
 It generates html from your .proto files. (Enable the option "compile_imports" to "recursive").
 
 Below is a guide/convention to structure/organize your stg ({{{StringTemplateGroup}}})
