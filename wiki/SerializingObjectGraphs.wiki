@@ -1,0 +1,57 @@
+#summary Ser/Deser for deep object graphs (references and cyclic dependencies)
+#labels Featured
+
+Available on 1.0.0.M7 or higher.
+
+Features:
+ * high-performance graph serialization
+ * handles cyclic dependencies and polymorphic pojos (interface and abstract classes)
+
+Limitations:
+ * When a root message is serialized/deserialized, its nested messages should not contain references to it.
+
+Example:
+{{{
+        message ClubFounder {
+            optional string name = 1;
+            optional Club club = 2;
+        }
+        
+        message Club {
+            optional string name = 1;
+            repeated Student student = 2;
+            repeated Club partner_club = 3;
+        }
+
+        message Student {
+            optional string name = 1;
+            repeated Club club = 2;
+        }
+}}}
+
+You cannot directly serialize {{{Club}}} since it can potentially have a reference to itself.
+
+The solution is to wrap the target message.
+{{{
+   message ClubWrapper {
+       optional Club club = 1;
+   }
+}}}
+
+On the other hand, you can serialize {{{ClubFounder}}}.
+{{{
+Schema<ClubFounder> schema = RuntimeSchema.getSchema(ClubFounder.class);
+ClubFounder founder = new ClubFounder();
+
+// fill with cyclic club and student objects
+
+byte[] data = GraphIOUtil.toByteArray(founder, schema);
+
+ClubFounder cf = new ClubFounder();
+GraphIOUtil.mergeFrom(data, cf, schema);
+
+// check if cf retains the graph
+}}}
+
+
+For a more complex example, take a look at [http://code.google.com/p/protostuff/source/browse/trunk/protostuff-runtime/src/test/java/com/dyuproject/protostuff/runtime/PolymorphicRuntimeGraphTest.java PolymorphicRuntimeGraphTest.java]
