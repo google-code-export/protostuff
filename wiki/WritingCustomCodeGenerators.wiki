@@ -11,7 +11,7 @@ The templates can inherit from the built-in templates for addons and code reuse.
 
 You simply invoke the compiler and supply your .stg resource as the "output".
 
-* java -jar protostuff-compiler-1.0.0.M6-jarjar.jar protostuff.properties *
+* java -jar protostuff-compiler-1.0.0.M7-jarjar.jar protostuff.properties *
 
 
 {{{protostuff.properties}}}
@@ -138,6 +138,6 @@ If not, the "message_block" is looked up with the args {{{[message,module,option
 
 For enums, the rule would be "enum_block" with the args {{{[eg,module,options]}}} (eg is a shortcut for {{{EnumGroup}}})
 
-See the [http://protostuff.googlecode.com/svn/javadoc/1.0.0.M6/index.html javadoc api] for more details.
+See the [http://protostuff.googlecode.com/svn/javadoc/1.0.0.M7/index.html javadoc api] for more details.
 
 The "//#message begin" is basically a bookmark so that when the code get's too big, its easy to navigate via your text editor's search for "#message"

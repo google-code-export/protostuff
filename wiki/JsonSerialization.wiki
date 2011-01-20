@@ -2,9 +2,9 @@
 #labels Featured
 
 * Dependencies used by [JsonSerialization#java_bean java_bean] and [JsonSerialization#java_v2protoc_schema java_v2protoc_schema]*
- * protostuff-api - 50kb
- * protostuff-json - 21kb
- * jackson-core-asl-1.6.1.jar - 197kb
+ * protostuff-api - 55kb
+ * protostuff-json - 23kb
+ * jackson-core-asl-1.7.1.jar - 205kb
 
 This library allows your generated pojos, existing pojos and existing protoc-generated pojos to be serialized and deserialized to json format.
 
@@ -31,7 +31,7 @@ message Person {
 
 = java_bean =
 
-Generate code via [http://protostuff.googlecode.com/files/protostuff-compiler-1.0.0.M6-jarjar.jar protostuff-compiler]. 
+Generate code via [http://protostuff.googlecode.com/files/protostuff-compiler-1.0.0.M7-jarjar.jar protostuff-compiler]. 
 See [CompilerOptions#java_bean compiler options] for more details.
  * simple pojos with a self-contained [Schema schema].
 
