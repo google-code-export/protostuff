@@ -11,7 +11,7 @@ _Note that value (key:value) from some options are optional. The option "generat
 
 * ${oldPackage} = ${newPackage}*
  * the matching package will be used for the compiled output.
- * useful to group certain protos together for certain scenarios.
+ * useful to group certain protos together for certain scenarios (E.g  moving packages to ${gwtpackage}.client).
 
 * header_source_path *
  * The source path (org/example/foo.proto) will be printed (as a comment) in the header.
@@ -19,7 +19,7 @@ _Note that value (key:value) from some options are optional. The option "generat
 
 * underscore_on_vars *
  * If you have fields named after java keywords ("package", "default", etc), enable this option to avoid the clash. (appends an underscore)
- * best to avoid using keywords.  Who knows, you might be writing (int the future via reflection) to json output with its field names.
+ * best to avoid using keywords.  Who knows, you might be writing (in the future via reflection) to json output with its field names.
 
 = java_bean =
 
@@ -43,6 +43,7 @@ _Note that value (key:value) from some options are optional. The option "generat
  * especially great for environments like android or j2me 
 
 *builder_pattern*
+ * Well not really the builder pattern, I should have name this to chain_methods :-)
  * the setters will return the instance.
 
 *generate_helper_methods*
