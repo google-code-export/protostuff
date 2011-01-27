@@ -65,7 +65,7 @@ when serializing utf8 strings, protostuff tries to do 2 things at once by writin
   * See the source code for protostuff-api ({{{StreamedStringSerializer}}}) for more details.
 
 Tradeoffs:
-  * protostuff does a lot of atomic operations for speed in exchange for internal buffering when needed.
+  * protostuff does a lot of atomic operations for speed in exchange for internal buffering (on streaming mode) when needed.
   * this tradeoff arguably makes protostuff the [http://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2 fastest java serializer] on serialization mode.
 
 ===={{{graph}}}====
@@ -84,7 +84,7 @@ Not as fast as the other formats but could be useful for legacy comms.
 
 ===={{{yaml}}}====
 
-If you want to visualize your messages/graph from your server, you'll want to use this.
+If you want to visualize the messages coming from your services/server, you'll want to use this.
 
 ==Serializing object graphs==
 
