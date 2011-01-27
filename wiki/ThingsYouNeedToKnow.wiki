@@ -1,0 +1,33 @@
+#summary Best practices, tradeoffs, techniques
+
+= Things you need to know =
+
+== Serialization ==
+
+1.  When choosing a format, you need to know the limitations and tradeoffs each format brings.
+
+==={{{protobuf}}}===
+- messages cannot be streamed (comes with its internal format)
+
+ * what the official protobuf java implementation does:
+   * it computes the size of each message and stores it on a private int field named "memoizedSerializedSize".  
+   * this means when your message contains a lot of nested messages, it will traverse every message (iterates the list if repeated field) on the graph (to compute the total size of the root message) before it can perform any serialization.
+   * the good thing about it is, it can perform validation on each message's fields (while computing the size) before the message is actually written (w/c is the proper way to do so).
+   * Tradeoffs:
+     * None.  Protobuf was designed to have validation from the get-go, therefore, you cannot be streaming messages anyway.
+
+ * what protobuf/protostuff does:
+   * same applies, cannot be streamed (comes with the format)
+   * validation and message size computation needs to happen during serialization (3-in-1 setting)
+     * But wait, isn't it a bad idea to perform serialization when the message itself has not yet been declared valid?  
+       * Yes.
+     * Does it mean I could be partially writing to the socket when the UnintializedMessageException (required field missing) is thrown?
+       * No.  We are buffering the writes to a series of logical buffers (one physical byte array if message size <= byte array size)
+       * This means that the message needs to be fully computed and validated (while serializing to a byte array) before it can be written to the socket.
+
+   * Tradeoffs
+     * Starts performing serialization (full buffering) to a byte array even though the message could be invalid.  
+     * In doing so, the serialization step is reduced to 1 instead of 2 (w/c is normally: 1. traverse the graph for validation/computation and 2.  traverse the graph again for the actual serialization)
+
+==={{{protostuff}}}===
+- messages can be streamed (like json,etc)
