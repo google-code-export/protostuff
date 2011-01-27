@@ -197,11 +197,15 @@ These field types are ignored:
 
 {{{EnumSet}}} is not supported(in the future it can be).
 
+Null values are not serialized. (A deserialized collection coming from a collection with null values will fail on {{{Collection.equals()}}})
+
 ==Map fields==
 
 Same rules with collection fields for both keys and values.
 
 {{{EnumMap}}} is not supported(in the future it can be).
+
+Allows null keys and values. (You can rely on the equality on {{{Map.equals()}}}) 
 
 ====Polymorphism====
 The values can be polymorphic.
