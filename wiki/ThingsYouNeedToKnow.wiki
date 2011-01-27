@@ -68,6 +68,12 @@ Tradeoffs:
   * protostuff does a lot of atomic operations for speed but will need internal buffering when a utf8 string is too large.
   * this tradeoff arguably makes protostuff the [http://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2 fastest java serializer] on serialization mode.
 
+===={{{graph}}}====
+
+Use it if you're serializing object graphs with cyclic references.
+
+Same tradeoffs with protostuff plus a small overhead of using an {{{IdentityHashMap}}} to identify cyclic references.
+
 ===={{{json}}}====
 
 No tradeoffs.  Use it if you're talking to a browser.
