@@ -25,8 +25,7 @@ messages cannot be streamed (comes with its internal format)
        * No.  We are buffering the writes to a series of logical buffers (one physical byte array if message size <= byte array size)
        * This means that the message needs to be fully computed and validated (while serializing to a byte array) before it can be written to the socket ({{{OutputStream}}}).
      * Tradeoffs
-       * Starts performing serialization (full buffering) to a byte array even though the message could be invalid.  
-       * In doing so, the serialization step is reduced to 1 instead of 2 (w/c is normally: 1. traverse the graph for validation/computation and 2.  traverse the graph again for the actual serialization)
+       * Even if you don't require validation, you still need to fully buffer the messages to reduce the serialization step to 1 instead of 2 (w/c is normally: 1. traverse the graph for validation/computation and 2.  traverse the graph again for the actual serialization)
 
 ===={{{protostuff}}}====
 messages can be streamed like most serialization formats (e.g json)
@@ -195,11 +194,13 @@ These field types are ignored:
  * {{{List<int[]>}}} (collections with array members)
    * Only List<byte[]> is allowed (note that you should not rely on {{{List<byte[]>.equals()}}} for equality (you probably already know that about arrays)
 
-EnumSet is not supported (in the future it can be).
+{{{EnumSet}}} is not supported(in the future it can be).
 
 ==Map fields==
 
 Same rules with collection fields for both keys and values.
+
+{{{EnumMap}}} is not supported(in the future it can be).
 
 ====Polymorphism====
 The values can be polymorphic.
