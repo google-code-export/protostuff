@@ -7,7 +7,7 @@
 1.  When choosing a format, you need to know the limitations and tradeoffs each format brings.
 
 ==={{{protobuf}}}===
-- messages cannot be streamed (comes with its internal format)
+messages cannot be streamed (comes with its internal format)
 
  * what the official protobuf java implementation does:
    * it computes the size of each message and stores it on a private int field named "memoizedSerializedSize".  
@@ -21,13 +21,44 @@
    * validation and message size computation needs to happen during serialization (3-in-1 setting)
      * But wait, isn't it a bad idea to perform serialization when the message itself has not yet been declared valid?  
        * Yes.
-     * Does it mean I could be partially writing to the socket when the UnintializedMessageException (required field missing) is thrown?
+     * Does it mean I could be partially writing to the socket ({{{OutputStream}}}) when the {{{UnintializedMessageException}}} (required field missing) is thrown?
        * No.  We are buffering the writes to a series of logical buffers (one physical byte array if message size <= byte array size)
-       * This means that the message needs to be fully computed and validated (while serializing to a byte array) before it can be written to the socket.
-
-   * Tradeoffs
-     * Starts performing serialization (full buffering) to a byte array even though the message could be invalid.  
-     * In doing so, the serialization step is reduced to 1 instead of 2 (w/c is normally: 1. traverse the graph for validation/computation and 2.  traverse the graph again for the actual serialization)
+       * This means that the message needs to be fully computed and validated (while serializing to a byte array) before it can be written to the socket ({{{OutputStream}}}).
+     * Tradeoffs
+       * Starts performing serialization (full buffering) to a byte array even though the message could be invalid.  
+       * In doing so, the serialization step is reduced to 1 instead of 2 (w/c is normally: 1. traverse the graph for validation/computation and 2.  traverse the graph again for the actual serialization)
 
 ==={{{protostuff}}}===
-- messages can be streamed (like json,etc)
+messages can be streamed like most serialization formats (e.g json)
+
+If you need validation, then you need to buffer your writes before writing to the socket ({{{OutputStream}}}).
+  {{{
+     LinkedBuffer buffer = ...;
+     try
+     {
+       int size = ProtostuffIOUtil.writeTo(buffer, message, schema);
+       // you can prefix the message with the size (delimited message)
+       LinkedBuffer.writeTo(outputStream, buffer);
+     }
+     finally
+     {
+       buffer.clear();
+     }
+     
+  }}}
+
+validation is built-in on the schema api but that does not mean you have to use it.
+  * If messages are generated from .proto, simply avoid using "required" on any of your fields.
+  * If using the runtime schemas, everything is "optional" (or "repeated" for collections).
+
+when serializing utf8 strings, there is buffering involved internally.
+  * Because a protobuf string requires that it's length be written first before the actual value, protostuff tries to do smart buffering.
+  * In streaming mode (directly writing to socket {{{OutputStream}}}), if the utf8 string size is too large to fit in the initial buffer({{{LinkedBuffer.allocate(size)}}}), protostuff will create session buffers.
+    * What are session buffers?
+      * These are small incremental buffers that are created, cached and  re-used while writing to the {{{OutputStream}}}.
+      * These buffers are flushed to the stream immediately after a complete utf8 string write (2-in-1: buffer write + utf8 size computation).
+  * See the source code for protostuff-api ({{{StreamedStringSerializer}}}) for more details.
+
+Tradeoffs:
+  * protostuff does a lot of atomic operations for speed but will need internal buffering when a utf8 string is too large.
+  * this tradeoff arguably makes protostuff the [http://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2 fastest java serializer].
