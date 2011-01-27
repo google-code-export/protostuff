@@ -40,6 +40,11 @@ If you need validation, then you need to buffer your writes before writing to th
        // you can prefix the message with the size (delimited message)
        LinkedBuffer.writeTo(outputStream, buffer);
      }
+     catch(UninitializedMessageException e)
+     {
+       // your message was not written to the stream
+       // because it was missing required fields.
+     }
      finally
      {
        buffer.clear();
@@ -61,4 +66,4 @@ when serializing utf8 strings, there is buffering involved internally.
 
 Tradeoffs:
   * protostuff does a lot of atomic operations for speed but will need internal buffering when a utf8 string is too large.
-  * this tradeoff arguably makes protostuff the [http://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2 fastest java serializer].
+  * this tradeoff arguably makes protostuff the [http://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2 fastest java serializer] on serialization mode.
