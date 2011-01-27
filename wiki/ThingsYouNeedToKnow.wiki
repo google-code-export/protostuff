@@ -4,7 +4,7 @@
 
 == Serialization Formats ==
 
-1.  When choosing a format, you need to know the limitations and tradeoffs each format brings.
+When choosing a format, you need to know the limitations and tradeoffs each format brings.
 
 ===={{{protobuf}}}====
 messages cannot be streamed (comes with its internal format)
@@ -67,6 +67,18 @@ when serializing utf8 strings, there is buffering involved internally.
 Tradeoffs:
   * protostuff does a lot of atomic operations for speed but will need internal buffering when a utf8 string is too large.
   * this tradeoff arguably makes protostuff the [http://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2 fastest java serializer] on serialization mode.
+
+===={{{json}}}====
+
+No tradeoffs.  Use it if you're talking to a browser.
+
+===={{{xml}}}====
+
+Not as fast as the other formats but could be useful for legacy comms.
+
+===={{{yaml}}}====
+
+If you want to visualize your messages/graph from your server, you'll want to use this.
 
 ==Serializing object graphs==
 
