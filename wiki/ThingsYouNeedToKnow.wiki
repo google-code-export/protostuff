@@ -1,4 +1,5 @@
 #summary Best practices, tradeoffs, techniques
+#labels Featured
 
 = Things you need to know =
 
@@ -192,7 +193,7 @@ These field types are ignored:
  * {{{HashSet<List<Double>>}}} (collections with collection members)
  * {{{Queue<Map<String,Long>}}} (collections with map members)
  * {{{List<int[]>}}} (collections with array members)
-   * Only List<byte[]> is allowed (note that you should not rely on {{{List<byte[]>.equals()}}} for equality (you probably already know that about arrays)
+   * Only the array {{{byte[]}}} is allowed (note that you should not rely on {{{List<byte[]>.equals()}}} for equality (you probably already know that about arrays)
 
 {{{EnumSet}}} is not supported(in the future it can be).
 
