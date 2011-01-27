@@ -2,11 +2,11 @@
 
 = Things you need to know =
 
-== Serialization ==
+== Serialization Formats ==
 
 1.  When choosing a format, you need to know the limitations and tradeoffs each format brings.
 
-==={{{protobuf}}}===
+===={{{protobuf}}}====
 messages cannot be streamed (comes with its internal format)
 
  * what the official protobuf java implementation does:
@@ -28,7 +28,7 @@ messages cannot be streamed (comes with its internal format)
        * Starts performing serialization (full buffering) to a byte array even though the message could be invalid.  
        * In doing so, the serialization step is reduced to 1 instead of 2 (w/c is normally: 1. traverse the graph for validation/computation and 2.  traverse the graph again for the actual serialization)
 
-==={{{protostuff}}}===
+===={{{protostuff}}}====
 messages can be streamed like most serialization formats (e.g json)
 
 If you need validation, then you need to buffer your writes before writing to the socket ({{{OutputStream}}}).
@@ -67,3 +67,130 @@ when serializing utf8 strings, there is buffering involved internally.
 Tradeoffs:
   * protostuff does a lot of atomic operations for speed but will need internal buffering when a utf8 string is too large.
   * this tradeoff arguably makes protostuff the [http://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2 fastest java serializer] on serialization mode.
+
+==Serializing object graphs==
+
+It is not portable to all the formats supported.
+
+The graph/reference logic is embedded in the serialization format (protostuff) to achieve high performance graph ser/deser.
+
+When you serialize the root object, its nested messages should not have a reference to it.  See [SerializingObjectGraphs] for more details.
+
+==Polymorphic serialization==
+
+This is only available for protostuff-runtime (obviously).
+
+What does this really mean?
+ * A pojo can have a field that is not a concrete type.
+ * E.g 
+{{{
+   public interface Foo
+   {
+       // ...
+   }
+   public abstract class Bar
+   {
+       // ...
+   }
+   public final class Person
+   {
+       Foo foo;
+       Bar bar;
+       Object baz; // can be foo or bar
+   } 
+}}}
+
+==Runtime Options==
+
+Runtime options for protostuff-runtime:
+ * -Dprotostuff.runtime.enums_by_name=true
+   * Your enums are serialized using the string from Enum.name();
+   * By default, this is disabled for protobuf compatibility (enums serialized using their number)
+ * -Dprotostuff.runtime.collection_schema_on_repeated_fields=true
+   * The collection (repeated field) will be serialized like a regular message (even if the collection is empty).
+   * Disabled by default for protobuf compatibility (the collection is not serialized, only its values).
+   * Here's an example (read the comments):
+{{{
+public final class Foo
+{
+   List<String> stringList;
+
+   // equals and hashCode methods
+
+}
+}}}
+   * Ser/deser
+{{{
+   LinkedBuffer buffer = ...;
+   Foo foo = new Foo();
+   // empty list
+   foo.stringList = new ArrayList<String>();
+
+   final byte[] data;
+   try
+   {
+       data = ProtostuffIOUtil.toByteArray(foo, schema, buffer);
+   }
+   finally
+   {
+       buffer.clear();
+   }
+
+   Foo f = new Foo();
+   
+   ProtostuffIOUtil.mergeFrom(data, f, schema);
+   
+   assertEquals(f, foo); // this will fail if the option is not enabled because f.stringList will be null.
+   // It would have been an empty list if the option was enabled (w/c makes it equal)
+   
+}}}
+
+ * -Dprotostuff.runtime.auto_load_polymorphic_classes=false
+   * Polymorphic serialization includes the concrete type of the object being serialized.  Upon deserialization, that className is read and is used to fetch the derived schema.
+{{{
+    boolean autoLoad = RuntimeSchema.AUTO_LOAD_POLYMORHIC_CLASSES;
+    String className = ...; // read from the input.
+    Schema<Object> derivedSchema = RuntimeSchema.getSchema(className, autoLoad);
+    // If the class has not been loaded, and autoLoad is true, it will be loaded from the context classloader.
+    // If autoLoad is false, a ProtostuffException is thrown (illegal operation, unknown message)
+}}}
+   * Enabled by default.  For security purposes, you can pre-load all your known pojos and disable this. Here's how:
+{{{
+// the code below preloads the schema of your pojos.
+RuntimeSchema.getSchema(SomePojo.class);
+RuntimeSchema.getSchema(AnotherPojo.class);
+// and so on ...
+}}}
+
+ * -Dprotostuff.runtime.morph_non_final_pojos=true
+   * See [http://code.google.com/p/protostuff/issues/detail?id=43&can=1 this issue] for more details.
+   * Basically, when your pojo's class is not declared final ... it can be subclassed (polymorphic)
+   * Disabled by default.  Note that if you enable this option, every message will contain its type (w/c is a lot of overhead when your package names are long).
+   
+
+==Collection fields==
+
+These field types are ignored:
+ * {{{HashSet<List<Double>>}}} (collections with collection members)
+ * {{{Queue<Map<String,Long>}}} (collections with map members)
+ * {{{List<int[]>}}} (collections with array members)
+   * Only List<byte[]> is allowed (note that you should not rely on {{{List<byte[]>.equals()}}} for equality (you probably already know that about arrays)
+
+EnumSet is not supported (in the future it can be).
+
+==Map fields==
+
+Same rules with collection fields for both keys and values.
+
+====Polymorphism====
+The values can be polymorphic.
+
+The keys however cannot be (for performance reasons).  It is limited to:
+ * scalar types (E.g {{{Map<String,Pojo>}}})
+ * pojos (final class)
+
+This should mostly cover 90% of all use-cases.
+
+Having said that, the limitations for both {{{Collection}}} and {{{Map}}} fields are *soft limits*.  
+
+Send a message to the discussion group if a limit is bugging you so we can discuss how to go about it.
