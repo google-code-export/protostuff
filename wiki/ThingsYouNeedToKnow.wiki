@@ -65,9 +65,16 @@ when serializing utf8 strings, protostuff tries to do 2 things at once by writin
       * These buffers are flushed to the stream immediately after a complete utf8 string write (2-in-1: buffer write + utf8 size computation).
   * See the source code for protostuff-api ({{{StreamedStringSerializer}}}) for more details.
 
+If you have large messages, please do allocate a {{{LinkedBuffer}}} relative to the message size.
+
+It is better to allocate large buffers and re-use them (application managed or thread-local) than to create one everytime.
+
 Tradeoffs:
-  * protostuff does a lot of atomic operations for speed in exchange for internal buffering (on streaming mode) when needed.
-  * this tradeoff arguably makes protostuff the [http://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2 fastest java serializer] on serialization mode.
+  * protostuff does a lot of atomic operations for speed in exchange for incremental internal buffering when needed.
+    * In buffering mode, internal buffering is not needed if the entire message fits in the buffer.
+    * In streaming mode, incremental session buffers are not needed if the there is no single utf8 string larger than the buffer.
+  * these tradeoffs arguably makes protostuff the [http://code.google.com/p/thrift-protobuf-compare/wiki/BenchmarkingV2 fastest] in terms of serialization speed.
+
 
 ===={{{graph}}}====
 
