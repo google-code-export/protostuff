@@ -31,7 +31,7 @@ what protobuf/protostuff does:
 ===={{{protostuff}}}====
 messages can be streamed like most serialization formats (e.g json)
 
-If you need validation, then you need to buffer your writes before writing to the socket ({{{OutputStream}}}).
+If you need validation, then you need to buffer your writes before writing to the socket ({{{OutputStream}}}). Same rules apply for json, xml and other streaming formats.
   {{{
      LinkedBuffer buffer = ...;
      try
@@ -100,7 +100,9 @@ The most human-readable format supported by protostuff.
 
 If you want to visualize the messages coming from your services/server, you'll want to use this.
 
-The default indention is 2 spaces.  For better readability, you can increase this indention with the system property {{{-Dyamloutput.extra_indent=2}}} to make the indention 4 spaces.
+The default indention is 2 spaces.  
+
+For better readability, you can increase this indention with the system property {{{-Dyamloutput.extra_indent=2}}} to make the indention 4 spaces.
 
 ==Serializing object graphs==
 
