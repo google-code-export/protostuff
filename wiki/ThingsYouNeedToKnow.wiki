@@ -100,8 +100,7 @@ The most human-readable format supported by protostuff.
 
 If you want to visualize the messages coming from your services/server, you'll want to use this.
 
-The default indention is 2 spaces.  For better readability, you can increase this indention with the system property 
-{{{-Dyamloutput.extra_indent=2}}} to make the indention 4 spaces.
+The default indention is 2 spaces.  For better readability, you can increase this indention with the system property {{{-Dyamloutput.extra_indent=2}}} to make the indention 4 spaces.
 
 ==Serializing object graphs==
 
@@ -249,8 +248,8 @@ Complex values (E.g {{{Queue<List<String>>}}}, {{{List<int[]>}}}, {{{Set<Object>
 
 {{{EnumMap}}} is currently not supported(in the future it can be).
 
-Allows null keys and values. (You can rely on the equality on {{{Map.equals()}}}) 
+Allows null keys and values. (You can rely on the equality from  {{{Map.equals()}}}) 
 
 {{{Maps}}} with simple keys and values(scalar,enum,pojo) are serialized without type metadata (normal operation).
 
-Complex values (E.g {{{Map<Object,List<String>>}}}, {{{HashMap<int[],float[]>}}}, {{{TreeMap<Object,long[][]}}}, {{{SortedMap<?,?>}}}) will be serialized *with* type metadata.
+Complex values (E.g {{{Map<Object,List<String>>}}}, {{{HashMap<Set<byte[]>,float[]>}}}, {{{TreeMap<long[][],Object>}}}, {{{SortedMap<?,?>}}}) will be serialized *with* type metadata.
