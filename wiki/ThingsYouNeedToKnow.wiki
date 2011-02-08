@@ -10,23 +10,23 @@ When choosing a format, you need to know the limitations and tradeoffs each form
 ===={{{protobuf}}}====
 messages cannot be streamed (comes with its internal format)
 
- * what the official protobuf java implementation does:
-   * it computes the size of each message and stores it on a private int field named "memoizedSerializedSize".  
-   * this means when your message contains a lot of nested messages, it will traverse every message (iterates the list if repeated field) on the graph (to compute the total size of the root message) before it can perform any serialization.
-   * the good thing about it is, it can perform validation on each message's fields (while computing the size) before the message is actually written (w/c is the proper way to do so).
-   * Tradeoffs:
-     * None.  Protobuf was designed to have validation from the get-go, therefore, you cannot be streaming messages anyway.
+what the official protobuf java implementation does:
+ * it computes the size of each message and stores it on a private int field named "memoizedSerializedSize".  
+ * this means when your message contains a lot of nested messages, it will traverse every message (iterates the list if repeated field) on the graph (to compute the total size of the root message) before it can perform any serialization.
+ * the good thing about it is, it can perform validation on each message's fields (while computing the size) before the message is actually written (w/c is the proper way to do so).
+ * Tradeoffs:
+   * None.  Protobuf was designed to have validation from the get-go, therefore, you cannot be streaming messages anyway.
 
- * what protobuf/protostuff does:
-   * same applies, cannot be streamed (comes with the format)
-   * validation and message size computation needs to happen during serialization (3-in-1 setting)
-     * But wait, isn't it a bad idea to perform serialization when the message itself has not yet been declared valid?  
-       * Yes.
-     * Does it mean I could be partially writing to the socket ({{{OutputStream}}}) when the {{{UnintializedMessageException}}} (required field missing) is thrown?
-       * No.  We are buffering the writes to a series of logical buffers (one physical byte array if message size <= byte array size)
-       * This means that the message needs to be fully computed and validated (while serializing to a byte array) before it can be written to the socket ({{{OutputStream}}}).
-     * Tradeoffs
-       * Even if you don't require validation, you still need to fully buffer the messages to reduce the serialization step to 1 instead of 2 (w/c is normally: 1. traverse the graph for validation/computation and 2.  traverse the graph again for the actual serialization)
+what protobuf/protostuff does:
+ * same applies, cannot be streamed (comes with the format)
+ * validation and message size computation needs to happen during serialization (3-in-1 setting)
+   * But wait, isn't it a bad idea to perform serialization when the message itself has not yet been declared valid?  
+     * Yes.
+   * Does it mean I could be partially writing to the socket ({{{OutputStream}}}) when the {{{UnintializedMessageException}}} (required field missing) is thrown?
+     * No.  We are buffering the writes to a series of logical buffers (one physical byte array if message size <= byte array size)
+     * This means that the message needs to be fully computed and validated (while serializing to a byte array) before it can be written to the socket ({{{OutputStream}}}).
+   * Tradeoffs
+     * Even if you don't require validation, you still need to fully buffer the messages to reduce the serialization step to 1 instead of 2 (w/c is normally: 1. traverse the graph for validation/computation and 2.  traverse the graph again for the actual serialization)
 
 ===={{{protostuff}}}====
 messages can be streamed like most serialization formats (e.g json)
@@ -59,13 +59,13 @@ validation is built-in on the schema api but that does not mean you have to use 
 when serializing utf8 strings, protostuff tries to do 2 things at once by writing to the buffer and computing the size at the same time.
   * Why? Computation is required since a protobuf string requires that it's length be written first before the actual value.
   * How? The max size of a utf8 string can be computed and protostuff uses that to decide how to efficiently perform the serialization.
-  * In streaming mode (directly writing to socket {{{OutputStream}}}), if the utf8 string size is too large to fit in the initial buffer({{{LinkedBuffer.allocate(size)}}}), protostuff will create session buffers.
+  * In streaming mode (directly writing to socket {{{OutputStream}}}), if the size of a single utf8 string is too large to fit in the initial buffer({{{LinkedBuffer.allocate(size)}}}), protostuff will attach session buffers to it.
     * What are session buffers?
-      * These are small incremental buffers that are created, cached and  re-used while writing to the {{{OutputStream}}}.
+      * These are small incremental buffers that are created, cached and re-used while writing to the {{{OutputStream}}}.
       * These buffers are flushed to the stream immediately after a complete utf8 string write (2-in-1: buffer write + utf8 size computation).
   * See the source code for protostuff-api ({{{StreamedStringSerializer}}}) for more details.
 
-If you have large messages, please do allocate a {{{LinkedBuffer}}} relative to the message size.
+If you are fully buffering the writes and you have large messages, please do allocate a {{{LinkedBuffer}}} relative to the message size.
 
 It is better to allocate large buffers and re-use them (application managed or thread-local) than to create one everytime.
 
@@ -84,7 +84,11 @@ Same tradeoffs with protostuff plus a small overhead of using an {{{IdentityHash
 
 ===={{{json}}}====
 
-No tradeoffs.  Use it if you're talking to a browser.
+Use it if you're talking to a browser.
+
+An internal set of buffers are kept and recycled by jackson's  {{{BufferRecycler}}} when writing/reading to/from streams.
+
+{{{JsonIOUtil}}} has methods where you can include the {{{LinkedBuffer}}} as an extra arg to effectively re-use your existing buffers when writing/reading to/from streams.
 
 ===={{{xml}}}====
 
@@ -92,15 +96,52 @@ Not as fast as the other formats but could be useful for legacy comms.
 
 ===={{{yaml}}}====
 
+The most human-readable format supported by protostuff.
+
 If you want to visualize the messages coming from your services/server, you'll want to use this.
+
+The default indention is 2 spaces.  For better readability, you can increase this indention with the system property 
+{{{-Dyamloutput.extra_indent=2}}} to make the indention 4 spaces.
 
 ==Serializing object graphs==
 
-It is not portable to all the formats supported.
+Not portable to the other formats.
 
 The graph/reference logic is embedded in the serialization format (protostuff) to achieve high performance graph ser/deser.
 
 When you serialize the root object, its nested messages should not have a reference to it.  See [SerializingObjectGraphs] for more details.
+
+==Schema Evolution==
+
+====Generated pojos====
+
+To remove a field, simply remove the field from the .proto (or you can comment that out).
+
+Make sure its field number is not re-used. (The same rules apply when adding new fields).
+
+The limit on the number of fields is 127.
+
+
+====Runtime pojos====
+
+To remove a field, annotate with {{{@Deprecated}}}.
+
+When adding new fields, append the field on your pojo's field declaration. (The order is top to bottom).
+
+The limit on the number of fields is 127.
+
+If you have base classes and your messages inherit from those classes, make sure that the base classes are not subject to any change.
+
+When a pojo inherits from a parent, the field number ordering will be based from the parent primarily then onto the child.
+
+If you add a field to the parent, the field number ordering of the subclass will be messed up.
+
+The whole concept is to preserve the field numbers.
+
+====Polymorphic pojos====
+
+The limit on the number of fields is 126.  127 is reserved for the type metadata included during serialization.
+
 
 ==Polymorphic serialization==
 
@@ -196,33 +237,20 @@ RuntimeSchema.getSchema(AnotherPojo.class);
 
 ==Collection fields==
 
-These field types are ignored:
- * {{{HashSet<List<Double>>}}} (collections with collection members)
- * {{{Queue<Map<String,Long>}}} (collections with map members)
- * {{{List<int[]>}}} (collections with array members)
-   * Only the array {{{byte[]}}} is allowed (note that you should not rely on {{{List<byte[]>.equals()}}} for equality (you probably already know that about arrays)
-
-{{{EnumSet}}} is not supported(in the future it can be).
+{{{EnumSet}}} is currently not supported(in the future it can be).
 
 Null values are not serialized. (A deserialized collection coming from a collection with null values will fail on {{{Collection.equals()}}})
 
+{{{Collections}}} with simple values(scalar,enum,pojo) are serialized without type metadata (normal operation).
+
+Complex values (E.g {{{Queue<List<String>>}}}, {{{List<int[]>}}}, {{{Set<Object>}}}, {{{Deque<?>}}}) will be serialized *with* type metadata.
+
 ==Map fields==
 
-Same rules with collection fields for both keys and values.
-
-{{{EnumMap}}} is not supported(in the future it can be).
+{{{EnumMap}}} is currently not supported(in the future it can be).
 
 Allows null keys and values. (You can rely on the equality on {{{Map.equals()}}}) 
 
-====Polymorphism====
-The values can be polymorphic.
+{{{Maps}}} with simple keys and values(scalar,enum,pojo) are serialized without type metadata (normal operation).
 
-The keys however cannot be (for performance reasons).  It is limited to:
- * scalar types (E.g {{{Map<String,Pojo>}}})
- * pojos (final class)
-
-This should mostly cover 90% of all use-cases.
-
-Having said that, the limitations for both {{{Collection}}} and {{{Map}}} fields are *soft limits*.  
-
-Send a message to the discussion group if a limit is bugging you so we can discuss how to go about it.
+Complex values (E.g {{{Map<Object,List<String>>}}}, {{{HashMap<int[],float[]>}}}, {{{TreeMap<Object,long[][]}}}, {{{SortedMap<?,?>}}}) will be serialized *with* type metadata.
