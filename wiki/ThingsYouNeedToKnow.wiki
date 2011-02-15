@@ -246,8 +246,6 @@ RuntimeSchema.getSchema(AnotherPojo.class);
 
 ==Collection fields==
 
-{{{EnumSet}}} is currently not supported(in the future it can be).
-
 Null values are not serialized. (A deserialized collection coming from a collection with null values will fail on {{{Collection.equals()}}})
 
 {{{Collections}}} with simple values(scalar,enum,pojo) are serialized without type metadata (normal operation).
@@ -255,8 +253,6 @@ Null values are not serialized. (A deserialized collection coming from a collect
 Complex values (E.g {{{Queue<List<String>>}}}, {{{List<int[]>}}}, {{{Set<Object>}}}, {{{Deque<?>}}}) will be serialized *with* type metadata.
 
 ==Map fields==
-
-{{{EnumMap}}} is currently not supported(in the future it can be).
 
 Allows null keys and values. (You can rely on the equality from  {{{Map.equals()}}}) 
 
