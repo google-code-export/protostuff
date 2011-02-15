@@ -1,7 +1,7 @@
 #summary Ser/Deser for deep object graphs (references and cyclic dependencies)
 #labels Featured
 
-Available on 1.0.0.M7 or higher.
+Available on 1.0.0 or higher.
 
 Features:
  * high-performance graph serialization

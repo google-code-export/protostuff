@@ -51,8 +51,16 @@ If you need validation, then you need to buffer your writes before writing to th
      }
      
   }}}
+Note that validation is intended for incoming messages.
 
-validation is built-in on the schema api but that does not mean you have to use it.
+When populating the messages, you as the developer should already know w/c fields are required.
+
+The above snippet is a safety-net in case you forget.
+
+When you have tested your application on your staging server, on the production server you can directly stream the messages without 
+full-buffering like the snippet above.
+
+validation is built-in on the schema api but that does not mean you have to use it (especially if you're using protostuff as a serialization library for object graphs).
   * If messages are generated from .proto, simply avoid using "required" on any of your fields.
   * If using the runtime schemas, everything is "optional" (or "repeated" for collections).
 

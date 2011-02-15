@@ -2,9 +2,9 @@
 #labels Featured
 
 * Dependencies used by [XmlSerialization#java_bean java_bean] and [XmlSerialization#java_v2protoc_schema java_v2protoc_schema]*
- * protostuff-api - 55kb
+ * protostuff-api - 48kb
  * protostuff-xml - 16kb
- * any stax impl jar would do ... I'd recommend woodstox-core-asl-4.0.8.jar 473kb from [http://woodstox.codehaus.org/]
+ * any stax impl jar would do ... you can use woodstox-core-asl-4.1.1.jar 468kb from [http://woodstox.codehaus.org/]
 
 This library allows your generated pojos, existing pojos and existing protoc-generated pojos to be serialized and deserialized to xml format.
 

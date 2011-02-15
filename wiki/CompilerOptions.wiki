@@ -48,6 +48,9 @@ _Note that value (key:value) from some options are optional. The option "generat
 
 *generate_helper_methods*
  * additional helper methods for repeated fields
+ 
+*primitive_numbers_if_optional
+ * uses primitive numbers (no auto-boxing) if the field is optional.
 
 * ${message.name}.implements_declaration = implements com.example.Foo*
  * the matching message will implement the given interface.
