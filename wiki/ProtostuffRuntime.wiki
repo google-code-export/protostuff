@@ -68,7 +68,7 @@ _Note that you can also hand-code schemas for more customization._
    // protobuf serialize
    try
    {
-       byte[] protostuff = ProtobufIOUtil.toByteArray(foo, schema, buffer);
+       byte[] protobuf = ProtobufIOUtil.toByteArray(foo, schema, buffer);
    }
    finally
    {
