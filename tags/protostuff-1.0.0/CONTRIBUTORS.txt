@@ -1,0 +1,20 @@
+Patch contributors:
+  J.D. Zamfirescu
+    * protostuff-parser - supplied code to parse protobuf "syntax2" header. (Issue 6)
+
+  Philippe Laflamme
+    * protostuff-parser - supplied code to parse protobuf extensions and allow generated code to access its metadata. (Issue 25)
+    
+  Joseph Gentle
+    * protostuff-model - fixed bug in the reflection compiler with nested protobuf types. (Issue 26)
+    
+  Tim Underwood
+    * protostuff-api - ArrayIndexOutOfBoundsException in StringSerializer.writeUTF8 (Issue 27)
+
+  nordlig.ulv
+    * protostuff-compiler - Native methods for repeated fields (Issue 35)
+  
+  avaskys
+    * protostuff-parser, protostuff-compiler - cannot import more than one .proto file from the same package (Issue 38)
+
+  
