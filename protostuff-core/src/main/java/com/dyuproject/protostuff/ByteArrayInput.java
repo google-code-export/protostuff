@@ -78,7 +78,7 @@ public final class ByteArrayInput implements Input
     /**
      * Returns the current offset (the position). 
      */
-    public int currentOffset()
+    public int curretOffset()
     {
         return offset;
     }

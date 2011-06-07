@@ -89,11 +89,6 @@ public class Proto extends AnnotationContainer
         return file;
     }
     
-    public String getSourcePath()
-    {
-        return file == null ? String.valueOf(url) : file.toString();
-    }
-    
     public Mutable<String> getMutablePackageName()
     {
         return packageName;
@@ -244,7 +239,7 @@ public class Proto extends AnnotationContainer
     void postParse()
     {
         if(packageName == null)
-            throw new IllegalStateException("proto package not defined in " + getSourcePath());
+            throw new IllegalStateException("proto package not defined.");
         
         String javaPkg = extraOptions.get("java_package");
         String javaPackageName = javaPkg==null || javaPkg.length()==0 ? 
