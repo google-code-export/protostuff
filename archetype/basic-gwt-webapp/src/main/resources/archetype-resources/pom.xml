@@ -33,17 +33,7 @@
         </executions>
       </plugin>
     </plugins>
-  </build>
-  <repositories>
-    <repository>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <id>protostuff-repo</id>
-      <name>protostuff-repo</name>      
-      <url>http://protostuff.googlecode.com/svn/repos/maven2/</url>
-    </repository>
-  </repositories>
+  </build>  
   <dependencyManagement>
     <dependencies>
       <dependency>
