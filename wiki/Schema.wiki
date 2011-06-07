@@ -27,6 +27,7 @@ public class User
     private String firstName;
     private String lastName;
     private String email;
+    private List<User> friends;
     
     public User()
     {
@@ -75,6 +76,11 @@ public class UserSchema implements Schema<User>
                 case 3:
                     user.setLastName(input.readString());
                     break;
+                case 4:
+                    if(message.friends == null)
+                        message.friends = new ArrayList<User>();
+                    message.friends.add(input.mergeObject(null, this));
+                    break;
                 default:
                     input.handleUnknownField(number, this);
             }
@@ -93,6 +99,15 @@ public class UserSchema implements Schema<User>
         
         if(user.getLastName() != null)
             output.writeString(3, user.getLastName(), false);
+
+        if(message.friends != null)
+        {
+            for(User friend : message.friends)
+            {
+                if(friend != null)
+                    output.writeObject(4, friend, this, true);
+            }
+        }
     }
 
     public User newMessage()
@@ -127,6 +142,8 @@ public class UserSchema implements Schema<User>
                 return "firstName";
             case 3:
                 return "lastName";
+            case 4:
+                return "friends";
             default:
                 return null;
         }
@@ -144,6 +161,7 @@ public class UserSchema implements Schema<User>
         fieldMap.put("email", 1);
         fieldMap.put("firstName", 2);
         fieldMap.put("lastName", 3);
+        fieldMap.put("friends", 4);
     }
 }
 
