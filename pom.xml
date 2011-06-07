@@ -129,6 +129,7 @@
         <version>2.5</version>
         <configuration>
           <excludePackageNames>com.google.*:org.apache.*:org.codehaus.*:javax.*:com.sun.*</excludePackageNames>
+          <aggregate>true</aggregate>
           <tags>
             <tag>
               <name>created</name>
@@ -140,9 +141,18 @@
             <link>http://java.sun.com/javaee/5/docs/api</link>
             <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
           </links>
+          <reportOutputDirectory>${basedir}</reportOutputDirectory> 
+          <destDir>javadoc</destDir>
         </configuration>
       </plugin>
     </plugins>
+    <!--<extensions>
+      <extension>
+        <groupId>org.jvnet.wagon-svn</groupId>
+        <artifactId>wagon-svn</artifactId>
+        <version>1.9</version>
+      </extension>
+    </extensions>-->
   </build>
   <distributionManagement>
     <repository>
