@@ -1,4 +1,3 @@
-Running the benchmark:
-$ mvn -DforkMode=never -Dbenchmark.skip=false -Dtest=BenchmarkTest test
-
-The generated html (filename starts with "benchmark-") will be on the "target" dir.
+Running:
+$ cd target
+$ java -Dbenchmark.output_dir=. -jar protostuff-benchmark-1.0-SNAPSHOT-jar-with-dependencies.jar
