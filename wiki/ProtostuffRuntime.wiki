@@ -51,7 +51,8 @@ _Note that you can also hand-code schemas for more customization._
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
    LinkedBuffer buffer = getApplicationBuffer();
    
-   // protostuff serialize
+   /* -------- protostuff -------- */
+   // ser
    try
    {
        byte[] protostuff = ProtostuffIOUtil.toByteArray(foo, schema, buffer);
@@ -60,12 +61,13 @@ _Note that you can also hand-code schemas for more customization._
    {
        buffer.clear();
    }
-
-   // protostuff deserialize
+   // deser
    Foo f = new Foo();
    ProtostuffIOUtil.mergeFrom(protostuff, f, schema);
    
-   // protobuf serialize
+   
+   /* -------- protobuf -------- */
+   // ser
    try
    {
        byte[] protobuf = ProtobufIOUtil.toByteArray(foo, schema, buffer);
@@ -74,30 +76,35 @@ _Note that you can also hand-code schemas for more customization._
    {
        buffer.clear();
    }
-
-   // protobuf deserialize
+   // deser
    Foo f = new Foo();
    ProtobufIOUtil.mergeFrom(protobuf, f, schema);
    
-   // json serialize
+   
+   /* -------- json -------- */
+   // ser
    boolean numeric = true;
-   byte[] json = JsonIOUtil.toByteArray(foo, schema, numeric);
+   byte[] json = JsonIOUtil.toByteArray(foo, schema, numeric, buffer);
 
-   // json deserialize
+   // deser
    Foo f = new Foo();
    JsonIOUtil.mergeFrom(json, f, schema, numeric);
    
-   // xml serialize
+    
+   /* -------- xml -------- */
+   // ser
    byte[] xml = XmlIOUtil.toByteArray(foo, schema);
 
-   // xml deserialize
+   // deser
    Foo f = new Foo();
    XmlIOUtil.mergeFrom(xml, f, schema);
    
-   // yaml serialize
+   
+   /* -------- yaml -------- */
+   // ser
    try
    {
-       byte[] protostuff = YamlIOUtil.toByteArray(foo, schema, buffer);
+       byte[] yaml = YamlIOUtil.toByteArray(foo, schema, buffer);
    }
    finally
    {
@@ -113,7 +120,8 @@ _Note that you can also hand-code schemas for more customization._
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
    LinkedBuffer buffer = getApplicationBuffer();
    
-   // protostuff serialize
+   /* -------- protostuff -------- */
+   // ser
    try
    {
        ProtostuffIOUtil.writeTo(outputStream, foo, buffer);
@@ -122,12 +130,13 @@ _Note that you can also hand-code schemas for more customization._
    {
        buffer.clear();
    }
-   
-   // protostuff deserialize
+   // deser
    Foo f = new Foo();
-   ProtostuffIOUtil.mergeFrom(inputStream, f, schema);
+   ProtostuffIOUtil.mergeFrom(inputStream, f, schema, buffer);
    
-   // protobuf serialize
+
+   /* --------protobuf -------- */
+   // ser
    try
    {
        ProtobufIOUtil.writeTo(outputStream, foo, buffer);
@@ -136,27 +145,32 @@ _Note that you can also hand-code schemas for more customization._
    {
        buffer.clear();
    }
-   
-   // protobuf deserialize
+   // deser
    Foo f = new Foo();
-   ProtobufIOUtil.mergeFrom(inputStream, f, schema);
+   ProtobufIOUtil.mergeFrom(inputStream, f, schema, buffer);
    
-   // json serialize
-   boolean numeric = true;
-   JsonIOUtil.writeTo(outputStream, foo, schema, numeric);
    
-   // json deserialize
+   /* -------- json -------- */
+   // ser
+   boolean numeric = false;
+   JsonIOUtil.writeTo(outputStream, foo, schema, numeric, buffer);
+   
+   // deser
    Foo f = new Foo();
-   JsonIOUtil.mergeFrom(inputStream, f, schema, numeric);
+   JsonIOUtil.mergeFrom(inputStream, f, schema, numeric, buffer);
    
-   // xml serialize
+   
+   /* -------- xml -------- */
+   // ser
    XmlIOUtil.writeTo(outputStream, foo, schema);
    
-   // xml deserialize
+   // deser
    Foo f = new Foo();
    XmlIOUtil.mergeFrom(inputStream, f, schema);
    
-   // yaml serialize
+   
+   /* -------- yaml -------- */
+   // ser
    try
    {
        YamlIOUtil.writeTo(outputStream, foo, buffer);
