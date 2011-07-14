@@ -94,3 +94,7 @@ _Note that value (key:value) from some options are optional. The option "generat
       boolean numeric = false;
       JsonIOUtil.writeTo(out, message, numeric);
    }}}
+
+= java_bean_me =
+
+a variant of java_bean that produces j2me-compatible messages/schemas.
