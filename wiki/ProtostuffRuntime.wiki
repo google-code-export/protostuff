@@ -5,6 +5,11 @@ The *protostuff-runtime* module allows your existing pojos to be serialized to d
 
 For people who prefer not to have their messages code-generated from proto files, this fits your bill.
 
+The preliminary modules needed:
+ * protostuff-api
+ * protostuff-collectionschema
+ * protostuff-runtime
+
 The advantages of using proto files is that you have explicit control of fields and their corresponding numbers (which is useful 
 for schema evolution, e.g forward-backward compatibility).
 
@@ -51,7 +56,7 @@ _Note that you can also hand-code schemas for more customization._
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
    LinkedBuffer buffer = getApplicationBuffer();
    
-   /* -------- protostuff -------- */
+   /* -------- protostuff -------- (requires protostuff-core module) */
    // ser
    try
    {
@@ -63,10 +68,10 @@ _Note that you can also hand-code schemas for more customization._
    }
    // deser
    Foo f = new Foo();
-   ProtostuffIOUtil.mergeFrom(protostuff, f, schema);
+   ProtostuffIOUtil.mergeFrom(requires protostuff, f, schema);
    
    
-   /* -------- protobuf -------- */
+   /* -------- protobuf -------- (requires protostuff-core module) */
    // ser
    try
    {
@@ -81,7 +86,7 @@ _Note that you can also hand-code schemas for more customization._
    ProtobufIOUtil.mergeFrom(protobuf, f, schema);
    
    
-   /* -------- json -------- */
+   /* -------- json -------- (requires protostuff-json module)*/
    // ser
    boolean numeric = true;
    byte[] json = JsonIOUtil.toByteArray(foo, schema, numeric, buffer);
@@ -91,7 +96,7 @@ _Note that you can also hand-code schemas for more customization._
    JsonIOUtil.mergeFrom(json, f, schema, numeric);
    
     
-   /* -------- xml -------- */
+   /* -------- xml -------- (requires protostuff-xml module)*/
    // ser
    byte[] xml = XmlIOUtil.toByteArray(foo, schema);
 
@@ -100,7 +105,7 @@ _Note that you can also hand-code schemas for more customization._
    XmlIOUtil.mergeFrom(xml, f, schema);
    
    
-   /* -------- yaml -------- */
+   /* -------- yaml -------- (requires protostuff-yaml module)*/
    // ser
    try
    {
@@ -120,7 +125,7 @@ _Note that you can also hand-code schemas for more customization._
    Schema<Foo> schema = RuntimeSchema.getSchema(Foo.class);
    LinkedBuffer buffer = getApplicationBuffer();
    
-   /* -------- protostuff -------- */
+   /* -------- protostuff -------- (requires protostuff-core module)*/
    // ser
    try
    {
@@ -135,7 +140,7 @@ _Note that you can also hand-code schemas for more customization._
    ProtostuffIOUtil.mergeFrom(inputStream, f, schema, buffer);
    
 
-   /* --------protobuf -------- */
+   /* --------protobuf -------- (requires protostuff-core module)*/
    // ser
    try
    {
@@ -150,7 +155,7 @@ _Note that you can also hand-code schemas for more customization._
    ProtobufIOUtil.mergeFrom(inputStream, f, schema, buffer);
    
    
-   /* -------- json -------- */
+   /* -------- json -------- (requires protostuff-json module)*/
    // ser
    boolean numeric = false;
    JsonIOUtil.writeTo(outputStream, foo, schema, numeric, buffer);
@@ -160,7 +165,7 @@ _Note that you can also hand-code schemas for more customization._
    JsonIOUtil.mergeFrom(inputStream, f, schema, numeric, buffer);
    
    
-   /* -------- xml -------- */
+   /* -------- xml -------- (requires protostuff-xml module)*/
    // ser
    XmlIOUtil.writeTo(outputStream, foo, schema);
    
@@ -169,7 +174,7 @@ _Note that you can also hand-code schemas for more customization._
    XmlIOUtil.mergeFrom(inputStream, f, schema);
    
    
-   /* -------- yaml -------- */
+   /* -------- yaml -------- (requires protostuff-yaml module)*/
    // ser
    try
    {
