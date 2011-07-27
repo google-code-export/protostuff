@@ -68,7 +68,7 @@ _Note that you can also hand-code schemas for more customization._
    }
    // deser
    Foo f = new Foo();
-   ProtostuffIOUtil.mergeFrom(requires protostuff, f, schema);
+   ProtostuffIOUtil.mergeFrom(protostuff, f, schema);
    
    
    /* -------- protobuf -------- (requires protostuff-core module) */
