@@ -55,3 +55,22 @@ GraphIOUtil.mergeFrom(data, cf, schema);
 
 
 For a more complex example, take a look at [http://code.google.com/p/protostuff/source/browse/trunk/protostuff-runtime/src/test/java/com/dyuproject/protostuff/runtime/PolymorphicRuntimeGraphTest.java PolymorphicRuntimeGraphTest.java]
+
+Note that if you have collection fields that can potentially be cyclic, 
+you need to enable the system property below:
+{{{
+-Dprotostuff.runtime.collection_schema_on_repeated_fields=true
+}}}
+
+E.g
+{{{
+class Foo
+{
+    List<Bar> barList;
+    List<Baz> anotherBarList; // if this points to barList, it will be cyclic.
+
+}
+
+}}}
+
+Doing so treats the collection field as a standalone message (which is handled on cyclic graph serialization).
