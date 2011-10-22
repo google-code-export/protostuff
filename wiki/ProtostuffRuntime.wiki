@@ -62,6 +62,7 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
         public final class Bar
         {
             Entity entity; // the example above
+            List<Long> scalarList; // any scalar type
             List<byte[]> bytesList; // bytes arrays are first class citizens in protostuff
             List<Entity> entityList;
             Map<String,Entity> entityMapWithScalarKeys;
