@@ -96,16 +96,16 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
  * *{{{ObjectSchema}}}* (dynamic)
    * used when nested messages:
      * are of type {{{java.lang.Object}}}
-     * are arrays, 
+     * are arrays
      * don't have generics
-     * are too complex.
+     * are too complex
    * all necessary metadata is included on serialization to be able to deserialize the message correctly.
    * E.g
      {{{
 
         public final class Dynamic
         {
-            Object entity; // the example above
+            Object entity;
     
             Object[] objectArray;
             int[] primitiveArray;
