@@ -46,7 +46,7 @@ The field mapping is still intact despite schema evolution ... w/c makes it forw
 ==3 possible types of Schema==
 
 Unlike a static hand-written/code-generated schema, there are 3 possible types of schema that can be used 
-an runtime.  Below are the types ordered according to their efficiency and performance at runtime.
+at runtime.  Below are the types ordered according to their efficiency and performance at runtime.
 
  * *Static Schema*
    * used when nested messages are concrete types.
