@@ -1,7 +1,8 @@
 #summary Ser/Deser for deep object graphs (references and cyclic dependencies)
 #labels Featured
 
-Available on 1.0.0 or higher.
+*Update: please use protostuff-1.0.3 or later*
+ * critical bugs fixed (related to maps and dynamic types).
 
 Features:
  * high-performance graph serialization
