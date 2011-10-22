@@ -21,7 +21,7 @@ Forward-backward compatibility is supported via "append-only" schema evolution.
    
 Here's an example:
 {{{
-    public class Entity
+    public final class Entity
     {
         int id;
         
@@ -43,7 +43,110 @@ With v3, the field mapping would be (id=1, name=2, timestamp=4).  When we encoun
 
 The field mapping is still intact despite schema evolution ... w/c makes it forward-backward compatible to different versions.
 
-===Usage===
+==3 possible types of Schema==
+
+Unlike a static hand-written/code-generated schema, there are 3 possible types of schema that can be used 
+an runtime.  Below are the types ordered according to their efficiency and performance at runtime.
+
+ * *Static Schema*
+   * used when nested messages are concrete types.
+   * compact since no extra metadata included on serialization
+   * E.g 
+     {{{
+        public enum SortOrder
+        {
+            ASCENDING,
+            DESCENDING;
+        }
+
+        public final class Bar
+        {
+            Entity entity; // the example above
+            List<byte[]> bytesList; // bytes arrays are first class citizens in protostuff
+            List<Entity> entityList;
+            Map<String,Entity> entityMapWithScalarKeys;
+            Map<SortOrder,Entity> entityMapWithEnumKeys;
+            Map<Entity,Entity> entityMapWithPojoKeys;
+        }
+     }}}
+
+ * *{{{DerivativeSchema}}}*
+   * used when nested messages are interface/abstract types.
+   * less compact since the type metadata (FQCN) is written (field number: 127) on serialization.
+   * E.g
+     {{{
+        public interface IEntity
+        {
+            // getters/setters
+            // this could be an abstract base class as well
+        }
+
+        public final class Baz
+        {
+            IEntity entity; // the example above
+            List<IEntity> entityList;
+            Map<String,IEntity> entityMapWithScalarKeys;
+            Map<SortOrder,IEntity> entityMapWithEnumKeys;
+            Map<IEntity,IEntity> entityMapWithPojoKeys;
+        }
+
+     }}}
+
+ * *{{{ObjectSchema}}}* (dynamic)
+   * used when nested messages:
+     * are of type {{{java.lang.Object}}}
+     * are arrays, 
+     * don't have generics
+     * are too complex.
+   * all necessary metadata is included on serialization to be able to deserialize the message correctly.
+   * E.g
+     {{{
+
+        public final class Dynamic
+        {
+            Object entity; // the example above
+    
+            Object[] objectArray;
+            int[] primitiveArray;
+            Integer[] boxedArray;
+            Entity[] entityArray;
+            IEntity[] ientityArray;
+
+            List noGenericsList;
+            List<?> uselessGenericsList;
+            List<Object> objectList;
+            List<long[]> withArrayList;
+    
+            Map noGenericsMap;
+            Map<?,?> uselessGenericsMap;
+            Map<String,Object> withObjectMap;
+            Map<?,SortOrder> dynamicKeyMap;
+            Map<Entity,?> dynamicValueMap;
+            Map<Integer[],int[]> withArrayMap;
+
+            // and complex types
+            List<List<String>> aListWithAList;
+            Map<String,List<SortOrder>> complexMap;
+            Map<Set<Entity>,Long> anotherComplexMap;
+        }
+
+     }}}
+
+
+=== Updating fields ===
+
+With the information above, be sure that you update your fields carefully. 
+
+For example ... don't add/remove generics when you already have existing data because the deserialization will fail.
+
+For scalar fields:
+ * {{{int}}} can be updated to {{{long}}} (and vice versa)
+   * compatible with most (if not all) formats
+ * {{{String}}} can be updated to {{{byte[]}}} (and vice versa)
+   * not compatible with text formats (e.g json/xml/yaml)
+
+
+==Usage==
 
 _Note that you can also hand-code schemas for more customization._
 
