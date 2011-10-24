@@ -1,6 +1,8 @@
 #summary schemas for existing pojos/beans/objects/etc
 #labels Featured
 
+*Please use atleast protostuff-1.0.4 or later if you have raw byte array fields ({{{byte[],List<byte[]>,etc}}}). See [http://code.google.com/p/protostuff/issues/detail?id=90 Issue 90] for details.*
+
 The *protostuff-runtime* module allows your existing pojos to be serialized to different formats.
 
 For people who prefer not to have their messages code-generated from proto files, this fits your bill.
@@ -63,8 +65,9 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
         {
             Entity entity; // the example above
             List<Long> scalarList; // any scalar type
-            List<byte[]> bytesList; // bytes arrays are first class citizens in protostuff
+            List<byte[]> bytesList; // byte arrays are treated as scalar fields (use >= 1.0.4)
             List<Entity> entityList;
+            Map<String,byte[]> bytesMapWithScalarKeys;
             Map<String,Entity> entityMapWithScalarKeys;
             Map<SortOrder,Entity> entityMapWithEnumKeys;
             Map<Entity,Entity> entityMapWithPojoKeys;
