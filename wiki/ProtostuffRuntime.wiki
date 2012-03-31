@@ -36,7 +36,7 @@ public class Bar
 
 // with this approach, versioning with inheritance is now fully supported.
 // you simply reserve x-y (range) numbers for the fields of the parent class.
-// internally it will be detected when you make mistakes tagging with the same id.
+// internally it will be detected when you make mistakes tagging with the same number.
 }}}
 
 Without annotations, forward-backward compatibility is still supported via "append-only" schema evolution.
