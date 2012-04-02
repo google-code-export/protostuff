@@ -179,10 +179,10 @@ What does this really mean?
 ==Runtime Options==
 
 Runtime options for protostuff-runtime:
- * -Dprotostuff.runtime.enums_by_name=true
+ * {{{-Dprotostuff.runtime.enums_by_name=true}}}
    * Your enums are serialized using the string from Enum.name();
    * By default, this is disabled for protobuf compatibility (enums serialized using their number)
- * -Dprotostuff.runtime.collection_schema_on_repeated_fields=true
+ * {{{-Dprotostuff.runtime.collection_schema_on_repeated_fields=true}}}
    * The collection (repeated field) will be serialized like a regular message (even if the collection is empty).
    * Disabled by default for protobuf compatibility (the collection is not serialized, only its values).
    * Here's an example (read the comments):
@@ -221,7 +221,7 @@ public final class Foo
    
 }}}
 
- * -Dprotostuff.runtime.auto_load_polymorphic_classes=false
+ * {{{-Dprotostuff.runtime.auto_load_polymorphic_classes=false}}}
    * Polymorphic serialization includes the concrete type of the object being serialized.  Upon deserialization, that className is read and is used to fetch the derived schema.
 {{{
     boolean autoLoad = RuntimeSchema.AUTO_LOAD_POLYMORHIC_CLASSES;
@@ -238,11 +238,15 @@ RuntimeSchema.getSchema(AnotherPojo.class);
 // and so on ...
 }}}
 
- * -Dprotostuff.runtime.morph_non_final_pojos=true
+ * {{{-Dprotostuff.runtime.morph_non_final_pojos=true}}}
    * See [http://code.google.com/p/protostuff/issues/detail?id=43&can=1 this issue] for more details.
    * Basically, when your pojo's class is not declared final ... it can be subclassed (polymorphic)
-   * Disabled by default.  Note that if you enable this option, every message will contain its type (w/c is a lot of overhead when your package names are long).
+   * Disabled by default.  Note that if you enable this option, every message will contain its type.
    
+ * {{{-Dprotostuff.runtime.id_strategy_factory=com.dyuproject.protostuff.runtime.IncrementalIdStrategy$Factory}}}
+   * By default (if property is not present), the {{{DefaultIdStrategy}}} is used, which means a polymorphic pojo is identified by serializing its type as a string (FQCN).
+   * If you set the above property, int ids are generated on the fly (thread-safe/atomic) and are mapped to your polymorphic pojos.  The end result is faster ser/deser and the serialized size is smaller (around 1/3-1/4 the size of the default strategy)
+   * You can also reserve the first few ids (via {{{IncrementalIdStrategy.Registry}}}) for your core pojos (remember that ids 1-15 are serialized as 1-byte together with the protobuf tag), as well as set the max size for the {{{ArrayList}}} which holds the ids.
 
 ==Collection fields==
 
