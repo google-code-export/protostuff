@@ -15,6 +15,7 @@ issues.
  * {{{[defaults]}}} on the fields will no be inculded (this is not implemented yet)
  * annotations on the extender will to be included
  * no transitive extend resolution (this is not implemented yet)
+ * no extend by multiple sources (msgs) (this is not implemented yet)
 
 = Usage =
 
