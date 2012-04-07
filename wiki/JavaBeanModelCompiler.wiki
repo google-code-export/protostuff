@@ -1,0 +1,41 @@
+#summary java_bean_model compiler description that provides you with flexible and inheritable
+schema generation for your separated\independent models
+
+= Flexible and inheritable schema generation =
+
+*java_bean_model* compiler is designed to give you a lot of flexibility for generated schemas through out
+polymorphism and extended use of annotations. You can subclass result schema and change the way fields are 
+written or read, change which fields should be written and which should not, how instances of deserialized 
+objects should be generated.
+
+This compiler is based on basic *java_bean* compiler code. The main purpose is to generate schemas
+for described messages to be compatible to your models. It implies you already have your models in your 
+project and you don't want to change them much.
+
+_Note. Models it self can be generated too if required. But a lot of specific features for that compiler
+on models generation are not implemented yet. So the models you can get from it is much alike java_bean
+will give to you._
+
+Second goal of this compiler is to give you some work around for handling inheritance in your models.
+This also requires subclassing of generated schemas and explicitly specifying of how to behave with it.
+
+= Features =
+ 
+== Schema generation ==
+ * inheritable schemas
+ * overridable reads/writes
+ * native type cast support on read/write int32
+ * native byte[] fields support
+ * accessors (is/set/get), direct field access to public fields
+ * renaming of field map
+ * collection fields with base class types 
+
+== Model generation ==
+ 
+ * immutable messages models (as option)
+ * copy()
+ * builder
+ * toString()
+ * native types for fields (support for existing annotation in schema @Byte, @Bytes, @Short, etc)
+
+None of this model generations features are implemented yet.
