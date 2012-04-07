@@ -69,3 +69,24 @@ the compilation result will be looked like:
 
 as you can see, fields id's in extendable message should not intersect with 
 fields id's in extender message.
+
+= Sample 2 = 
+
+{{{    
+    message Item {
+        required int32 id = 1;
+        optional string name = 2;
+    }
+
+    @Extend(by = Item)
+    message Weapon {        
+    }
+
+    @Extend(by = Item)
+    message Drug {        
+    }
+
+    @Extend(by = Item)
+    message Pet {        
+    }
+}}}
