@@ -55,5 +55,7 @@ None of this model generations features are implemented yet.
         // or
         options <message name>.package = "package."
    }}} 
- * if {{{ @Import(a="com.text.blah", b="org.text.blah", ...) }}} is specified on a message, all values of params of this attribute will be included in import section of the file.
+ * if {{{ @Import(a="com.text.blah", b="org.text.blah", ...) }}} is specified on a message, all values of params of this attribute will be included in an import section of the file.
  * if {{{ @Transient }}} is specified on a message or enum block, it will be skipped for generation. Nothing will be generated for that.
+
+To Be continued ...
