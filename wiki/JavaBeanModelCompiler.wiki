@@ -1,5 +1,4 @@
-#summary java_bean_model compiler description that provides you with flexible and inheritable
-schema generation for your separated\independent models
+#summary java_bean_model compiler provides you with flexible and inheritable schema generation for your separated\independent models
 
 = Flexible and inheritable schema generation =
 
