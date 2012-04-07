@@ -25,8 +25,7 @@ of extendable message.
  * apply an attribute on extendable message {{{ @Extend(by = ExtenderMessageName) }}}
 
 _Warning. Transitive resolution of extendables is not support yet. So if you want A to be extended
-by B that should be extended by C, try first to arrange them in asc order in the file. This is not
-implemented directly now._
+by B that should be extended by C, this is not possible right now._
 
 = Sample = 
 
