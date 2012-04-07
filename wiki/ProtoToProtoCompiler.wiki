@@ -32,14 +32,16 @@ by B that should be extended by C, this is not possible right now._
 
 {{{
     @Extend(by = ItemBase)
-    message Item {
+    message Item 
+    {
         // or instead of @, this can be used: option extends = ItemBase;
 
         required int32 xxx = 10;
         optional string yyy = 11;
     }
 
-    message ItemBase {
+    message ItemBase 
+    {
         required int32 id = 1;
         @Test(v = 1, a = "bbb")
         optional string name = 2;
@@ -50,7 +52,8 @@ the compilation result will be looked like:
 
 {{{
     // @Extend(by = ItemBase)
-    message Item {
+    message Item 
+    {
         // Extended by ItemBase at ....
         required int32 id = 1;
         @Test(v = 1, a = "bbb")
@@ -60,7 +63,8 @@ the compilation result will be looked like:
         optional string yyy = 11;
     }
 
-    message ItemBase {
+    message ItemBase 
+    {
         required int32 id = 1;
         @Test(v = 1, a = "bbb")
         optional string name = 2;
@@ -73,20 +77,24 @@ fields id's in extender message.
 = Sample 2 = 
 
 {{{    
-    message Item {
+    message Item 
+    {
         required int32 id = 1;
         optional string name = 2;
     }
 
     @Extend(by = Item)
-    message Weapon {        
+    message Weapon 
+    {        
     }
 
     @Extend(by = Item)
-    message Drug {        
+    message Drug 
+    {        
     }
 
     @Extend(by = Item)
-    message Pet {        
+    message Pet 
+    {        
     }
 }}}
