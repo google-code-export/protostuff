@@ -47,20 +47,21 @@ None of this model generation features are implemented yet.
  {{{
        // from highest priority to lowest 
        option msuffix = "Suffix"; // can only be provided inside of message body
-       option java_model_suffix = "Suffix" // can be provided inside of message body
-       option <message name>.suffix = "Suffix for this certain message"  // in global namespace or in module properties
-       option java_model_suffix = "Suffix" // in global namespace, in module properties
+       option java_model_suffix = "Suffix"; // can be provided inside of message body
+       option <message name>.suffix = "Suffix for this certain message";  // in global namespace or in module properties
+       option java_model_suffix = "Suffix"; // in global namespace, in module properties
  }}}
  * Model names will always be generated in form of: {{{ <message package><message name><message suffix>}}}. Package is defined much alike schema Suffix. Package should be always end up with DOT.
    {{{ 
        // from highest priority to lowest 
        option mpackage = "com.package."; // can only be provided inside of message body
-       option java_model_package = "com.package." // can be provided inside of message body
-       option <message name>.package = "package for this certain message."  // in global namespace or in module properties
-       option java_model_package = "com.package." // in global namespace, in module properties
+       option java_model_package = "com.package."; // can be provided inside of message body
+       option <message name>.package = "package for this certain message.";  // in global namespace or in module properties
+       option java_model_package = "com.package."; // in global namespace, in module properties
    }}} 
  * if {{{ @Import(a="com.text.blah", b="org.text.blah", ...) }}} is specified on a message, all values of params of this attribute will be included in an import section of the file.
  * if {{{ @Transient }}} is specified on a message or enum block, it will be skipped for generation. Nothing will be generated for that.
+ * {{{ option java_schema_field_accessors=true; }}} can be used in module properties, or global namespace, or message body to specify that accessors methods should be used for accessing model fields on  reading/writing. _Note. Currently field will be used directly only if this option is not specified._
 
 To Be continued ...
 
