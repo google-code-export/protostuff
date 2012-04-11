@@ -37,23 +37,27 @@ This also requires subclassing of generated schemas and explicitly specifying of
  * toString()
  * native types for fields (support for existing annotation in schema @Byte, @Bytes, @Short, etc)
 
-None of this model generations features are implemented yet.
+None of this model generation features are implemented yet.
 
 
 = Usage =
 
- * Schema and Model classes are always will be generated in separate files as separate classes.
- * Schema names will always be generated in form: {{{ <message name><message suffix>Schema}}}. This is to separate names of generated models and schemas. Suffix can be defined following way: 
- {{{ 
-       option java_model_suffix = "Suffix" // specified in module properties or in proto global ns
-       // or 
-       options <message name>.suffix = "Suffix for this certain message"  // in global proto ns or in message body
+ * Schema and Model classes will always be generated in separate files as separate classes.
+ * Schema names will always be generated in form of: {{{ <message name><message suffix>Schema}}}. This is to separate names of generated models and schemas. Suffix can be defined following way (suffix term is used in postfix meaning) (options with high priority overrides options with lower priority): 
+ {{{
+       // from highest priority to lowest 
+       option msuffix = "Suffix"; // can only be provided inside of message body
+       option java_model_suffix = "Suffix" // can be provided inside of message body
+       option <message name>.suffix = "Suffix for this certain message"  // in global namespace or in module properties
+       option java_model_suffix = "Suffix" // in global namespace, in module properties
  }}}
- * Model names will always be generated in form: {{{ <message package><message name><message suffix>}}}. Suffix is defined like with schema names. Package is defined the same way too but names of the options are a bit different.
+ * Model names will always be generated in form of: {{{ <message package><message name><message suffix>}}}. Package is defined much alike schema Suffix. Package should be always end up with DOT.
    {{{ 
-        option java_model_package = "package." 
-        // or
-        options <message name>.package = "package."
+       // from highest priority to lowest 
+       option mpackage = "com.package."; // can only be provided inside of message body
+       option java_model_package = "com.package." // can be provided inside of message body
+       option <message name>.package = "package for this certain message."  // in global namespace or in module properties
+       option java_model_package = "com.package." // in global namespace, in module properties
    }}} 
  * if {{{ @Import(a="com.text.blah", b="org.text.blah", ...) }}} is specified on a message, all values of params of this attribute will be included in an import section of the file.
  * if {{{ @Transient }}} is specified on a message or enum block, it will be skipped for generation. Nothing will be generated for that.
