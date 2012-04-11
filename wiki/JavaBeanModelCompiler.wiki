@@ -43,7 +43,7 @@ None of this model generation features are implemented yet.
 = Usage =
 
  * Schema and Model classes will always be generated in separate files as separate classes.
- * Schema names will always be generated in form of: {{{ <message name><message suffix>Schema}}}. This is to separate names of generated models and schemas. Suffix can be defined following way (suffix term is used in postfix meaning) (options with high priority overrides options with lower priority): 
+ * Schema names will always be generated in form of: {{{ <message name><message suffix>Schema}}}. This is to separate names of generated models and schemas. Suffix can be defined following way (suffix term is used in postfix meaning) (options with higher priority overrides options with lower priority): 
  {{{
        // from highest priority to lowest 
        option msuffix = "Suffix"; // can only be provided inside of message body
@@ -63,3 +63,35 @@ None of this model generation features are implemented yet.
  * if {{{ @Transient }}} is specified on a message or enum block, it will be skipped for generation. Nothing will be generated for that.
 
 To Be continued ...
+
+= Sample: simple =
+
+{{{
+package game.data.model.proto;
+
+option java_schema_field_accessors = true;
+option java_model_package = "game.data.model.";
+option java_model_suffix = "";
+
+message Cowardice {
+    required int32 defenderId = 1;
+
+    required int32 attackerId = 2;
+
+    @Byte
+    required int32 score = 3;
+
+    required int32 old = 4;
+
+    @Byte
+    required int32 lastResult = 5;
+}
+
+message CowardiceCacheEntry {
+    option mpackage = "game.data.model.cache.";
+
+    required int32 heroId = 1;
+
+    repeated Cowardice cowardices  = 2;
+}
+}}}
