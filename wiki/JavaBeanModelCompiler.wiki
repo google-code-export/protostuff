@@ -61,7 +61,7 @@ None of this model generation features are implemented yet.
    }}} 
  * if {{{ @Import(a="com.text.blah", b="org.text.blah", ...) }}} is specified on a message, all values of params of this attribute will be included in an import section of the file.
  * if {{{ @Transient }}} is specified on a message or enum block, it will be skipped for generation. Nothing will be generated for that.
- * {{{ option java_schema_field_accessors=true; }}} can be used in module properties, or global namespace, or message body to specify that accessors methods should be used for accessing model fields on  reading/writing. _Note. Currently field will be used directly only if this option is not specified._
+ * {{{ option java_schema_field_accessors=true; }}} can be used in module properties, or global namespace, or message body to specify that accessors methods should be used for accessing model fields on  reading/writing. _Note. Currently fields in a message will be used directly in one case only, when there is no of this option applied anywhere to certain message._
 
 To Be continued ...
 
