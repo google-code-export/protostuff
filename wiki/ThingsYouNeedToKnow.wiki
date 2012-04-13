@@ -128,8 +128,7 @@ To remove a field, simply remove the field from the .proto (or you can comment t
 
 Make sure its field number is not re-used. (The same rules apply when adding new fields).
 
-The limit on the number of fields is 127.
-
+If you're mixing this with protostuff-runtime, its best that you do not use the field number 127.
 
 ====Runtime pojos====
 
@@ -137,9 +136,12 @@ To remove a field, annotate with {{{@Deprecated}}}.
 
 When adding new fields, append the field on your pojo's field declaration. (The order is top to bottom).
 
-The limit on the number of fields is 127.
+The limit on the number of fields is 126.
 
-If you have base classes and your messages inherit from those classes, make sure that the base classes are not subject to any change.
+If you are using the {{{@Tag}}} annotation, then there is no limit.
+Only requirement is that you don't use 127.
+
+If not and you have base classes and your messages inherit from those classes, make sure that the base classes are not subject to any change.
 
 When a pojo inherits from a parent, the field number ordering will be based from the parent primarily then onto the child.
 
@@ -147,10 +149,7 @@ If you add a field to the parent, the field number ordering of the subclass will
 
 The whole concept is to preserve the field numbers.
 
-====Polymorphic pojos====
-
-The limit on the number of fields is 126.  127 is reserved for the type metadata included during serialization.
-
+It is best you use the {{{@Tag}}} annotation to fully support schema evolution on object hierarchies.
 
 ==Polymorphic serialization==
 
