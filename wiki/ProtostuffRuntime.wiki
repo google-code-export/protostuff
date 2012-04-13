@@ -99,6 +99,7 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
 
  * *{{{DerivativeSchema}}}*
    * used when the declared field is an abstract class.
+     * Use at least version 1.0.5.  (previous versions allowed interfaces but was changed because enums and most scalars do implement interfaces)
    * less compact since the type metadata is written (field number: 127) on serialization.
    * E.g
      {{{
@@ -133,7 +134,7 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
  * *{{{ObjectSchema}}}* (dynamic)
    * used when the type of the declared fields:
      * are {{{java.lang.Object}}}
-     * are interfaces (enums and most scalars do implement interfaces)
+     * are interfaces
      * are arrays
      * don't have generics
      * are too complex
