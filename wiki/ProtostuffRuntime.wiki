@@ -21,7 +21,7 @@ With this module, the field's number is ordered according to their declaration i
 
 Sun jdk6 or higher is recommended for guaranteed ordering ([http://stackoverflow.com/questions/5001172/java-reflection-getting-fields-and-methods-in-declaration-order link]).
 
-* As of 1.0.5, you can annotate the fields to have explicit control of the field numbers*
+* As of 1.0.5, {{{@Tag}}} annotations can be used on fields to have explicit control of the field numbers*
 {{{
 // all or nothing.  
 // Either you annotate all fields or you don't annotate at all (applies to the relevant class only).
@@ -39,7 +39,7 @@ public class Bar
 // internally it will be detected when you make mistakes tagging with the same number.
 }}}
 
-Without annotations, forward-backward compatibility is still supported via "append-only" schema evolution.
+Without {{{@Tag}}} annotations, forward-backward compatibility is still supported via "append-only" schema evolution.
  * To add new fields, append the field in the declaration
  * To remove existing fields, annotate with @Deprecated
    
