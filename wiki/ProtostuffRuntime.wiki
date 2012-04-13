@@ -92,7 +92,8 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
             Map<String,byte[]> bytesMapWithScalarKeys;
             Map<String,Entity> entityMapWithScalarKeys;
             Map<SortOrder,Entity> entityMapWithEnumKeys;
-            Map<Entity,Entity> entityMapWithPojoKeys;
+            Map<Entity,Date> entityMapWithPojoKeys;
+            Map<Entity,Entity> entityMap;
         }
      }}}
 
@@ -101,19 +102,30 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
    * less compact since the type metadata is written (field number: 127) on serialization.
    * E.g
      {{{
-        public interface IEntity
+        public abstract class Instrument
         {
-            // getters/setters
-            // this could be an abstract base class as well
+            // ...
         }
 
+        public final class BaseGuitar extends Instrument
+        {
+            // ...
+        }
+
+        public final class Piano extends Instrument
+        {
+            // ...
+        }
+
+        // DerivativeSchema will be used on the fields below
         public final class Baz
         {
-            IEntity entity; // the example above
-            List<IEntity> entityList;
-            Map<String,IEntity> entityMapWithScalarKeys;
-            Map<SortOrder,IEntity> entityMapWithEnumKeys;
-            Map<IEntity,IEntity> entityMapWithPojoKeys;
+            Instrument instrument;
+            List<Instrument> instrumentList;
+            Map<String,Instrument> instrumentMapWithScalarKeys;
+            Map<SortOrder,Instrument> instrumentMapWithEnumKeys;
+            Map<BaseGuitar,Instrument> instrumentMapWithPojoKeys;
+            Map<Instrument,Instrument> instrumentMap;
         }
 
      }}}
