@@ -73,7 +73,7 @@ Unlike a static hand-written/code-generated schema, there are 3 possible types o
 at runtime.  Below are the types ordered according to their efficiency and performance at runtime.
 
  * *Static Schema*
-   * used when nested messages are concrete types.
+   * used when the declared field is a concrete type.
    * compact since no extra metadata included on serialization
    * E.g 
      {{{
@@ -97,8 +97,8 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
      }}}
 
  * *{{{DerivativeSchema}}}*
-   * used when nested messages are interface/abstract types.
-   * less compact since the type metadata (FQCN) is written (field number: 127) on serialization.
+   * used when the declared field is an abstract class.
+   * less compact since the type metadata is written (field number: 127) on serialization.
    * E.g
      {{{
         public interface IEntity
@@ -119,8 +119,9 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
      }}}
 
  * *{{{ObjectSchema}}}* (dynamic)
-   * used when nested messages:
-     * are of type {{{java.lang.Object}}}
+   * used when the type of the declared fields:
+     * are {{{java.lang.Object}}}
+     * are interfaces (enums and most scalars do implement interfaces)
      * are arrays
      * don't have generics
      * are too complex
@@ -158,7 +159,6 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
 
      }}}
 
-
 === Updating fields ===
 
 With the information above, be sure that you update your fields carefully. 
@@ -167,10 +167,44 @@ For example ... don't add/remove generics when you already have existing data be
 
 For scalar fields:
  * {{{int}}} can be updated to {{{long}}} (and vice versa)
-   * compatible with most (if not all) formats
- * {{{String}}} can be updated to {{{byte[]}}} (and vice versa)
+   * compatible with all suported formats
+ * {{{String}}} can be updated to {{{byte[]}}}/{{{ByteString}}} (and vice versa)
    * not compatible with text formats (e.g json/xml/yaml)
 
+{{{
+class Example
+{
+   int i;
+   long l;
+   Integer i2;
+   Long l2;
+   String s;
+   byte[] b;
+   ByteString bs;
+}
+
+}}}
+
+=== Performance guidelines ===
+
+As much as possible, use the concrete type when declaring a field.
+
+For polymorhic datasets, prefer abstract classes vs interfaces.
+ * Use {{{ExplicitIdStrategy}}} to write the type metadata as int (ser/deser will be faster and the serialized size will be smaller).
+   * Register your concrete classes at startup via {{{ExplicitIdStrategy.Registry}}}.
+
+ * For objects not known ahead of time, use {{{IncrementalIdStrategy}}}
+   * You can activate it using the system property:
+    {{{-Dprotostuff.runtime.id_strategy_factory=com.dyuproject.protostuff.runtime.IncrementalIdStrategy$Factory}}}
+
+   * You can also use these strategies independently.  E.g:
+    {{{
+    final IncrementalIdStrategy strategy = new IncrementalIdStrategy(....);  
+    // use its registry if you want to pre-register classes.
+
+    // Then when your app needs a schema, use it.
+    RuntimeSchema.getSchema(clazz, strategy);
+    }}}
 
 ==Usage==
 
