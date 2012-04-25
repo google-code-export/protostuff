@@ -1,5 +1,4 @@
 #summary protostuff binary serialization and deserialization, howto, usage
-#labels Featured
 
 The single dependency:
  * protostuff-api - 48kb
