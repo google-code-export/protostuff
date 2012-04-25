@@ -25,7 +25,7 @@ Sun jdk6 or higher is recommended for guaranteed ordering ([http://stackoverflow
 {{{
 // all or nothing.  
 // Either you annotate all fields or you don't annotate at all (applies to the relevant class only).
-public class Bar
+public final class Bar
 {
   @Tag(8)
   int baz;
@@ -130,6 +130,34 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
         }
 
      }}}
+   * IMPORTANT
+     * If your object heirarchy involves a concrete class subclassing another concrete class (not using abstract classes), set: 
+       {{{-Dprotostuff.runtime.morph_non_final_pojos=true}}}
+     * With that property set, {{{DerivativeSchema}}} will be used on non-final pojos (concrete types) similar to abstract classes.
+       For example:
+       {{{
+       class Base
+       {
+         int id = 1;
+       }
+       class Child extends Base
+       {
+         int status = 2;
+       }
+       class Pojo
+       {
+         Base b = new Child();
+       }
+       
+       // If you serialize Pojo, Child's "status" field will not be 
+       // serialized if the system property is not set.
+       
+       // With that in mind, all pojos that aren't marked final will 
+       // have an overhead of extra type metadata on serialization.
+       
+       // To ensure that no extra type metadata be will written, mark 
+       // your pojos final when you know there are no subclasses.
+       }}}
 
  * *{{{ObjectSchema}}}* (dynamic)
    * used when the type of the declared fields:
