@@ -238,9 +238,11 @@ RuntimeSchema.getSchema(AnotherPojo.class);
 }}}
 
  * {{{-Dprotostuff.runtime.morph_non_final_pojos=true}}}
-   * See [http://code.google.com/p/protostuff/issues/detail?id=43&can=1 this issue] for more details.
+   * Disabled by default (Some devs have a habit of not using the final keyword).  
    * Basically, when your pojo's class is not declared final ... it can be subclassed (polymorphic)
-   * Disabled by default.  Note that if you enable this option, every message will contain its type.
+   * Note that if you enable this option, every non-final pojo will have the overhead of including the type metadata on serialization
+   * So, if you know that a particular class will not be subclassed, mark it final.
+   * See [http://code.google.com/p/protostuff/issues/detail?id=43&can=1 this issue] for more details.
    
  * {{{-Dprotostuff.runtime.id_strategy_factory=com.dyuproject.protostuff.runtime.IncrementalIdStrategy$Factory}}}
    * By default (if property is not present), the {{{DefaultIdStrategy}}} is used, which means a polymorphic pojo is identified by serializing its type as a string (FQCN).
