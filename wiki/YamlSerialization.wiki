@@ -1,5 +1,4 @@
 #summary yaml serialization howto, usage
-#labels Featured
 
 * Dependencies used by [YamlSerialization#java_bean java_bean] and [YamlSerialization#java_v2protoc_schema java_v2protoc_schema]*
  * protostuff-api - 48kb
