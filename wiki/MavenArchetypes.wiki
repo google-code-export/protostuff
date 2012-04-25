@@ -1,5 +1,4 @@
 #summary maven archetypes for rapid development
-#labels Featured
 ={{{Maven Archetypes}}}=
 
 Currently there are 2 archetypes available:
