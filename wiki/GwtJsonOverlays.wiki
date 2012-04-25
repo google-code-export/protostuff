@@ -1,5 +1,4 @@
 #summary gwt json overlays
-#labels Featured
 ={{{GWT JSON Overlays}}}=
 
 
