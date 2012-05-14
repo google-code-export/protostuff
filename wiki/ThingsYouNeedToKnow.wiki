@@ -243,17 +243,54 @@ RuntimeSchema.getSchema(AnotherPojo.class);
    * Note that if you enable this option, every non-final pojo will have the overhead of including the type metadata on serialization
    * So, if you know that a particular class will not be subclassed, mark it final.
    * See [http://code.google.com/p/protostuff/issues/detail?id=43&can=1 this issue] for more details.
+
+ * {{{-Dprotostuff.runtime.morph_collection_interfaces=true}}} (since 1.0.7)
+   * Disabled by default.  Type metadata will not be included and instead, the collection will be mapped to a default impl.
+     * {{{Collection = ArrayList}}}
+     * {{{List = ArrayList}}}
+     * {{{Set = HashSet}}}
+     * {{{SortedSet = TreeSet}}}
+     * {{{NavigableSet = TreeSet}}}
+     * {{{Queue = LinkedList}}}
+     * {{{BlockingQueue = LinkedBlockingQueue}}}
+     * {{{Deque = LinkedList}}}
+     * {{{BlockingDequeue = LinkedBlockingDeque}}}
+   * Enabling this is useful if you want to retain the actual impl used (type metadata will be included).
+   * To enable/override for a particular field, annotate the field with {{{com.dyuproject.protostuff.Morph}}} (since 1.0.7)
+   * Since it is disabled by default, "{{{List<String> names;}}}" would be serialized to json like:
+     {{{
+     {
+       "names": ["foo","bar"]
+     }
+     }}}
+   * If enabled:
+     {{{
+     {
+       "names": {"y":"ArrayList", "v":[{"i":"foo"},{"i":"bar"}]}
+     }
+     }}}
+   * If you're using protostuff for webservices, then you'll probably want to leave it disabled and let protostuff map it to an {{{ArrayList}}}.
+
+ * {{{-Dprotostuff.runtime.morph_map_interfaces=true}}} (since 1.0.7)
+   * Disabled by default.  Type metadata will not be included and instead, the map will be mapped to a default impl.
+     * {{{Map = HashMap}}}
+     * {{{SortedMap = TreeMap}}}
+     * {{{NavigableMap = TreeMap}}}
+     * {{{ConcurrentMap = ConcurrentHashMap}}}
+     * {{{ConcurrentNavigableMap = ConcurrentSkipListMap}}}
+   * Enabling this is useful if you want to retain the actual impl used (type metadata will be included).
+   * To enable/override for a particular field, annotate the field with {{{com.dyuproject.protostuff.Morph}}} (since 1.0.7)
    
  * {{{-Dprotostuff.runtime.id_strategy_factory=com.dyuproject.protostuff.runtime.IncrementalIdStrategy$Factory}}}
    * By default (if property is not present), the {{{DefaultIdStrategy}}} is used, which means a polymorphic pojo is identified by serializing its type as a string (FQCN).
    * If you set the above property, int ids are generated on the fly (thread-safe/atomic) and are mapped to your polymorphic pojos.  The end result is faster ser/deser and the serialized size is smaller (around 1/3-1/4 the size of the default strategy)
-   * You can also reserve the first few ids (via {{{IncrementalIdStrategy.Registry}}}) for your core pojos (remember that ids 1-15 are serialized as 1-byte together with the protobuf tag), as well as set the max size for the {{{ArrayList}}} which holds the ids.
+   * You can also reserve the first few ids (via {{{IncrementalIdStrategy.Registry}}}) for your core pojos, as well as set the max size for the {{{ArrayList}}} which holds the ids.
 
 ==Collection fields==
 
 Null values are not serialized. (A deserialized collection coming from a collection with null values will fail on {{{Collection.equals()}}})
 
-{{{Collections}}} with simple values(scalar,enum,pojo) are serialized without type metadata (normal operation).
+{{{Collections}}} with simple values(scalar,enum,pojo,delegate) are serialized without type metadata (normal operation).
 
 Complex values (E.g {{{Queue<List<String>>}}}, {{{List<int[]>}}}, {{{Set<Object>}}}, {{{Deque<?>}}}) will be serialized *with* type metadata.
 
@@ -261,6 +298,6 @@ Complex values (E.g {{{Queue<List<String>>}}}, {{{List<int[]>}}}, {{{Set<Object>
 
 Allows null keys and values. (You can rely on the equality from  {{{Map.equals()}}}) 
 
-{{{Maps}}} with simple keys and values(scalar,enum,pojo) are serialized without type metadata (normal operation).
+{{{Maps}}} with simple keys and values(scalar,enum,pojo,delegate) are serialized without type metadata (normal operation).
 
 Complex values (E.g {{{Map<Object,List<String>>}}}, {{{HashMap<Set<byte[]>,float[]>}}}, {{{TreeMap<long[][],Object>}}}, {{{SortedMap<?,?>}}}) will be serialized *with* type metadata.
