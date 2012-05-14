@@ -30,7 +30,9 @@ public final class Bar
   @Tag(8)
   int baz;
 
-  @Tag(15)
+  // alias is available since 1.0.7
+  // useful for json/xml/yaml where you can override the field names
+  @Tag(value = 15, alias = "f")
   double foo;
 }
 
