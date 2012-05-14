@@ -1,5 +1,5 @@
+#summary runtime delegates howto/usage
 #labels Featured
-# runtime delegates howto/usage
 
 *{{{com.dyuproject.protostuff.runtime.Delegate}}} is available since 1.0.7*(protostuff-runtime)
 
@@ -7,8 +7,8 @@ Useful for:
  # singletons
  # pojos with no fields
  # pojos that should not be merged
- # pojos that should be written as a scalar/inline value
- # could be used to pack a type into a byte array
+ # pojos that prefer to be written as scalar/inline values
+ # could be used to pack primitive array types into a byte array
 
 You basically register them on initialization via:
  * {{{DefaultIdStrategy.registerDelegate(Delegate<V> delegate)}}}
