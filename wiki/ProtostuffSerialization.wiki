@@ -78,7 +78,7 @@ finally
 LinkedBuffer buffer = getApplicationBuffer();
 try
 {
-    byte[] data = ProtostuffIOUtil.toByteArray(person, Person.getSchema());
+    byte[] data = ProtostuffIOUtil.toByteArray(person, Person.getSchema(), buffer);
     // do something with data
 }
 finally
