@@ -94,6 +94,10 @@ finally
 Person person = new Person();
 InputStream in;
 ProtostuffIOUtil.mergeFrom(in, person, Person.getSchema());
+
+// or re-use the internal byte array as read buffer
+LinkedBuffer buffer = getApplicationBuffer();
+ProtostuffIOUtil.mergeFrom(in, person, Person.getSchema(), buffer);
 }}}
 
 * merging from a byte array *
