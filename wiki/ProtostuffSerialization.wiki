@@ -1,12 +1,12 @@
 #summary protostuff binary serialization and deserialization, howto, usage
 
-The single dependency:
+The dependencies:
  * protostuff-api - 48kb
- * protostuff-core - 43kb
+ * protostuff-core - 45kb
 
 = java_bean =
 
-Generate code via [http://protostuff.googlecode.com/files/protostuff-compiler-1.0.0-jarjar.jar protostuff-compiler].
+Generate code via [http://protostuff.googlecode.com/files/protostuff-compiler-1.0.7-jarjar.jar protostuff-compiler].
 
 {{{foo.proto}}}
 {{{
@@ -95,7 +95,7 @@ Person person = new Person();
 InputStream in;
 ProtostuffIOUtil.mergeFrom(in, person, Person.getSchema());
 
-// or re-use the internal byte array as read buffer
+// or re-use the LinkedBuffer's internal byte array as a read buffer
 LinkedBuffer buffer = getApplicationBuffer();
 ProtostuffIOUtil.mergeFrom(in, person, Person.getSchema(), buffer);
 }}}
@@ -105,4 +105,26 @@ ProtostuffIOUtil.mergeFrom(in, person, Person.getSchema(), buffer);
 Person person = new Person();
 byte[] data;
 ProtostuffIOUtil.mergeFrom(data, person, Person.getSchema()); 
+}}}
+
+If a nested message's required field is missing on deser,  {{{UninitializedMessageException is thrown}}}.
+
+{{{
+catch(UninitializedMessageException e)
+{
+    // your error handling. 
+}
+
+}}}
+
+If a required field from the root message is missing, nothing is thrown.
+This is intentional (saves extra object allocation and stacktrace).
+
+You can simply do:
+{{{
+if(!schema.isInitialized(message))
+{
+    // your error handling. 
+}
+
 }}}
