@@ -27,6 +27,7 @@ JsonIOUtil.writeTo(outputStream, foo, Foo.getSchema(), false, buffer);
 Here's the code using pipes:
 
   * Note that for generated message, you need to enable the "generate_pipe_schema" option (see [CompilerOptions#java_bean compiler options]). A static method "getPipeSchema" will be generated.
+
 {{{
 InputStream protobufInputStream;
 
@@ -38,14 +39,15 @@ JsonIOUtil.writeTo(outputStream, pipe, Foo.getPipeSchema(), false, buffer);
 
 
 For runtime objects, pipes are also supported. 
-The schema of a runtime object is an instance of {{{MappedSchema<T>}}}, which has a getPipeSchema() method. 
+  * The schema of a runtime object is an instance of {{{MappedSchema<T>}}}, which has a getPipeSchema() method.
+
 {{{
-// byte array from cache
+// protostuff byte array from cache or datastore
 byte[] protostuffData = ...;
 MappedSchema<Foo> schema = (MappedSchema<Foo>)RuntimeSchema.getSchema(Foo.class);
 
-// transcode the protobuf encoding to json encoding
+// protostuff to json-numeric (which I use all the time for gwt overlays)
 LinkedBuffer buffer = ...;
-Pipe pipe = ProtostuffIOUtil.newPipe(protostuffData);
-JsonIOUtil.writeTo(outputStream, pipe, schema.getPipeSchema(), false, buffer);
+Pipe pipe = ProtostuffIOUtil.newPipe(protostuffData, 0, protostuffData.length);
+JsonIOUtil.writeTo(outputStream, pipe, schema.getPipeSchema(), true, buffer);
 }}}
