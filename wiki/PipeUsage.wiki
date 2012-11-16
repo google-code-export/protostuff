@@ -15,29 +15,37 @@ InputStream protobufInputStream;
 
 // deserialize
 Foo foo = new Foo();
-ProtobufIOUtil.mergeFrom(protobufInputStream, foo, Foo.getSchema());
+ProtobufIOUtil.mergeFrom(protobufInputStream, foo, Foo.getSchema(), inBuf);
 
 // write to json
-JsonIOUtil.writeTo(outputStream, foo, Foo.getSchema(), false);
+LinkedBuffer buffer = ...;
+JsonIOUtil.writeTo(outputStream, foo, Foo.getSchema(), false, buffer);
 }}}
 
-To use pipes, enable the "generate_pipe_schema" option (see [CompilerOptions#java_bean compiler options]). 
-A static method "getPipeSchema" will be generated.
+----
+
+Here's the code using pipes:
+
+  * Note that for generated message, you need to enable the "generate_pipe_schema" option (see [CompilerOptions#java_bean compiler options]). A static method "getPipeSchema" will be generated.
 {{{
 InputStream protobufInputStream;
 
 // transcode the protobuf encoding to json encoding
+LinkedBuffer buffer = ...;
 Pipe pipe = ProtobufIOUtil.newPipe(protobufInputStream);
-JsonIOUtil.writeTo(outputStream, pipe, Foo.getPipeSchema(), false);
+JsonIOUtil.writeTo(outputStream, pipe, Foo.getPipeSchema(), false, buffer);
 }}}
 
 
 For runtime objects, pipes are also supported. 
 The schema of a runtime object is an instance of {{{MappedSchema<T>}}}, which has a getPipeSchema() method. 
 {{{
+// byte array from cache
+byte[] protostuffData = ...;
 MappedSchema<Foo> schema = (MappedSchema<Foo>)RuntimeSchema.getSchema(Foo.class);
 
 // transcode the protobuf encoding to json encoding
-Pipe pipe = ProtobufIOUtil.newPipe(protobufInputStream);
-JsonIOUtil.writeTo(outputStream, pipe, schema.getPipeSchema(), false);
+LinkedBuffer buffer = ...;
+Pipe pipe = ProtostuffIOUtil.newPipe(protostuffData);
+JsonIOUtil.writeTo(outputStream, pipe, schema.getPipeSchema(), false, buffer);
 }}}
