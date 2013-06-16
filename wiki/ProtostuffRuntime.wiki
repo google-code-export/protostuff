@@ -110,7 +110,7 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
             // ...
         }
 
-        public final class BaseGuitar extends Instrument
+        public final class BassGuitar extends Instrument
         {
             // ...
         }
@@ -127,7 +127,7 @@ at runtime.  Below are the types ordered according to their efficiency and perfo
             List<Instrument> instrumentList;
             Map<String,Instrument> instrumentMapWithScalarKeys;
             Map<SortOrder,Instrument> instrumentMapWithEnumKeys;
-            Map<BaseGuitar,Instrument> instrumentMapWithPojoKeys;
+            Map<BassGuitar,Instrument> instrumentMapWithPojoKeys;
             Map<Instrument,Instrument> instrumentMap;
         }
 
