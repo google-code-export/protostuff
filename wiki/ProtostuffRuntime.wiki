@@ -254,7 +254,7 @@ For polymorhic datasets, prefer abstract classes vs interfaces.
 
 ==Usage==
 
-_Note that you can also hand-code schemas for more customization._
+_Note that on deser, if your object does not have a default constructor, you can always use *schema.newMessage()* to instantiate (internally similar to how the default java-serialization instantiates)_
 
 {{{
    Foo foo = new Foo("foo", 1, 3.5);
@@ -276,7 +276,7 @@ _Note that you can also hand-code schemas for more customization._
        buffer.clear();
    }
    // deser
-   Foo f = new Foo();
+   Foo f = new Foo(); // or schema.newMessage()
    ProtostuffIOUtil.mergeFrom(protostuff, f, schema);
    
    
@@ -291,7 +291,7 @@ _Note that you can also hand-code schemas for more customization._
        buffer.clear();
    }
    // deser
-   Foo f = new Foo();
+   Foo f = new Foo(); // or schema.newMessage()
    ProtobufIOUtil.mergeFrom(protobuf, f, schema);
    
    
@@ -301,7 +301,7 @@ _Note that you can also hand-code schemas for more customization._
    byte[] json = JsonIOUtil.toByteArray(foo, schema, numeric, buffer);
 
    // deser
-   Foo f = new Foo();
+   Foo f = new Foo(); // or schema.newMessage()
    JsonIOUtil.mergeFrom(json, f, schema, numeric);
    
     
@@ -310,7 +310,7 @@ _Note that you can also hand-code schemas for more customization._
    byte[] xml = XmlIOUtil.toByteArray(foo, schema);
 
    // deser
-   Foo f = new Foo();
+   Foo f = new Foo(); // or schema.newMessage()
    XmlIOUtil.mergeFrom(xml, f, schema);
    
    
