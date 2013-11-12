@@ -276,7 +276,7 @@ _Note that on deser, if your object does not have a default constructor, you can
        buffer.clear();
    }
    // deser
-   Foo f = new Foo(); // or schema.newMessage()
+   Foo f = schema.newMessage();
    ProtostuffIOUtil.mergeFrom(protostuff, f, schema);
    
    
@@ -291,7 +291,7 @@ _Note that on deser, if your object does not have a default constructor, you can
        buffer.clear();
    }
    // deser
-   Foo f = new Foo(); // or schema.newMessage()
+   Foo f = schema.newMessage();
    ProtobufIOUtil.mergeFrom(protobuf, f, schema);
    
    
@@ -301,7 +301,7 @@ _Note that on deser, if your object does not have a default constructor, you can
    byte[] json = JsonIOUtil.toByteArray(foo, schema, numeric, buffer);
 
    // deser
-   Foo f = new Foo(); // or schema.newMessage()
+   Foo f = schema.newMessage();
    JsonIOUtil.mergeFrom(json, f, schema, numeric);
    
     
@@ -310,7 +310,7 @@ _Note that on deser, if your object does not have a default constructor, you can
    byte[] xml = XmlIOUtil.toByteArray(foo, schema);
 
    // deser
-   Foo f = new Foo(); // or schema.newMessage()
+   Foo f = schema.newMessage();
    XmlIOUtil.mergeFrom(xml, f, schema);
    
    
@@ -345,7 +345,7 @@ _Note that on deser, if your object does not have a default constructor, you can
        buffer.clear();
    }
    // deser
-   Foo f = new Foo();
+   Foo f = schema.newMessage();
    ProtostuffIOUtil.mergeFrom(inputStream, f, schema, buffer);
    
 
@@ -360,7 +360,7 @@ _Note that on deser, if your object does not have a default constructor, you can
        buffer.clear();
    }
    // deser
-   Foo f = new Foo();
+   Foo f = schema.newMessage();
    ProtobufIOUtil.mergeFrom(inputStream, f, schema, buffer);
    
    
@@ -370,7 +370,7 @@ _Note that on deser, if your object does not have a default constructor, you can
    JsonIOUtil.writeTo(outputStream, foo, schema, numeric, buffer);
    
    // deser
-   Foo f = new Foo();
+   Foo f = schema.newMessage();
    JsonIOUtil.mergeFrom(inputStream, f, schema, numeric, buffer);
    
    
@@ -379,7 +379,7 @@ _Note that on deser, if your object does not have a default constructor, you can
    XmlIOUtil.writeTo(outputStream, foo, schema);
    
    // deser
-   Foo f = new Foo();
+   Foo f = schema.newMessage();
    XmlIOUtil.mergeFrom(inputStream, f, schema);
    
    
