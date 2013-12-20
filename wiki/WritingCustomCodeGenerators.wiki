@@ -52,7 +52,7 @@ proto_block(proto, module, options) ::= <<
 
 // this is for generating code with OuterClassname style
 
-public final class <proto.extraOptions.java_outer_classname> 
+public final class <proto.options.java_outer_classname> 
 {
 
     // call the enum_block template
