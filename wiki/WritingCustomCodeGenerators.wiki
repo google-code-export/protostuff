@@ -25,7 +25,9 @@ You simply invoke the compiler and supply your .stg resource as the "output".
 
 To test it out, try supplying [http://protostuff.googlecode.com/files/protodoc.html.stg] as the output.
 
-It generates html from your .proto files. (Enable the option "compile_imports" to "recursive").
+It generates html from your .proto files. (You can optionally enable the option "compile_imports" to "recursive").
+
+----
 
 Below is a guide/convention to structure/organize your stg ({{{StringTemplateGroup}}})
 
@@ -139,5 +141,3 @@ If not, the "message_block" is looked up with the args {{{[message,module,option
 For enums, the rule would be "enum_block" with the args {{{[eg,module,options]}}} (eg is a shortcut for {{{EnumGroup}}})
 
 See the [http://protostuff.googlecode.com/svn/javadoc/1.0.0/index.html javadoc api] for more details.
-
-The "//#message begin" is basically a bookmark so that when the code get's too big, its easy to navigate via your text editor's search for "#message"
