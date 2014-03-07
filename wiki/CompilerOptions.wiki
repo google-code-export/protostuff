@@ -3,6 +3,14 @@
 
 _Note that value (key:value) from some options are optional. The option "generate_field_map:false" does not disable the option ... remove the entry instead to disable._
 
+_In maven, you would declare the key:value as:
+{{{
+<property>
+  <name>Foo.implements_declaration</name> <!-- key -->
+  <value>implements com.example.Bar</value> <!-- value -->
+</property>
+}}}
+
 = all =
 
 * compile_imports = true | false| recursive*
