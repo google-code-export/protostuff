@@ -48,7 +48,7 @@ public final class Bar
 Without {{{@Tag}}} annotations, forward-backward compatibility is still supported via "append-only" schema evolution.
  * To add new fields, append the field in the declaration
  * To remove existing fields, annotate with @Deprecated
- * To exclude/remove fields, you can also use the java keyword: *transient*
+ * To exclude fields from being serialized, use the java keyword: *transient*
    
 Here's an example:
 {{{
