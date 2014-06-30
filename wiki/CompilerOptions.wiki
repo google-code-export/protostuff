@@ -103,6 +103,9 @@ _In maven, you would declare the key:value as:
       JsonIOUtil.writeTo(out, message, numeric);
    }}}
 
+* enums_by_name *
+ * serialize enums using their name instead of their number.
+
 = java_bean_me =
 
 a variant of java_bean that produces j2me-compatible messages/schemas.
