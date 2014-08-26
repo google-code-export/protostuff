@@ -9,6 +9,7 @@ Useful for:
  # pojos that should not be merged
  # pojos that prefer to be written as scalar/inline values
  # could be used to pack primitive array types into a byte array
+ # overriding protostuff-runtime's internal serializers for scalar fields (delegates have the first priority).
 
 You basically register them on initialization via:
  * {{{DefaultIdStrategy.registerDelegate(Delegate<V> delegate)}}}
